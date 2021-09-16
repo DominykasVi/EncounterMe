@@ -6,7 +6,9 @@ namespace EncounterMe
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Team!");
+            User user1 = new User("bildukas", "bildukas@gmail.com","beldziuosi");
+            Console.WriteLine(user1.CompareHashPassword("nesibeldziu"));
+            Console.WriteLine(user1.CompareHashPassword("beldziuosi"));
         }
     }
 }
