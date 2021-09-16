@@ -1,4 +1,5 @@
 ﻿using System;
+using EncounterMe.Functions;
 
 namespace EncounterMe
 {
@@ -6,7 +7,8 @@ namespace EncounterMe
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Team!");
+            
         }
+
     }
 }
