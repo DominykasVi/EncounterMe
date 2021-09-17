@@ -25,5 +25,6 @@ namespace EncounterMe
         {
             return 6372.795477598 * Math.Acos(Math.Sin(this.Latitude * Math.PI / 180.00) * Math.Sin(lat * Math.PI / 180.00) + Math.Cos(this.Latitude * Math.PI / 180.00) * Math.Cos(lat * Math.PI / 180.00) * Math.Cos((this.Longtitude - lon) * Math.PI / 180));
         }
+
     }
 }
