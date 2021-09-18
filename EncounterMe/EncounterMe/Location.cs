@@ -13,12 +13,13 @@ namespace EncounterMe
         public double Latitude { get; set; }
         public double Longtitude { get; set; }
 
-        public Location(int id, String name, double northCoord, double eastCoord)
+        //public Location(int id, String name, double northCoord, double eastCoord)
+        public Location(int ID, String Name, double Latitude, double Longtitude)
         {
-            this.ID = id;
-            this.Name = name;
-            this.Latitude = northCoord;
-            this.Longtitude = eastCoord;
+            this.ID = ID;
+            this.Name = Name;
+            this.Latitude = Latitude;
+            this.Longtitude = Longtitude;
         }
 
         public double distanceToUser(double lat, double lon)
