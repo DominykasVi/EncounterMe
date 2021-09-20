@@ -14,11 +14,11 @@ namespace EncounterMe.Functions
             //Not sure how we're gonna store user cridentials, so didn't do this yet
         }
 
-        public temp_User CreateUser (string username, string password)         
-            //Change temp_User to User class when it is created
+        public User CreateUser (string username, string email, string password)
         {
             if (ExistingUsername(username) && ValidPassword(password))
-                return new temp_User(username, password);
+                //the email is not validated yet
+                return new User(username, email, password);
             else
                 return null;
         }
@@ -29,6 +29,8 @@ namespace EncounterMe.Functions
             return false;                                        
             //Not sure how we're gonna store user cridentials, so didn't do this yet
         }
+
+        //A class for verifying emails needs to be created
 
         public bool ValidPassword(string input)
         {
