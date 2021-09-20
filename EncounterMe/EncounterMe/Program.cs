@@ -20,6 +20,7 @@ namespace EncounterMe
 
             db.writeToFile(locationList);
             var list = db.readSavedLocations();
+            //The Database Manager does not check what locations we already have in the file and keeps adding new ones
 
             foreach (var value in list)
             {
