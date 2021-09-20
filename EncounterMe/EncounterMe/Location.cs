@@ -13,17 +13,19 @@ namespace EncounterMe
         public double Latitude { get; set; }
         public double Longtitude { get; set; }
 
-        public Location(int id, String name, double northCoord, double eastCoord)
+        //public Location(int id, String name, double northCoord, double eastCoord)
+        public Location(int ID, String Name, double Latitude, double Longtitude)
         {
-            this.ID = id;
-            this.Name = name;
-            this.Latitude = northCoord;
-            this.Longtitude = eastCoord;
+            this.ID = ID;
+            this.Name = Name;
+            this.Latitude = Latitude;
+            this.Longtitude = Longtitude;
         }
 
         public double distanceToUser(double lat, double lon)
         {
             return 6372.795477598 * Math.Acos(Math.Sin(this.Latitude * Math.PI / 180.00) * Math.Sin(lat * Math.PI / 180.00) + Math.Cos(this.Latitude * Math.PI / 180.00) * Math.Cos(lat * Math.PI / 180.00) * Math.Cos((this.Longtitude - lon) * Math.PI / 180));
         }
+
     }
 }
