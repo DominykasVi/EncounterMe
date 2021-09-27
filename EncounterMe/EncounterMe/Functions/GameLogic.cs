@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+
 
 namespace EncounterMe.Functions
 {
@@ -25,7 +25,6 @@ namespace EncounterMe.Functions
             }
             catch (ArgumentOutOfRangeException e)
             {
-                
             }
             return null;
         }
@@ -33,7 +32,15 @@ namespace EncounterMe.Functions
         public int getRadiusFromUser ()
         {
             Console.WriteLine("Please write radius for Locations: ");
-            return Convert.ToInt32(Console.ReadLine());
+            try
+            {
+                return Convert.ToInt32(Console.ReadLine());
+            } catch (FormatException e)
+            {
+                Console.WriteLine("Invalid argument ");
+                return getRadiusFromUser();
+            }
+            
         }
 
         public void showLocationInformation(Location loc)
