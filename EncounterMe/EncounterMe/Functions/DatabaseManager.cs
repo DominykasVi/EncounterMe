@@ -15,9 +15,9 @@ namespace EncounterMe
     {
         public String path { get; set; }
 
-        public DatabaseManager(String filename)
+        public DatabaseManager(string filename)
         {
-            this.path = "Records\\" + filename + ".csv";
+            path = "Records\\" + filename + ".csv";
             //Creates folder and file, if they are not initialized
             if (!Directory.Exists("Records"))
             {
@@ -105,13 +105,13 @@ namespace EncounterMe
 
         }
 
-        public IEnumerable<Location> readSavedLocations()
+        public List<Location> readSavedLocations()
         {
             //read file
             using (var reader = new StreamReader(path))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<Location>().ToList();
+                List<Location> records = csv.GetRecords<Location>().ToList();
                 return records;
             }
 
