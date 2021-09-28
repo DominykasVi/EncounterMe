@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections;
 using EncounterMe.Classes;
-//using System.Collections.Generic;//
 using EncounterMe.Functions;
 
 namespace EncounterMe
@@ -28,7 +27,7 @@ namespace EncounterMe
             {
                 Console.WriteLine(location.Name + " " + location.ID + " " + location.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
             }
-        }
 
+        }
     }
 }
