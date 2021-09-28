@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
+using EncounterMe.Functions;
 
 namespace MapApp
 {
@@ -18,6 +19,7 @@ namespace MapApp
     {
         public MainPage()
         {
+            //DatabaseManager db = new DatabaseManager("Test"); it works i think
             InitializeComponent();
 
             Task.Delay(2000);

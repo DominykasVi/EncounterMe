@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace EncounterMe
 {
-    class DatabaseManager
+    public class DatabaseManager
     {
         public String path { get; set; }
 
