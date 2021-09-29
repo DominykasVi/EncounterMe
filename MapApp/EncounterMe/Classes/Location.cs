@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace EncounterMe
 {
     public class Location : IComparable
@@ -15,6 +16,7 @@ namespace EncounterMe
         //Might not require duoble precision, can be switched to float later
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
+        //public Position Position { get; set; }
 
         public Location(int ID, String Name, double Latitude, double Longtitude)
         {
@@ -22,6 +24,8 @@ namespace EncounterMe
             this.Name = Name;
             this.Latitude = (float) Latitude;
             this.Longtitude = (float) Longtitude;
+            //just testing it
+            //this.Position = new Position(Latitude, Longtitude);
         }
 
         public float distanceToUser(float lat, float lon)
