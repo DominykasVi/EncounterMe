@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EncounterMe.Classes
 {
-    class temp_Location
+    public class temp_Location
     {
         //This class is temporaty while we don't have user location implemented
         public static double currLatitude = 54.72996760444356;

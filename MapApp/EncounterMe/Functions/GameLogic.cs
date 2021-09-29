@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EncounterMe.Functions
 {
-    class GameLogic
+    public class GameLogic
     {
         public Location getLocationToFind (IEnumerable<Location> Locations, float Lat, float Long, int distance)
         {

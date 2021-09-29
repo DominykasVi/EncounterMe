@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EncounterMe
 {
-    class User
+    public class User
     {
         private string name;
         private string gmail;

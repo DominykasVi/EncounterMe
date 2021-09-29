@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
-using EncounterMe.Classes;
 using EncounterMe.Functions;
+using EncounterMe.Classes;
+using EncounterMe;
 
-namespace EncounterMe
+namespace ConsoleApp
 {
     class Program
     {
@@ -25,7 +26,7 @@ namespace EncounterMe
 
             foreach (Location location in locationList)
             {
-                Console.WriteLine(location.Name + " " + location.ID + " " + location.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
+                //Console.WriteLine(location.Name + " " + location.ID + " " + location.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
             }
 
         }

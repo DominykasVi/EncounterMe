@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace EncounterMe.Functions
 {
-    class LogIn
+    public class LogIn
     {
         public bool CheckPassword(string username, string password)             
             //Class for checking if the password is correct

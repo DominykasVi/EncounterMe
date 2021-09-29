@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EncounterMe
 {
-    class Location : IComparable
+    public class Location : IComparable
     {
         private const float circumference = (float) 6372.795477598;
         public int ID { get; set; }
@@ -37,7 +37,8 @@ namespace EncounterMe
         public int CompareTo(object obj)
         {
             Location other = (Location)obj;
-            return (int)(this.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) - other.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
+            return -1;
+            //return (int)(this.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) - other.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
             //While user location isn't implemented we are using the temp_Location class
         }
     }
