@@ -16,6 +16,10 @@ namespace EncounterMe
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
 
+        private int Upvote = 0;
+
+        private int Downvote = 0;
+
         public Location(int ID, String Name, double Latitude, double Longtitude)
         {
             this.ID = ID;
@@ -40,6 +44,22 @@ namespace EncounterMe
             return -1;
             //return (int)(this.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) - other.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
             //While user location isn't implemented we are using the temp_Location class
+        }
+
+        public void upvote ()
+        {
+            Upvote++;
+        }
+
+        public void downvote()
+        {
+            Downvote++;
+        }
+
+        public float getRating ()
+        {
+            if (Upvote + Downvote == 0) return 0;
+            else return Upvote / (Upvote + Downvote) * 100;
         }
     }
 }
