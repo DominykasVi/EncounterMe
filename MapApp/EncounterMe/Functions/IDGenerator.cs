@@ -52,7 +52,8 @@ namespace EncounterMe.Functions
 
         public Location getLocationByID (uint ID)
         {
-            return (Location)locations[ID];
+            if (!locations.ContainsKey(ID)) throw new Exception("ID not found!");
+            else return (Location)locations[ID];
         }
     }
 }
