@@ -9,13 +9,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.03*" />
-            <RowDefinition Height="0.2*" />
-            <RowDefinition Height="0.77*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label x:Name="text" Grid.Row="0"/>
-        <ListView x:Name="listView" Grid.Row="1"/>
-        <map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" Grid.Row="2">
+        <!--<Label x:Name="text" Grid.Row="0"/>
+        <ListView x:Name="listView" Grid.Row="1"/>-->
+        <map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" Grid.Row="0">
             <map:Map.ItemTemplate>
                 <DataTemplate>
                     <map:Pin Position="{Binding Position}"
@@ -24,6 +22,30 @@
                 </DataTemplate>
             </map:Map.ItemTemplate>
         </map:Map>
+        <Rectangle Fill="DodgerBlue" 
+               WidthRequest="300"
+               HeightRequest="100"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               Grid.Row="0"
+               Margin="20"/>
+        <Label x:Name="SliderValue" TextColor="DarkOrange" VerticalOptions="End" HorizontalOptions="Center" Margin="0, 0, 0, 90"/>
+        <Slider x:Name="RadiusSlider"
+                Minimum="0"
+                Maximum="1000"
+                WidthRequest="300"
+                BackgroundColor="DarkOrange"
+                VerticalOptions="End"
+                ValueChanged="SliderValueChanged"
+                Grid.Row="0"
+                Margin="75, 0, 75, 70"/>
+        <Button Text="Search"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Margin="0, 0, 0, 23"
+                 />
+        <!-- TODO Fix design, add absolute layout-->
+
     </Grid>
 
 </ContentPage>

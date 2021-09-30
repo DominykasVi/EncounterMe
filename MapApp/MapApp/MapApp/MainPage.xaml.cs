@@ -22,6 +22,10 @@ namespace MapApp
     {
         public MainPage()
         {
+            /*Dominykas TODO: clean up code
+                              make search feature work
+                              delete function in database
+                              draw radius based and live location*/
 
             InitializeComponent();
             //File.WriteAllText(_fileName, "Text");
@@ -32,7 +36,7 @@ namespace MapApp
 
 
 
-            text.Text = "Test_Text";
+            //text.Text = "Test_Text";
             string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.csv");
 
             this.db = new DatabaseManager(_fileName, "Test");//it works i think// I made it work ;)
@@ -63,6 +67,7 @@ namespace MapApp
 
         List<Place> placesList = new List<Place>();
         DatabaseManager db;
+        Circle userSearchCircle;
 
         private async void UpdateMap()
         {
@@ -110,7 +115,7 @@ namespace MapApp
                 //{
 
                 //}
-                listView.ItemsSource = dispList;
+                //listView.ItemsSource = dispList;
                 //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(47.6370891183, -122.123736172), Distance.FromKilometers(100)));
                 //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(54.67518129701089, 25.273545582365784), Distance.FromKilometers(5)));
                 
@@ -125,7 +130,17 @@ namespace MapApp
                 MyMap.ItemsSource = placesList;
                 MyMap.IsShowingUser = true;
 
+                userSearchCircle = new Circle
+                {
+                    Center = _position,
+                    Radius = new Distance(250),
+                    StrokeColor = Color.FromHex("#88FF0000"),
+                    StrokeWidth = 8,
+                    FillColor = Color.FromHex("#88FFC0CB")
+                };
 
+                // Add the Circle to the map's MapElements collection
+                MyMap.MapElements.Add(userSearchCircle);
 
                 //
                 //TimeSpan span = TimeSpan.FromMinutes(10000);
@@ -140,6 +155,12 @@ namespace MapApp
             {
                 Debug.WriteLine(ex);
             }
+        }
+
+        private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
+        {
+            SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString();
+            userSearchCircle.Radius = new Distance(RadiusSlider.Value);
         }
 
     }
