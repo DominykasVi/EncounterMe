@@ -121,7 +121,7 @@ namespace MapApp
                 var myPosition = await locator.GetPositionAsync();
                 Position _position = new Position(myPosition.Latitude, myPosition.Longitude);
                 MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(_position, Distance.FromKilometers(3)));
-
+                
                 MyMap.ItemsSource = placesList;
                 MyMap.IsShowingUser = true;
 
