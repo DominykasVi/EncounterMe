@@ -9,23 +9,30 @@ namespace EncounterMe
     public class Location : IComparable
     {
         private const float circumference = (float) 6372.795477598;
-        public int ID { get; set; }
+        public uint ID { get; set; }
         public String Name { get; set; }
         //Coordiantes are to be written in Decimal Degree (DD) notation. See more here: https://en.wikipedia.org/wiki/Decimal_degrees
         //Might not require duoble precision, can be switched to float later
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
 
-        private int Upvote = 0;
+        private uint Upvote = 0;
 
-        private int Downvote = 0;
+        private uint Downvote = 0;
 
-        public Location(int ID, String Name, double Latitude, double Longtitude)
+        public Location(uint ID, String Name, double Latitude, double Longtitude)
         {
             this.ID = ID;
             this.Name = Name;
             this.Latitude = (float) Latitude;
             this.Longtitude = (float) Longtitude;
+        }
+
+        public Location(String Name, double Latitude, double Longtitude)
+        {
+            this.Name = Name;
+            this.Latitude = (float)Latitude;
+            this.Longtitude = (float)Longtitude;
         }
 
         public float distanceToUser(float lat, float lon)
@@ -54,12 +61,13 @@ namespace EncounterMe
         public void downvote()
         {
             Downvote++;
+            
         }
 
         public float getRating ()
         {
             if (Upvote + Downvote == 0) return 0;
-            else return Upvote / (Upvote + Downvote) * 100;
+            else return (float)(Upvote * 1.0 / (Upvote + Downvote) * 100);
         }
     }
 }
