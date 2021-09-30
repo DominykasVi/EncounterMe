@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EncounterMe.Functions
 {
-    class IDGenerator
+    public class IDGenerator
     {
         //lazy, thread-safe singleton pattern, based on https://csharpindepth.com/articles/singleton
         private static readonly Lazy<IDGenerator> lazy =
@@ -20,11 +20,14 @@ namespace EncounterMe.Functions
 
         private bool idIsSet = false;
 
-        public void setID (IEnumerable<Location> loc)
+        public void setID (List<Location> loc)
         {
-            foreach (Location location in loc)
+            if (loc != null)
             {
-                if (location.ID > id) id = location.ID;
+                foreach (Location location in loc)
+                {
+                    if (location.ID > id) id = location.ID;
+                }
             }
             idIsSet = true;
         }
