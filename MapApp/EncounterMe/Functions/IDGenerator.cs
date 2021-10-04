@@ -28,7 +28,6 @@ namespace EncounterMe.Functions
             {
                 foreach (Location location in loc)
                 {
-                    Console.WriteLine(location.ID + " " + location.Name);
                     locations.Add(location.ID, location);
                     if (location.ID > id) id = location.ID;
                 }
