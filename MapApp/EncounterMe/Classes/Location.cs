@@ -9,9 +9,12 @@ using System.Xml.Serialization;
 
 namespace EncounterMe
 {
+
     [XmlRoot(ElementName = "Location", DataType = "Location", IsNullable = true)]
     public class Location : IComparable
     {
+        //TODO: get coordinates (lat, lng) tuple as extension
+
         private const float circumference = (float) 6372.795477598;
         public uint ID { get; set; }
         public String Name { get; set; }
@@ -25,6 +28,7 @@ namespace EncounterMe
 
         private uint Downvote = 0;
 
+        public Location() { }
         public Location(uint ID, String Name, double Latitude, double Longtitude)
         {
             this.ID = ID;
@@ -76,6 +80,10 @@ namespace EncounterMe
             if (Upvote + Downvote == 0) return 0;
             else return (float)(Upvote * 1.0 / (Upvote + Downvote) * 100);
         }
+
+
     }
+
+
 }
 

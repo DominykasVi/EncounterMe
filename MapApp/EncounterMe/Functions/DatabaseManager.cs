@@ -75,40 +75,41 @@ namespace EncounterMe
             }
             else
             {
-                ////read all records
-                //var readRecords = readSavedLocations();
+                //read all records
+                var readRecords = readFromFile<T>();
+                //TODO inplement compare to?
+                //OLD: check if any of the passed record names are in the file, if so remove them from the list
+                foreach (var readRecord in readRecords)
+                {
+                    foreach (var passedRecord in records.ToList())
+                    {
+                        //TODO test
+                        if (readRecord.GetHashCode() == passedRecord.GetHashCode())
+                        {
+                            records.Remove(passedRecord);
+                            Console.WriteLine("Duplicate " + passedRecord);
+                        }
+                    }
+                }
 
-                ////check if any of the passed record names are in the file, if so remove them from the list
-                //foreach (var readRecord in readRecords)
-                //{
-                //    foreach (var passedRecord in records.ToList()) 
-                //    {
-                //        if (readRecord.Name.Equals(passedRecord.Name))
-                //        {
-                //            records.Remove(passedRecord);
-                //            Console.WriteLine("Duplicate " + passedRecord.Name);
-                //        }
-                //    }
-                //}
-                
 
-                ////Exit if list is empty
-                //if (!records.Any())
-                //{
-                //    return;
-                //}
-                ////write all the left records to file
-                //var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                //{
-                //    // Don't write the header again.
-                //    HasHeaderRecord = false,
-                //};
-                //using (var stream = File.Open(path, FileMode.Append))
-                //using (var writer = new StreamWriter(stream))
-                //using (var csv = new CsvWriter(writer, config))
-                //{
-                //    csv.WriteRecords(records);
-                //}
+                //Exit if list is empty
+                if (!records.Any())
+                {
+                    return;
+                }
+                //write all the left records to file
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    // Don't write the header again.
+                    HasHeaderRecord = false,
+                };
+                using (var stream = File.Open(path, FileMode.Append))
+                using (var writer = new StreamWriter(stream))
+                using (var csv = new CsvWriter(writer, config))
+                {
+                    csv.WriteRecords(records);
+                }
             }
 
         }
@@ -119,17 +120,8 @@ namespace EncounterMe
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
             FileStream fs = new FileStream(path, FileMode.Open);
             var result = serializer.Deserialize(fs);
-            
-            //Console.WriteLine(typeof(List<T>));
-            //Console.WriteLine(result.ToString());
+           
             return (List<T>) result;
-            //using (var reader = new StreamReader(path))
-            //using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            //{
-            //    List<Location> records = csv.GetRecords<Location>().ToList();
-            //    return records;
-            //}
-
         }
 
         public String getPath()
