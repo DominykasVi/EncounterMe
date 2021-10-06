@@ -3,11 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 //might need importing
 
 
 namespace EncounterMe
 {
+    [XmlRoot(ElementName = "Location", DataType = "Location", IsNullable = true)]
     public class Location : IComparable
     {
         private const float circumference = (float) 6372.795477598;
@@ -19,6 +21,7 @@ namespace EncounterMe
         public float Longtitude { get; set; }
         //public Position Position { get; set; }
 
+        public Location() {        }
         public Location(int ID, String Name, double Latitude, double Longtitude)
         {
             this.ID = ID;
