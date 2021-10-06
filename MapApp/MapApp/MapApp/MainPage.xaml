@@ -8,11 +8,11 @@
              x:Class="MapApp.MainPage">
 
     <Grid>
+        <!-- TODO Fix design, add absolute layout-->
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--<Label x:Name="text" Grid.Row="0"/>
-        <ListView x:Name="listView" Grid.Row="1"/>-->
         <map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" Grid.Row="0">
             <map:Map.ItemTemplate>
                 <DataTemplate>
@@ -44,8 +44,7 @@
                 HorizontalOptions="Center"
                 Margin="0, 0, 0, 23"
                  />
-        <!-- TODO Fix design, add absolute layout-->
-
+       
     </Grid>
 
 </ContentPage>

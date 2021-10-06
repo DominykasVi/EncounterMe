@@ -27,18 +27,14 @@ namespace MapApp
                               delete function in database
                               draw radius based and live location*/
 
+            //Request accesto to location and storage
             InitializeComponent();
-            //File.WriteAllText(_fileName, "Text");
             var status = Permissions.RequestAsync<Permissions.StorageWrite>();
             var locStatus = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
-            
-
-
-
-            //text.Text = "Test_Text";
             string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.csv");
 
+            //left for first time initialization, remove later
             this.db = new DatabaseManager(_fileName, "Test");//it works i think// I made it work ;)
             EncounterMe.Location location1 = new EncounterMe.Location(001, "VU MIF Naugardukas", 54.67518129701089, 25.273545582365784);
             EncounterMe.Location location2 = new EncounterMe.Location(002, "VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
@@ -48,17 +44,6 @@ namespace MapApp
             locations.Add(location2);
             locations.Add(location3);
             db.writeToFile(locations);
-
-
-
-
-            //if (File.Exists(_fileName))
-            //{
-            //    var txt = File.ReadAllText(_fileName);
-            //    names.Add(txt);
-            //}
-
-
 
 
             Task.Delay(2000);
@@ -79,7 +64,7 @@ namespace MapApp
                 var locationList = db.readSavedLocations();
 
 
-
+                //read saved locations and put them into object, that google maps can read
                 foreach (EncounterMe.Location location in locationList)
                 {
                     placesList.Add(new Place
@@ -94,33 +79,11 @@ namespace MapApp
                     });
                 }
 
-                foreach(Place place in placesList)
+                foreach (Place place in placesList)
                 {
                     dispList.Add(place.PlaceName);
                 }
-                //currently commented, will be deleted later
-
-
-                //var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MainPage)).Assembly;
-                //Stream stream = assembly.GetManifestResourceStream("MapApp.Places.json");
-                //string text = string.Empty;
-                //using (var reader = new StreamReader(stream))
-                //{
-                //    text = reader.ReadToEnd();
-                //}
-
-                //var resultObject = JsonConvert.DeserializeObject<Places>(text);
-
-                //foreach (var place in resultObject.results)
-                //{
-
-                //}
-                //listView.ItemsSource = dispList;
-                //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(47.6370891183, -122.123736172), Distance.FromKilometers(100)));
-                //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(54.67518129701089, 25.273545582365784), Distance.FromKilometers(5)));
-                
-
-
+                //Move view to current location
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 50;
                 var myPosition = await locator.GetPositionAsync();
@@ -129,7 +92,7 @@ namespace MapApp
                 
                 MyMap.ItemsSource = placesList;
                 MyMap.IsShowingUser = true;
-
+                //create circle around user
                 userSearchCircle = new Circle
                 {
                     Center = _position,
@@ -141,14 +104,6 @@ namespace MapApp
 
                 // Add the Circle to the map's MapElements collection
                 MyMap.MapElements.Add(userSearchCircle);
-
-                //
-                //TimeSpan span = TimeSpan.FromMinutes(10000);
-                //var position = await locator.GetPositionAsync(span);
-                //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude),
-                //                                             Distance.FromMiles(5)));
-                //var loc = await Xamarin.Essentials.Geolocation.GetLocationAsync();
-                //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(47.6370891183, -122.123736172), Distance.FromKilometers(100)));
 
             }
             catch (Exception ex)
