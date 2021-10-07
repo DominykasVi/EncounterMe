@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Serialization;
 
 //TODO:Add check if path exists, if records are not null (I think they should be new functions) (for write, read etc.)
@@ -12,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace EncounterMe
 {
-    public class DatabaseManager
+    public struct DatabaseManager
     {
         public String path { get; set; }
 
@@ -22,21 +23,8 @@ namespace EncounterMe
             //var name = filename + ".csv";
            
             path = Path.Combine(newPath, filename + ".xml");
-            //Creates folder and file, if they are not initialized
-            //if (!Directory.Exists("Records"))
-            //{
-            //    try
-            //    {
-            //        Directory.CreateDirectory("Records");
-            //        Console.WriteLine("Directory created");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine(ex.ToString());
-            //    }
 
-            //}
-
+            //Creates file if it does not exist
             if (!File.Exists(path))
             {
                 try
@@ -75,22 +63,37 @@ namespace EncounterMe
             }
             else
             {
+                
                 //read all records
                 var readRecords = readFromFile<T>();
-                //TODO inplement compare to?
-                //OLD: check if any of the passed record names are in the file, if so remove them from the list
+
+                //check if porps are same (except ID), if any prop is different, consider a new object
                 foreach (var readRecord in readRecords)
                 {
+                    Type myType = readRecord.GetType();
+                    IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+                    bool equalObjects = true;
                     foreach (var passedRecord in records.ToList())
                     {
-                        //TODO test
-                        if (readRecord.GetHashCode() == passedRecord.GetHashCode())
+                        foreach (PropertyInfo prop in props)
+                        {
+                            if (!prop.Name.Contains("ID"))
+                            {
+                                object readValue = prop.GetValue(readRecord, null);
+                                object passedValue = prop.GetValue(passedRecord, null);
+                                if (!readValue.Equals(passedValue)) 
+                                {
+                                    equalObjects = false;
+                                }
+                            }
+                        }
+                        if (equalObjects)
                         {
                             records.Remove(passedRecord);
-                            Console.WriteLine("Duplicate " + passedRecord);
                         }
                     }
                 }
+
 
 
                 //Exit if list is empty
@@ -98,18 +101,13 @@ namespace EncounterMe
                 {
                     return;
                 }
-                //write all the left records to file
-                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                {
-                    // Don't write the header again.
-                    HasHeaderRecord = false,
-                };
-                using (var stream = File.Open(path, FileMode.Append))
-                using (var writer = new StreamWriter(stream))
-                using (var csv = new CsvWriter(writer, config))
-                {
-                    csv.WriteRecords(records);
-                }
+
+                readRecords.AddRange(records);
+
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+                TextWriter writer = new StreamWriter(path);
+                serializer.Serialize(writer, readRecords);
+                writer.Close();
             }
 
         }
@@ -120,7 +118,7 @@ namespace EncounterMe
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
             FileStream fs = new FileStream(path, FileMode.Open);
             var result = serializer.Deserialize(fs);
-           
+            fs.Close();
             return (List<T>) result;
         }
 

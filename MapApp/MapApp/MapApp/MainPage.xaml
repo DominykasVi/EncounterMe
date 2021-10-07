@@ -40,11 +40,20 @@
                 Grid.Row="0"
                 Margin="75, 0, 75, 70"/>
         <Button Text="Search"
+                Clicked="SearchForPlace"
                 VerticalOptions="End"
-                HorizontalOptions="Center"
-                Margin="0, 0, 0, 23"
+                HorizontalOptions="Start"
+                Margin="75, 0, 0, 23"
                  />
-       
+        <Button Text="ShowAll"
+                Clicked="ShowAll"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                Margin="0, 0, 75, 23"
+                 />
+
+
     </Grid>
+    
 
 </ContentPage>
