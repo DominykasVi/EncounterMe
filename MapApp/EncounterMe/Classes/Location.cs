@@ -20,12 +20,30 @@ namespace EncounterMe
 
         private uint Downvote = 0;
 
-        public Location(uint ID, String Name, double Latitude, double Longtitude)
+        [Flags]
+        public enum LocationAttributes
+        {
+            None = 0,
+            Normal = 1,
+            DifficultTerrain = 2,
+            DifficultToFind = 4,
+            FarFromCityCenter = 8,
+            CloseToCityCenter = 16
+        }
+        public LocationAttributes attributes { get; set; }
+        public String Attributes
+        {
+            get { return attributes.ToString(); }
+
+        }
+
+        public Location(uint ID, String Name, double Latitude, double Longtitude, LocationAttributes attributes = LocationAttributes.Normal)
         {
             this.ID = ID;
             this.Name = Name;
             this.Latitude = (float) Latitude;
             this.Longtitude = (float) Longtitude;
+            this.attributes = attributes;
         }
 
         public Location(String Name, double Latitude, double Longtitude)
