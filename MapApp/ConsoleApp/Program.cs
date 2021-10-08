@@ -10,8 +10,51 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Test_LocationOutputAndSort();
+            string input = Console.ReadLine();
+            if (input == "1") { Test_UserCreate(); }
+            else if (input == "2") { Test_UserLogIn(); }
+            else Console.ReadLine();
+
+            //Test_LocationOutputAndSort();
         }
+
+        static void Test_UserCreate()
+        {
+            string name;
+            string password;
+            string email;
+            Console.WriteLine("Name:");
+            name = Console.ReadLine();
+            Console.WriteLine("Email:");
+            email = Console.ReadLine();
+            Console.WriteLine("Password:");
+            password = Console.ReadLine();
+
+            LogIn login = new LogIn();
+
+            User user = login.CreateUser(name, email, password);
+
+            Console.ReadLine();
+
+        }
+
+        static void Test_UserLogIn()
+        {
+            string name;
+            string password;
+            Console.WriteLine("Name:");
+            name = Console.ReadLine();
+            Console.WriteLine("Password:");
+            password = Console.ReadLine();
+
+            LogIn login = new LogIn();
+
+            User user = login.CheckPassword(name, password);
+
+            Console.ReadLine();
+
+        }
+
 
         static void Test_LocationOutputAndSort()
         {
