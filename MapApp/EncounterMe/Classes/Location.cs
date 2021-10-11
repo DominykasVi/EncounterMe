@@ -25,6 +25,24 @@ namespace EncounterMe
 
         // optional argument usage
         public Location(String Name, double Latitude, double Longtitude, uint ID = 0)
+        [Flags]
+        public enum LocationAttributes
+        {
+            None = 0,
+            Normal = 1,
+            DifficultTerrain = 2,
+            DifficultToFind = 4,
+            FarFromCityCenter = 8,
+            CloseToCityCenter = 16
+        }
+        public LocationAttributes attributes { get; set; }
+        public String Attributes
+        {
+            get { return attributes.ToString(); }
+
+        }
+
+        public Location(uint ID, String Name, double Latitude, double Longtitude, LocationAttributes attributes = LocationAttributes.Normal)
         {
             this.ID = ID;
             this.Name = Name;
@@ -34,6 +52,10 @@ namespace EncounterMe
             {
                 this.ID = id.getID(this);
             }
+            this.attributes = attributes;
+            //just testing it
+            //this.Position = new Position(Latitude, Longtitude);
+        }
         }
 
         public float distanceToUser(float lat, float lon)
