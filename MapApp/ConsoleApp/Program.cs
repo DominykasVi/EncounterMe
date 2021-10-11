@@ -16,6 +16,7 @@ namespace ConsoleApp
         static void Test_LocationOutputAndSort()
         {
             //Test Code, non important
+
             IDGenerator id = IDGenerator.Instance;
             DatabaseManager db = new DatabaseManager("Test");
             //Location test = new Location(123, "Teeeest", 1.0, 3.0);
@@ -47,6 +48,7 @@ namespace ConsoleApp
                 locationByID.downvote();
             }
             Console.WriteLine(locationByID.Name + " " + locationByID.ID + " " + locationByID.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) + " " + locationByID.getRating());
+
 
         }
     }
