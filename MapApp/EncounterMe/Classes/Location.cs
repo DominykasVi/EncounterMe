@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+//might need importing
+
 
 namespace EncounterMe
 {
@@ -15,6 +17,7 @@ namespace EncounterMe
         //Might not require duoble precision, can be switched to float later
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
+        //public Position Position { get; set; }
 
         private uint Upvote = 0;
 
@@ -44,6 +47,8 @@ namespace EncounterMe
             this.Latitude = (float) Latitude;
             this.Longtitude = (float) Longtitude;
             this.attributes = attributes;
+            //just testing it
+            //this.Position = new Position(Latitude, Longtitude);
         }
 
         public Location(String Name, double Latitude, double Longtitude)
