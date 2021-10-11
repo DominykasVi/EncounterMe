@@ -4,7 +4,6 @@ using EncounterMe.Functions;
 using EncounterMe.Classes;
 using EncounterMe;
 using System.IO;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace ConsoleApp
@@ -16,24 +15,48 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            //Test_LocationOutputAndSort();
+            string input = Console.ReadLine();
+            if (input == "1") { Test_UserCreate(); }
+            else if (input == "2") { Test_UserLogIn(); }
+            else Console.ReadLine();
 
-            dominykas_tests();
-
-
-            Enum_Testing();
         }
 
-        static void Enum_Testing()
+        static void Test_UserCreate()
         {
+            string name;
+            string password;
+            string email;
+            Console.WriteLine("Name:");
+            name = Console.ReadLine();
+            Console.WriteLine("Email:");
+            email = Console.ReadLine();
+            Console.WriteLine("Password:");
+            password = Console.ReadLine();
+
+            LogInManager login = new LogInManager();
+
+            User user = login.CreateUser(name, email, password);
+
+            Console.ReadLine();
 
         }
-        static void dominykas_tests() {
 
-        }
-        static void Test_LocationOutputAndSort()
+        static void Test_UserLogIn()
         {
-        }
+            string name;
+            string password;
+            Console.WriteLine("Name:");
+            name = Console.ReadLine();
+            Console.WriteLine("Password:");
+            password = Console.ReadLine();
 
+            LogInManager login = new LogInManager();
+
+            User user = login.CheckPassword(name, password);
+
+            Console.ReadLine();
+
+        }
     }
 }

@@ -3,27 +3,44 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace EncounterMe
 {
-    public class User
+    public enum AccessLevel
     {
-        private string name;
-        private string gmail;
-        private byte[] hashpassword;
+        User, Admin
+    }
 
-        public string Name
-        { get { return name; } }
-        
-        public string Gmail
-        { get { return gmail; } }
+    [Serializable]
+    public class User : ISerializable
+    {
+        public string name { get; set; }
+        public string email { get; set; }
+        public byte[] hashpassword { get; set; }
+        public AccessLevel accessLevel { get; set; }
 
-        public User(string name, string gmail, string password)
+
+
+        public User() { }
+
+        public User(string name, string email, string password)
         {
             this.name = name;
-            this.gmail = gmail;
+            this.email = email;
             hashpassword = HashPassword(password);
+            accessLevel = AccessLevel.User;
         }
+
+        public User(SerializationInfo info, StreamingContext context)
+        {
+            name = (string)info.GetValue("Username", typeof(string));
+            email = (string)info.GetValue("Email", typeof(string));
+            hashpassword = (byte[])info.GetValue("Password", typeof(byte[]));
+            accessLevel = (AccessLevel)info.GetValue("Password", typeof(AccessLevel));
+        }
+
+
 
         private byte[] HashPassword(string password)
         {
@@ -36,6 +53,15 @@ namespace EncounterMe
         {
             return hashpassword.SequenceEqual(HashPassword(password));
         }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Username", name);
+            info.AddValue("Email", email);
+            info.AddValue("Password", hashpassword);
+            info.AddValue("AccessLevel", accessLevel);
+        }
+
 
     }
 }
