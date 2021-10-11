@@ -131,12 +131,5 @@ namespace EncounterMe
             return newDir;
         }
 
-        public String getPath()
-        {
-            //read file
-            var newDir = Directory.GetCurrentDirectory();
-            return newDir;
-        }
-
     }
 }

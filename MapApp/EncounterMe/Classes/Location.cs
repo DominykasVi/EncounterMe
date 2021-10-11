@@ -1,13 +1,12 @@
 using EncounterMe.Classes;
 using System;
+using EncounterMe.Functions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 //THis does not work, shoud move all classes
 //using Xamarin.Forms.Maps;
-
-
 
 namespace EncounterMe
 {
@@ -24,21 +23,15 @@ namespace EncounterMe
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
 
-        //public Position Position { get; set; }
-
-
         private uint Upvote = 0;
 
         private uint Downvote = 0;
 
 
         public Location() { }
-        public Location(uint ID, String Name, double Latitude, double Longtitude)
 
-        IDGenerator id = IDGenerator.Instance; 
+        IDGenerator id = IDGenerator.Instance;
 
-        // optional argument usage
-        public Location(String Name, double Latitude, double Longtitude, uint ID = 0)
         [Flags]
         public enum LocationAttributes
         {
@@ -56,30 +49,18 @@ namespace EncounterMe
 
         }
 
-        public Location(uint ID, String Name, double Latitude, double Longtitude, LocationAttributes attributes = LocationAttributes.Normal)
+        public Location(String Name, double Latitude, double Longtitude, LocationAttributes attributes = LocationAttributes.Normal, uint ID = 0)
 
         {
             this.ID = ID;
             this.Name = Name;
             this.Latitude = (float) Latitude;
             this.Longtitude = (float) Longtitude;
-
             if (this.ID == 0)
             {
                 this.ID = id.getID(this);
             }
             this.attributes = attributes;
-
-            //just testing it
-            //this.Position = new Position(Latitude, Longtitude);
-        }
-        }
-
-        public Location(double Latitude, double Longtitude)
-        {
-            this.Name = "";
-            this.Latitude = (float)Latitude;
-            this.Longtitude = (float)Longtitude;
         }
 
         public float distanceToUser(float lat, float lon)
@@ -117,10 +98,6 @@ namespace EncounterMe
             if (Upvote + Downvote == 0) return 0;
             else return (float)(Upvote * 1.0 / (Upvote + Downvote) * 100);
         }
-
-
     }
-
-
 }
 
