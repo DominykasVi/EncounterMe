@@ -30,7 +30,7 @@ namespace ConsoleApp
             Console.WriteLine("Password:");
             password = Console.ReadLine();
 
-            LogIn login = new LogIn();
+            LogInManager login = new LogInManager();
 
             User user = login.CreateUser(name, email, password);
 
@@ -47,7 +47,7 @@ namespace ConsoleApp
             Console.WriteLine("Password:");
             password = Console.ReadLine();
 
-            LogIn login = new LogIn();
+            LogInManager login = new LogInManager();
 
             User user = login.CheckPassword(name, password);
 

@@ -6,7 +6,7 @@ using EncounterMe.Classes;
 
 namespace EncounterMe.Functions
 {
-    public class LogIn
+    public class LogInManager
     {
         private UserManager users = new UserManager();
         public User CheckPassword(string username, string password)
