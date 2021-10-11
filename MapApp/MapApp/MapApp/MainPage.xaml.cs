@@ -46,10 +46,10 @@ namespace MapApp
 
             //left for first time initialization, remove later
             this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test");//it works i think// I made it work ;)
-            EncounterMe.Location location1 = new EncounterMe.Location(001, "VU MIF Naugardukas", 54.67518129701089, 25.273545582365784);
-            EncounterMe.Location location2 = new EncounterMe.Location(002, "VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
-            EncounterMe.Location location3 = new EncounterMe.Location(003, "M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
-            EncounterMe.Location location4 = new EncounterMe.Location(004, "Jammi", 54.68446369057142, 25.273091438331683);
+            EncounterMe.Location location1 = new EncounterMe.Location("VU MIF Naugardukas", 54.67518129701089, 25.273545582365784);
+            EncounterMe.Location location2 = new EncounterMe.Location( "VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
+            EncounterMe.Location location3 = new EncounterMe.Location( "M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
+            EncounterMe.Location location4 = new EncounterMe.Location( "Jammi", 54.68446369057142, 25.273091438331683);
 
             List<EncounterMe.Location> locations = new List<EncounterMe.Location>();
             locations.Add(location1);
