@@ -16,6 +16,7 @@ namespace ConsoleApp
         static void Test_LocationOutputAndSort()
         {
             //Test Code, non important
+
             IDGenerator id = IDGenerator.Instance;
             DatabaseManager db = new DatabaseManager("Test");
             GameLogic logic = new GameLogic();
@@ -35,6 +36,18 @@ namespace ConsoleApp
             Location locationByID = id.getLocationByID(127);
             int radius = logic.getRadiusFromUser();
             logic.showLocationInformation(logic.getLocationToFind(locationList, temp_Location.currLatitude, temp_Location.currLongitude, radius));
+            Location locationByID = id.getLocationByID(123);
+
+            for (int i = 0; i < 50; i++)
+            {
+                locationByID.upvote();
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                locationByID.downvote();
+            }
+            Console.WriteLine(locationByID.Name + " " + locationByID.ID + " " + locationByID.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) + " " + locationByID.getRating());
         }
     }
 }

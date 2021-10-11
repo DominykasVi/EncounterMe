@@ -15,23 +15,25 @@ namespace EncounterMe
     {
         public String path { get; set; }
 
-        public DatabaseManager(string filename)
+        public DatabaseManager(string newPath, string filename)
         {
-            path = "Records\\" + filename + ".csv";
-            //Creates folder and file, if they are not initialized
-            if (!Directory.Exists("Records"))
-            {
-                try
-                {
-                    Directory.CreateDirectory("Records");
-                    Console.WriteLine("Directory created");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
+            //var name = filename + ".csv";
+            path = newPath;
 
-            }
+            //Creates folder and file, if they are not initialized
+            //if (!Directory.Exists("Records"))
+            //{
+            //    try
+            //    {
+            //        Directory.CreateDirectory("Records");
+            //        Console.WriteLine("Directory created");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine(ex.ToString());
+            //    }
+
+            //}
 
             if (!File.Exists(path))
             {
@@ -115,6 +117,13 @@ namespace EncounterMe
                 return records;
             }
 
+        }
+
+        public String getPath()
+        {
+            //read file
+            var newDir = Directory.GetCurrentDirectory();
+            return newDir;
         }
 
     }

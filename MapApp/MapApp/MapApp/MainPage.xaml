@@ -8,15 +8,43 @@
              x:Class="MapApp.MainPage">
 
     <Grid>
-        <map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True">
+        <!-- TODO Fix design, add absolute layout-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" Grid.Row="0">
             <map:Map.ItemTemplate>
                 <DataTemplate>
                     <map:Pin Position="{Binding Position}"
-                             Address="{Binding Adress}"
-                             Label="{Binding PlaceName}" />
+                             Address="{Binding Address}"
+                             Label="{Binding PlaceName }" />
                 </DataTemplate>
             </map:Map.ItemTemplate>
         </map:Map>
+        <Rectangle Fill="DodgerBlue" 
+               WidthRequest="300"
+               HeightRequest="100"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               Grid.Row="0"
+               Margin="20"/>
+        <Label x:Name="SliderValue" TextColor="DarkOrange" VerticalOptions="End" HorizontalOptions="Center" Margin="0, 0, 0, 90"/>
+        <Slider x:Name="RadiusSlider"
+                Minimum="0"
+                Maximum="1000"
+                WidthRequest="300"
+                BackgroundColor="DarkOrange"
+                VerticalOptions="End"
+                ValueChanged="SliderValueChanged"
+                Grid.Row="0"
+                Margin="75, 0, 75, 70"/>
+        <Button Text="Search"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Margin="0, 0, 0, 23"
+                 />
+       
     </Grid>
 
 </ContentPage>

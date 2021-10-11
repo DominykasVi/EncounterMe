@@ -1,6 +1,8 @@
-﻿using System;
 using EncounterMe.Classes;
-using EncounterMe.Functions;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 
 namespace EncounterMe
 {
@@ -13,6 +15,7 @@ namespace EncounterMe
         //Might not require duoble precision, can be switched to float later
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
+        //public Position Position { get; set; }
 
         private uint Upvote = 0;
 
