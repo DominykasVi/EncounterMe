@@ -81,7 +81,7 @@ namespace EncounterMe
                             {
                                 object readValue = prop.GetValue(readRecord, null);
                                 object passedValue = prop.GetValue(passedRecord, null);
-                                if (!readValue.Equals(passedValue)) 
+                                if (!readValue.Equals(passedValue))
                                 {
                                     equalObjects = false;
                                 }
