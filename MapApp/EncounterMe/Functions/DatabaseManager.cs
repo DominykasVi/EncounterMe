@@ -18,11 +18,13 @@ namespace EncounterMe
         public String path { get; set; }
 
 
+
         public DatabaseManager(string newPath, string filename)
         {
             //var name = filename + ".csv";
            
             path = Path.Combine(newPath, filename + ".xml");
+
 
             //Creates file if it does not exist
             if (!File.Exists(path))
@@ -120,6 +122,13 @@ namespace EncounterMe
             var result = serializer.Deserialize(fs);
             fs.Close();
             return (List<T>) result;
+        }
+
+        public String getPath()
+        {
+            //read file
+            var newDir = Directory.GetCurrentDirectory();
+            return newDir;
         }
 
         public String getPath()

@@ -41,6 +41,7 @@ namespace MapApp
             var status = Permissions.RequestAsync<Permissions.StorageWrite>();
             var locStatus = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
+
             //string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.csv");
 
             //left for first time initialization, remove later
@@ -49,13 +50,16 @@ namespace MapApp
             EncounterMe.Location location2 = new EncounterMe.Location(002, "VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
             EncounterMe.Location location3 = new EncounterMe.Location(003, "M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
             EncounterMe.Location location4 = new EncounterMe.Location(004, "Jammi", 54.68446369057142, 25.273091438331683);
+
             List<EncounterMe.Location> locations = new List<EncounterMe.Location>();
             locations.Add(location1);
             locations.Add(location2);
             locations.Add(location3);
+
             locations.Add(location4);
 
             db.writeToFile(locations);
+
 
             Task.Delay(2000);
             InitMap();
@@ -65,6 +69,7 @@ namespace MapApp
         List<Place> placesList = new List<Place>();
         DatabaseManager db;
         Circle userSearchCircle;
+
         Position userPosition;
         Distance searchRadius;
 
@@ -102,10 +107,12 @@ namespace MapApp
             }
         }
 
+
         private async void UpdateMap()
         {
             try
             {
+
                 //List < string > dispList= new List<string>();
 
 
@@ -130,6 +137,7 @@ namespace MapApp
                 Debug.WriteLine(ex);
             }
         }
+
 
         private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
         {
@@ -196,6 +204,7 @@ namespace MapApp
                 });
             }
         }
+
 
     }
 }

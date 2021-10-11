@@ -40,6 +40,7 @@
                 Grid.Row="0"
                 Margin="75, 0, 75, 70"/>
         <Button Text="Search"
+
                 Clicked="SearchForPlace"
                 VerticalOptions="End"
                 HorizontalOptions="Start"
@@ -51,6 +52,7 @@
                 HorizontalOptions="End"
                 Margin="0, 0, 75, 23"
                  />
+
 
 
     </Grid>
