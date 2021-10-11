@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace EncounterMe.Functions
 {
@@ -48,7 +48,7 @@ namespace EncounterMe.Functions
                 throw new Exception("ID is not set!");
             }
         }
-
+        //TODO reiview func, do we really need to save the list in memory?
         public Location getLocationByID (uint ID)
         {
             if (!locations.ContainsKey(ID)) throw new Exception("ID not found!");

@@ -12,68 +12,199 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using EncounterMe.Functions;
 using EncounterMe;
+using Xamarin.Essentials;
+using Plugin.Geolocator;
 
 namespace MapApp
 {
     [DesignTimeVisible(false)]
+
+    public static class MyExtendedMethods
+    {
+        public static Position getPosition(this EncounterMe.Location loc)
+        {
+            return new Position(loc.Latitude, loc.Longtitude);
+            
+        }
+    }
     public partial class MainPage : ContentPage
     {
         public MainPage()
         {
-            DatabaseManager db = new DatabaseManager("Test"); //it works i think
+            /*Dominykas TODO: clean up code
+                              make search feature work
+                              delete function in database
+                              draw radius based and live location*/
+
+            //Request accesto to location and storage
             InitializeComponent();
+            var status = Permissions.RequestAsync<Permissions.StorageWrite>();
+            var locStatus = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
+
+            //string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.csv");
+
+            //left for first time initialization, remove later
+            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test");//it works i think// I made it work ;)
+            EncounterMe.Location location1 = new EncounterMe.Location("VU MIF Naugardukas", 54.67518129701089, 25.273545582365784);
+            EncounterMe.Location location2 = new EncounterMe.Location( "VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
+            EncounterMe.Location location3 = new EncounterMe.Location( "M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
+            EncounterMe.Location location4 = new EncounterMe.Location( "Jammi", 54.68446369057142, 25.273091438331683);
+
+            List<EncounterMe.Location> locations = new List<EncounterMe.Location>();
+            locations.Add(location1);
+            locations.Add(location2);
+            locations.Add(location3);
+
+            locations.Add(location4);
+
+            db.writeToFile(locations);
+
 
             Task.Delay(2000);
-            UpdateMap();
+            InitMap();
+            //UpdateMap();
         }
 
         List<Place> placesList = new List<Place>();
+        DatabaseManager db;
+        Circle userSearchCircle;
+
+        Position userPosition;
+        Distance searchRadius;
+
+
+        private async void InitMap()
+        {
+            //read saved locations and put them into object, that google maps can read
+            try 
+            { 
+
+
+                //Move view to current location
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 50;
+                var myPosition = await locator.GetPositionAsync();
+                userPosition = new Position(myPosition.Latitude, myPosition.Longitude);
+                MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(userPosition, Distance.FromKilometers(3)));
+
+                //initiazlize search circle
+                userSearchCircle = new Circle
+                {
+                    Center = userPosition,
+                    Radius = new Distance(0),
+                    StrokeColor = Color.FromHex("#88FF0000"),
+                    StrokeWidth = 8,
+                    FillColor = Color.FromHex("#88FFC0CB")
+                };
+                MyMap.MapElements.Add(userSearchCircle);
+
+                MyMap.IsShowingUser = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
 
         private async void UpdateMap()
         {
             try
             {
-                var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MainPage)).Assembly;
-                Stream stream = assembly.GetManifestResourceStream("MapApp.Places.json");
-                string text = string.Empty;
-                using (var reader = new StreamReader(stream))
-                {
-                    text = reader.ReadToEnd();
-                }
 
-                var resultObject = JsonConvert.DeserializeObject<Places>(text);
+                //List < string > dispList= new List<string>();
 
-                foreach (var place in resultObject.results)
-                {
-                    placesList.Add(new Place
-                    {
-                        PlaceName = place.name,
-                        Address = place.vicinity,
-                        Location = place.geometry.location,
-                        Position = new Position(place.geometry.location.lat, place.geometry.location.lng),
-                        //Icon = place.icon,
-                        //Distance = $"{GetDistance(lat1, lon1, place.geometry.location.lat, place.geometry.location.lng, DistanceUnit.Kiliometers).ToString("N2")}km",
-                        //OpenNow = GetOpenHours(place?.opening_hours?.open_now)
-                    });
-                }
 
-                MyMap.ItemsSource = placesList;
-                //PlacesListView.ItemsSource = placesList;
-                //var loc = await Xamarin.Essentials.Geolocation.GetLocationAsync();
-                MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(47.6370891183, -122.123736172), Distance.FromKilometers(100)));
+                //foreach (Place place in placesList)
+                //{
+                //    dispList.Add(place.PlaceName);
+                //}
+
+                
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //create circle around user
+
+
+                // Add the Circle to the map's MapElements collection
+                
 
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
-
-
         }
 
-        private void Sign_In(object sender, EventArgs e)
+
+        private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
         {
-
+            SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
+            searchRadius = new Distance(RadiusSlider.Value);
+            userSearchCircle.Radius = searchRadius;
         }
+
+        private void SearchForPlace(Object sender, EventArgs args)
+        {
+            //read database and save locations locally
+            //in the future might use stream, so as not to store locations locally, or do calculation on sql
+            //placesList.Clear();
+            MyMap.Pins.Clear();
+
+            var locationList = db.readFromFile<EncounterMe.Location>();
+            foreach (EncounterMe.Location location in locationList)
+            {
+                var dist = location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
+                //Console.WriteLine(searchRadius.Kilometers.ToString());
+                if (dist <= searchRadius.Kilometers)
+                {
+                    //placesList.Add(new Place
+                    //{
+                    //    PlaceName = location.Name,
+                    //    Address = location.Name,
+                    //    //Location = location.geometry.location,
+                    //    Position = location.getPosition(),
+                    //    //Icon = place.icon,
+                    //    //Distance = $"{GetDistance(lat1, lon1, place.geometry.location.lat, place.geometry.location.lng, DistanceUnit.Kiliometers).ToString("N2")}km",
+                    //    //OpenNow = GetOpenHours(place?.opening_hours?.open_now)
+                    //});
+                    MyMap.Pins.Add(new Pin
+                    {
+                        Position = location.getPosition(),
+                        Label = location.Name,
+                        Address = location.Name
+                    });
+                }
+
+            }
+
+            //MyMap.ItemsSource = placesList;
+            //UpdateMap();
+
+            //text.Text = new EncounterMe userPosition.Latitude.ToString();
+        }
+
+        private void ShowAll(Object sender, EventArgs args)
+        {
+            //read database and save locations locally
+            //in the future might use stream, so as not to store locations locally, or do calculation on sql
+            //placesList.Clear();
+            MyMap.Pins.Clear();
+
+            var locationList = db.readFromFile<EncounterMe.Location>();
+            foreach (EncounterMe.Location location in locationList)
+            {
+                MyMap.Pins.Add(new Pin
+                {
+                    Position = location.getPosition(),
+                    Label = location.Name,
+                    Address = location.Name
+                });
+            }
+        }
+
+
     }
 }

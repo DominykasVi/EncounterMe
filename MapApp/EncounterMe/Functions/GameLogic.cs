@@ -1,29 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using EncounterMe.Classes;
 
 namespace EncounterMe.Functions
 {
     public class GameLogic
     {
-        public Location getLocationToFind (IEnumerable<Location> Locations, float Lat, float Long, int distance)
+        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, int distance)
         {
-            List <Location> locationsSortedByDistance = new List<Location>();
-            foreach (Location loc in Locations)
+            //LINQ query
+            var locationsQuery =
+                (from loc in Locations
+                where loc.distanceToUser(Lat, Long) < distance
+                select loc);
+
+            int i = 0;
+
+            LocationList<Location> locationsSortedByDistance = new LocationList<Location>();
+
+            foreach (Location loc in locationsQuery)
             {
-                if (loc.distanceToUser(Lat, Long) <= distance)
-                {
-                    locationsSortedByDistance.Add(loc);
-                }
+                locationsSortedByDistance[i] = loc;
+                i++;
             }
+
             Random random = new Random();
-            int index = random.Next(locationsSortedByDistance.Count);
+            int index = random.Next(i);
             try
             {
                 Location location =  locationsSortedByDistance[index];
                 return location;
             }
-            catch (ArgumentOutOfRangeException e)
+            catch
             {
             }
             return null;
