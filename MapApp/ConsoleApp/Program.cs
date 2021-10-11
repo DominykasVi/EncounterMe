@@ -18,36 +18,23 @@ namespace ConsoleApp
             //Test Code, non important
             IDGenerator id = IDGenerator.Instance;
             DatabaseManager db = new DatabaseManager("Test");
-            //Location test = new Location(123, "Teeeest", 1.0, 3.0);
-            //List<Location> testList = new List<Location>() { test };
-            //db.writeToFile(testList);
+            GameLogic logic = new GameLogic();
             var locationList = db.readSavedLocations();
             id.setID(locationList);
             List<Location> location = new List<Location>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 10; i > 0; i--)
             {
-                Location loc = new Location("Location no. " + i, 54.675182+i, 25.273546+i);
+                Location loc = new Location(Name: "Location no. " + i, 54.675182+i, 25.273546+i);
                 locationList.Add(loc);
-                loc.ID = id.getID(loc);
             }
             locationList.Sort();
             foreach (Location loc in locationList)
             {
                 Console.WriteLine(loc.Name + " " + loc.ID + " " + loc.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
             }
-            Location locationByID = id.getLocationByID(123);
-
-            for (int i = 0; i < 50; i++)
-            {
-                locationByID.upvote();
-            }
-
-            for (int i = 0; i < 20; i++)
-            {
-                locationByID.downvote();
-            }
-            Console.WriteLine(locationByID.Name + " " + locationByID.ID + " " + locationByID.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) + " " + locationByID.getRating());
-
+            Location locationByID = id.getLocationByID(127);
+            int radius = logic.getRadiusFromUser();
+            logic.showLocationInformation(logic.getLocationToFind(locationList, temp_Location.currLatitude, temp_Location.currLongitude, radius));
         }
     }
 }

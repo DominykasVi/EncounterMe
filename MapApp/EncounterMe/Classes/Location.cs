@@ -1,8 +1,6 @@
-﻿using EncounterMe.Classes;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using EncounterMe.Classes;
+using EncounterMe.Functions;
 
 namespace EncounterMe
 {
@@ -20,19 +18,19 @@ namespace EncounterMe
 
         private uint Downvote = 0;
 
-        public Location(uint ID, String Name, double Latitude, double Longtitude)
+        IDGenerator id = IDGenerator.Instance; 
+
+        // optional argument usage
+        public Location(String Name, double Latitude, double Longtitude, uint ID = 0)
         {
             this.ID = ID;
             this.Name = Name;
             this.Latitude = (float) Latitude;
             this.Longtitude = (float) Longtitude;
-        }
-
-        public Location(String Name, double Latitude, double Longtitude)
-        {
-            this.Name = Name;
-            this.Latitude = (float)Latitude;
-            this.Longtitude = (float)Longtitude;
+            if (this.ID == 0)
+            {
+                this.ID = id.getID(this);
+            }
         }
 
         public float distanceToUser(float lat, float lon)
@@ -48,8 +46,7 @@ namespace EncounterMe
         public int CompareTo(object obj)
         {
             Location other = (Location)obj;
-            return -1;
-            //return (int)(this.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) - other.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
+            return (int)(this.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude) - other.distanceToUser(temp_Location.currLatitude, temp_Location.currLongitude));
             //While user location isn't implemented we are using the temp_Location class
         }
 
