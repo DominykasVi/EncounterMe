@@ -4,7 +4,6 @@ using EncounterMe.Functions;
 using EncounterMe.Classes;
 using EncounterMe;
 using System.IO;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace ConsoleApp
@@ -21,7 +20,6 @@ namespace ConsoleApp
             else if (input == "2") { Test_UserLogIn(); }
             else Console.ReadLine();
 
-            //Test_LocationOutputAndSort();
         }
 
         static void Test_UserCreate()
@@ -60,17 +58,5 @@ namespace ConsoleApp
             Console.ReadLine();
 
         }
-
-        static void Test_LocationOutputAndSort()
-        {
-
-        }
-        static void dominykas_tests() {
-
-        }
-        static void Test_LocationOutputAndSort()
-        {
-        }
-
     }
 }
