@@ -161,7 +161,7 @@ namespace MapApp
             var locationList = db.readFromFile<EncounterMe.Location>();
             foreach (EncounterMe.Location location in locationList)
             {
-                var dist = location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
+                var dist = (double) location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
                 //Console.WriteLine(searchRadius.Kilometers.ToString());
                 if (dist <= searchRadius.Kilometers)
                 {
