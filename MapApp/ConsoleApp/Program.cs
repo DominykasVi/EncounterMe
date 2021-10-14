@@ -15,10 +15,13 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
+            UserManager aa = new UserManager();
+            aa.createXML();
             string input = Console.ReadLine();
             if (input == "1") { Test_UserCreate(); }
             else if (input == "2") { Test_UserLogIn(); }
-            else Console.ReadLine();
+            else aa.printListOfUsers();
+            //else Console.ReadLine();
 
         }
 
@@ -35,7 +38,7 @@ namespace ConsoleApp
             password = Console.ReadLine();
 
             LogInManager login = new LogInManager();
-
+            
             User user = login.CreateUser(name, email, password);
 
             Console.ReadLine();

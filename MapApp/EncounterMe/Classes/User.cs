@@ -64,4 +64,10 @@ namespace EncounterMe
 
 
     }
+
+    public class AccessRights
+    {
+        public AccessLevel accessLevel { get; set; }
+        public String accessName { get; set; }
+    }
 }
