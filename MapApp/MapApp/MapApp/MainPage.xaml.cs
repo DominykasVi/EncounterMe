@@ -14,6 +14,8 @@ using EncounterMe.Functions;
 using EncounterMe;
 using Xamarin.Essentials;
 using Plugin.Geolocator;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.Storage.Streams;
 
 namespace MapApp
 {
@@ -29,8 +31,10 @@ namespace MapApp
     }
     public partial class MainPage : ContentPage
     {
+        //Xamarin.Forms.Maps.Map MyMap = new Xamarin.Forms.Maps.Map();
         public MainPage()
         {
+            
             /*Dominykas TODO: clean up code
                               make search feature work
                               delete function in database
@@ -38,6 +42,26 @@ namespace MapApp
 
             //Request accesto to location and storage
             InitializeComponent();
+            //CustomMap customMap = new CustomMap
+            //{
+            //    MapType = MapType.Street
+            //};
+
+            //Content = customMap;
+            //CustomPin pin = new CustomPin
+            //{
+            //    Type = PinType.Place,
+            //    Position = new Position(37.79752, -122.40183),
+            //    Label = "Xamarin San Francisco Office",
+            //    Address = "394 Pacific Ave, San Francisco CA",
+            //    Name = "Xamarin",
+            //    Url = "http://xamarin.com/about/"
+            //};
+            //customMap.CustomPins = new List<CustomPin> { pin };
+            //customMap.Pins.Add(pin);
+            //customMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(37.79752, -122.40183), Distance.FromMiles(1.0)));
+
+
             var status = Permissions.RequestAsync<Permissions.StorageWrite>();
             var locStatus = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
@@ -53,7 +77,7 @@ namespace MapApp
             EncounterMe.Location location3 = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
             EncounterMe.Location location4 = new EncounterMe.Location("Jammi", 54.68446369057142, 25.273091438331683);
             
-      
+            
 
             List<EncounterMe.Location> locations = new List<EncounterMe.Location>();
             locations.Add(location1);
@@ -65,6 +89,26 @@ namespace MapApp
    
             db.writeToFile(locations);
 
+
+            var pinList = new List<CustomPin>();
+            var locationList = db.readFromFile<EncounterMe.Location>();
+            foreach (EncounterMe.Location location in locationList)
+            {
+                //MyMap.Pins.Add(
+                var pin = new CustomPin
+                {
+                    Position = location.getPosition(),
+                    Label = location.Name,
+                    Address = location.Name,
+                    Name = "Xamarin",
+                    Url = "http://xamarin.com/about/"
+                };
+                pinList.Add(pin);
+                //MyMap.Pins.Add(pin);
+                // MyMap.CustomPins = new List<CustomPin> { pin };
+
+            }
+            MyMap.CustomPins = pinList;
 
             Task.Delay(2000);
             InitMap();
@@ -175,11 +219,14 @@ namespace MapApp
                     //    //Distance = $"{GetDistance(lat1, lon1, place.geometry.location.lat, place.geometry.location.lng, DistanceUnit.Kiliometers).ToString("N2")}km",
                     //    //OpenNow = GetOpenHours(place?.opening_hours?.open_now)
                     //});
-                    MyMap.Pins.Add(new Pin
+                    MyMap.Pins.Add(new CustomPin
                     {
                         Position = location.getPosition(),
                         Label = location.Name,
-                        Address = location.Name
+                        Address = location.Name,
+                        Name = "Xamarin",
+                        Url = "http://xamarin.com/about/"
+
                     });
                 }
 
@@ -197,17 +244,35 @@ namespace MapApp
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
             //placesList.Clear();
             MyMap.Pins.Clear();
-
+            var pinList = new List<CustomPin>();
             var locationList = db.readFromFile<EncounterMe.Location>();
             foreach (EncounterMe.Location location in locationList)
             {
-                MyMap.Pins.Add(new Pin
+                //MyMap.Pins.Add(
+                var pin = new CustomPin
                 {
                     Position = location.getPosition(),
                     Label = location.Name,
-                    Address = location.Name
-                });
+                    Address = location.Name,
+                    Name = "Xamarin",
+                    Url = "http://xamarin.com/about/"
+                };
+                pinList.Add(pin);
+                MyMap.Pins.Add(pin);
+               // MyMap.CustomPins = new List<CustomPin> { pin };
+
             }
+            //MyMap.CustomPins = pinList;
+            foreach(var pin in MyMap.CustomPins)
+            {
+                Console.WriteLine(pin.Label);
+            }
+
+        }
+
+        private async void NavigateButton_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SecondPage());
         }
 
 

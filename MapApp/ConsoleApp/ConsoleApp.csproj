@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="WeightedRandomizer" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EncounterMe\EncounterMe.csproj" />
   </ItemGroup>
 

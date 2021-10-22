@@ -23,7 +23,7 @@ namespace EncounterMe
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
 
-        private uint Upvote = 0;
+        public uint Upvote = 0;
 
         private uint Downvote = 0;
 
