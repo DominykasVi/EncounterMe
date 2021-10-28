@@ -24,7 +24,7 @@
         </map:Map>
         <Rectangle Fill="DodgerBlue" 
                WidthRequest="300"
-               HeightRequest="100"
+               HeightRequest="170"
                HorizontalOptions="Center"
                VerticalOptions="End"
                Grid.Row="0"
@@ -40,7 +40,6 @@
                 Grid.Row="0"
                 Margin="75, 0, 75, 70"/>
         <Button Text="Search"
-
                 Clicked="SearchForPlace"
                 VerticalOptions="End"
                 HorizontalOptions="Start"
@@ -53,9 +52,17 @@
                 Margin="0, 0, 75, 23"
                  />
 
+        <Grid x:Name="FilterPanel"
+              Margin="75, 470, 75, 85"
+              RowSpacing="0"
+              ColumnSpacing="0">
+
+        </Grid>
+
+        
 
 
     </Grid>
-    
+
 
 </ContentPage>
