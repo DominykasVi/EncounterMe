@@ -14,10 +14,12 @@ using EncounterMe.Functions;
 using EncounterMe;
 using Xamarin.Essentials;
 using Plugin.Geolocator;
+using Xamarin.Forms;
 
 namespace MapApp
 {
     [DesignTimeVisible(false)]
+
 
     public static class MyExtendedMethods
     {
@@ -27,10 +29,13 @@ namespace MapApp
 
         }
     }
+    
     public partial class MainPage : ContentPage
     {
         public MainPage()
         {
+            //fileImage.Source = ImageSource.FromFile("Icons/idk.png");
+            //await navPage.PushAsync(new MySecondPage());
             /*Dominykas TODO: clean up code
                               make search feature work
                               delete function in database
@@ -82,7 +87,7 @@ namespace MapApp
 
         LocationAttributes filterList;
         List<LocationAttributes> attributeList;
-
+        
         private async void InitMap()
         {
             //read saved locations and put them into object, that google maps can read
@@ -259,6 +264,11 @@ namespace MapApp
                 button.BackgroundColor = Color.Default;
                 filterList = filterList & ~tag;
             }
+        }
+
+        async void RedirectPage(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Profile());
         }
     }
 }
