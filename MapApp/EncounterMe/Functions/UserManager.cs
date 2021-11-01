@@ -10,6 +10,19 @@ namespace EncounterMe.Functions
     public class UserManager
     {
         private string path = "users.xml";
+
+        public void createXML ()
+        {
+            if (!File.Exists(path))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<User>));
+                List<User> users = new List<User>();
+                using (FileStream writer = File.Create(path))
+                {
+                    serializer.Serialize(writer, users);
+                }
+            }
+        }
         List<User> GetUsersFromMemory()
         {
             List<User> users;
@@ -37,6 +50,32 @@ namespace EncounterMe.Functions
             using (TextWriter writer = new StreamWriter(path))
             {
                 serializer.Serialize(writer, users);
+            }
+        }
+
+        public void printListOfUsers ()
+        {
+            List<User> users = GetUsersFromMemory();
+            List<AccessRights> accessRights = new List<AccessRights>
+            {
+                new AccessRights { accessLevel = AccessLevel.Admin, accessName = "Admin"},
+                new AccessRights { accessLevel = AccessLevel.User, accessName = "User"}
+            };
+            var query = accessRights.GroupJoin (users,
+                                                rights => rights.accessLevel,
+                                                user => user.accessLevel,
+                                                (rights, userList) => new
+                                                {
+                                                    Users = userList,
+                                                    AccessName = rights.accessName
+                                                });
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.AccessName);
+                foreach (var user in item.Users)
+                {
+                    Console.WriteLine("\t" + user.name);
+                }
             }
         }
     }

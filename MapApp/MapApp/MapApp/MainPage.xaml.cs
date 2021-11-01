@@ -73,10 +73,10 @@ namespace MapApp
             this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test");//it works i think// I made it work ;)
             IDGenerator idg = IDGenerator.Instance;
             idg.setID(new List<EncounterMe.Location> { });
-            EncounterMe.Location location1 = new EncounterMe.Location("VU MIF Naugardukas", 54.67518129701089, 25.273545582365784);
-            EncounterMe.Location location2 = new EncounterMe.Location("VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
-            EncounterMe.Location location3 = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
-            EncounterMe.Location location4 = new EncounterMe.Location("Jammi", 54.68446369057142, 25.273091438331683);
+            EncounterMe.Location location1 = new EncounterMe.Location(Name: "VU MIF Naugardukas", Latitude: 54.67518129701089, Longtitude: 25.273545582365784);
+            EncounterMe.Location location2 = new EncounterMe.Location(Name: "VU MIF Baltupiai", Latitude: 54.729775633971855, Longtitude: 25.263535399566603);
+            EncounterMe.Location location3 = new EncounterMe.Location(Name: "M. Mažvydo Nacionalinė Biblioteka", Latitude: 54.690803584492194, Longtitude: 25.263577022718472);
+            EncounterMe.Location location4 = new EncounterMe.Location(Name: "Jammi", Latitude: 54.68446369057142, Longtitude: 25.273091438331683);
             
             
 
