@@ -24,8 +24,7 @@ namespace EncounterMe
     [XmlRoot(ElementName = "Location", DataType = "Location", IsNullable = true)]
     public class Location : IComparable
     {
-
-        private const float circumference = (float)6372.795477598;
+        private const double circumference = 6372.795477598;
         public uint ID { get; set; }
         public String Name { get; set; }
         //Coordiantes are to be written in Decimal Degree (DD) notation. See more here: https://en.wikipedia.org/wiki/Decimal_degrees
