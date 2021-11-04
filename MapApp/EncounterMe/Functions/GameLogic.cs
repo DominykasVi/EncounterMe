@@ -15,15 +15,18 @@ namespace EncounterMe.Functions
                 where loc.distanceToUser(Lat, Long) < distance
                 select loc);
 
-            List<Location> locationsSortedByDistance = new List<Location>();
+            int i = 0;
+
+            LocationList<Location> locationsSortedByDistance = new LocationList<Location>();
 
             foreach (Location loc in locationsQuery)
             {
-                locationsSortedByDistance.Add(loc);
+                locationsSortedByDistance[i] = loc;
+                i++;
             }
 
             Random random = new Random();
-            int index = random.Next(locationsSortedByDistance.Count);
+            int index = random.Next(i);
             try
             {
                 Location location =  locationsSortedByDistance[index];

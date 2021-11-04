@@ -11,6 +11,7 @@ namespace MapApp
             InitializeComponent();
 
             MainPage = new NavigationPage(new MainPage());
+            //SecondPage = new SecondPage();
         }
 
         protected override void OnStart()
