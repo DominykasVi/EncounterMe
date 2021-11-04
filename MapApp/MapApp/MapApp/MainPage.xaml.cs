@@ -21,14 +21,16 @@ namespace MapApp
 {
     [DesignTimeVisible(false)]
 
+
     public static class MyExtendedMethods
     {
         public static Position getPosition(this EncounterMe.Location loc)
         {
             return new Position(loc.Latitude, loc.Longtitude);
-            
+
         }
     }
+    
     public partial class MainPage : ContentPage
     {
         //Xamarin.Forms.Maps.Map MyMap = new Xamarin.Forms.Maps.Map();
@@ -42,26 +44,6 @@ namespace MapApp
 
             //Request accesto to location and storage
             InitializeComponent();
-            //CustomMap customMap = new CustomMap
-            //{
-            //    MapType = MapType.Street
-            //};
-
-            //Content = customMap;
-            //CustomPin pin = new CustomPin
-            //{
-            //    Type = PinType.Place,
-            //    Position = new Position(37.79752, -122.40183),
-            //    Label = "Xamarin San Francisco Office",
-            //    Address = "394 Pacific Ave, San Francisco CA",
-            //    Name = "Xamarin",
-            //    Url = "http://xamarin.com/about/"
-            //};
-            //customMap.CustomPins = new List<CustomPin> { pin };
-            //customMap.Pins.Add(pin);
-            //customMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(37.79752, -122.40183), Distance.FromMiles(1.0)));
-
-
             var status = Permissions.RequestAsync<Permissions.StorageWrite>();
             var locStatus = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
@@ -72,21 +54,24 @@ namespace MapApp
             this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test");//it works i think// I made it work ;)
             IDGenerator idg = IDGenerator.Instance;
             idg.setID(new List<EncounterMe.Location> { });
+            
             EncounterMe.Location location1 = new EncounterMe.Location("VU MIF Naugardukas", 54.67518129701089, 25.273545582365784);
             EncounterMe.Location location2 = new EncounterMe.Location("VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
-            EncounterMe.Location location3 = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
-            EncounterMe.Location location4 = new EncounterMe.Location("Jammi", 54.68446369057142, 25.273091438331683);
-            
-            
+            EncounterMe.Location location3 = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, LocationAttributes.FarFromCityCenter);
+            EncounterMe.Location location4 = new EncounterMe.Location("Jammi", 54.68446369057142, 25.273091438331683, LocationAttributes.DifficultToFind);
+            EncounterMe.Location location5 = new EncounterMe.Location("Mo Muziejus", 54.6791655393238, 25.277288631477447, LocationAttributes.CloseToCityCenter);
+            EncounterMe.Location location6 = new EncounterMe.Location("Reformatu Skveras", 54.6814502183355, 25.276301578559966, LocationAttributes.DifficultTerrain | LocationAttributes.DifficultToFind);
 
             List<EncounterMe.Location> locations = new List<EncounterMe.Location>();
             locations.Add(location1);
             locations.Add(location2);
             locations.Add(location3);
             locations.Add(location4);
+            locations.Add(location5);
+            locations.Add(location6);
 
 
-   
+
             db.writeToFile(locations);
 
 
@@ -122,14 +107,16 @@ namespace MapApp
         Position userPosition;
         Distance searchRadius;
 
-
+        LocationAttributes filterList;
+        List<LocationAttributes> attributeList;
+        
         private async void InitMap()
         {
             //read saved locations and put them into object, that google maps can read
-            try 
-            { 
+            try
+            {
 
-
+                GenerateFilterButtons();
                 //Move view to current location
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 50;
@@ -137,6 +124,7 @@ namespace MapApp
                 userPosition = new Position(myPosition.Latitude, myPosition.Longitude);
                 MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(userPosition, Distance.FromKilometers(3)));
 
+                // MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(47.6370891183, -122.123736172), Distance.FromKilometers(3)));
                 //initiazlize search circle
                 userSearchCircle = new Circle
                 {
@@ -159,6 +147,7 @@ namespace MapApp
 
         private async void UpdateMap()
         {
+
             try
             {
 
@@ -170,15 +159,15 @@ namespace MapApp
                 //    dispList.Add(place.PlaceName);
                 //}
 
-                
+
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                
+
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //create circle around user
 
 
                 // Add the Circle to the map's MapElements collection
-                
+
 
             }
             catch (Exception ex)
@@ -207,7 +196,7 @@ namespace MapApp
             {
                 var dist = (double) location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
                 //Console.WriteLine(searchRadius.Kilometers.ToString());
-                if (dist <= searchRadius.Kilometers)
+                if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
                 {
                     //placesList.Add(new Place
                     //{
@@ -275,6 +264,54 @@ namespace MapApp
             await Navigation.PushAsync(new SecondPage());
         }
 
+        private void GenerateFilterButtons()
+        {
+            LocationAttributes[] array = (LocationAttributes[])Enum.GetValues(typeof(LocationAttributes));
+            attributeList = new List<LocationAttributes>(array);
+            attributeList.RemoveAt(0); //enum sucks
 
+            this.FilterPanel.RowDefinitions.Add(new RowDefinition());
+            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+
+            int i = 0;
+            foreach (var attribute in attributeList)
+            {
+                var newButton = new Button()
+                {
+                    Text = attribute.ToString(),
+                    FontSize = 10,
+                    BackgroundColor = Color.Default
+                };
+                newButton.Clicked += FilterButtonClicked;
+                this.FilterPanel.Children.Add(newButton, i++, 0);
+            }
+        }
+
+        async void FilterButtonClicked(object sender, EventArgs args)
+        {
+            Button button = (sender as Button);
+            LocationAttributes tag = attributeList.Find(x => x.ToString() == button.Text);
+            if (button.BackgroundColor == Color.Default)
+            {
+                //enabled for filtering
+                button.BackgroundColor = Color.DarkOrange;
+                filterList = filterList | tag;
+            }
+            else
+            {
+                //disable for filtering
+                button.BackgroundColor = Color.Default;
+                filterList = filterList & ~tag;
+            }
+        }
+
+        async void RedirectPage(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Profile());
+        }
     }
 }
