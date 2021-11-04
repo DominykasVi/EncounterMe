@@ -58,14 +58,8 @@
                 HorizontalOptions="End"
                 Margin="0, 0, 75, 23"
                  />
-        <ImageButton 
-                     Source="hamster.png"
-                     Clicked="RedirectPage"
-                     VerticalOptions="End"
-                     HorizontalOptions="End"
-                     Margin="0, 0, 5, 535" />
 
-            <Image x:Name="hamster"
+        <Image x:Name="hamster"
 				Source="hamster.png"
                   WidthRequest="10"
 				 Margin="5, 5, 320, 740">
