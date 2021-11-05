@@ -16,6 +16,7 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
+            Console.WriteLine(DateTime.Now);
             UserManager aa = new UserManager();
             aa.createXML();
             string input = Console.ReadLine();
@@ -28,6 +29,12 @@ namespace ConsoleApp
             //Console.WriteLine(randomLocation);
         }
 
+        //static void TestIlogger()
+        //{
+        //    errorLogger.logErrorMessage("File: " + path + "not found");
+        //    errorLogger.logErrorMessage("Could not sort location list");
+
+        //}
         static void Test_UserCreate()
         {
             string name;

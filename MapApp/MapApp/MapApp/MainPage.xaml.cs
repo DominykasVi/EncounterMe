@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using EncounterMe.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,7 +53,7 @@ namespace MapApp
             //string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.csv");
 
             //left for first time initialization, remove later
-            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test");//it works i think// I made it work ;)
+            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());//it works i think// I made it work ;)
             IDGenerator idg = IDGenerator.Instance;
             idg.setID(new List<EncounterMe.Location> { });
             
@@ -117,7 +118,7 @@ namespace MapApp
             try
             {
 
-                GenerateFilterButtons();
+               // GenerateFilterButtons();
                 //Move view to current location
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 50;
@@ -178,12 +179,12 @@ namespace MapApp
         }
 
 
-        private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
-        {
-            SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
-            searchRadius = new Distance(RadiusSlider.Value);
-            userSearchCircle.Radius = searchRadius;
-        }
+        //private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
+        //{
+        //    SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
+        //    searchRadius = new Distance(RadiusSlider.Value);
+        //    userSearchCircle.Radius = searchRadius;
+        //}
 
         private void SearchForPlace(Object sender, EventArgs args)
         {
@@ -260,38 +261,44 @@ namespace MapApp
 
         }
 
+        private void ShowDashboard(Object sender, EventArgs args)
+        {
+            MainDashboard.IsVisible = true;
+            SearchButton.IsVisible = false;
+        }
+
         private async void NavigateButton_OnClicked(object sender, EventArgs e)
         {   
             await Navigation.PushAsync(new  UserPage());
             //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.Black;
         }
 
-        private void GenerateFilterButtons()
-        {
-            LocationAttributes[] array = (LocationAttributes[])Enum.GetValues(typeof(LocationAttributes));
-            attributeList = new List<LocationAttributes>(array);
-            attributeList.RemoveAt(0); //enum sucks
+        //private void GenerateFilterButtons()
+        //{
+        //    LocationAttributes[] array = (LocationAttributes[])Enum.GetValues(typeof(LocationAttributes));
+        //    attributeList = new List<LocationAttributes>(array);
+        //    attributeList.RemoveAt(0); //enum sucks
 
-            this.FilterPanel.RowDefinitions.Add(new RowDefinition());
-            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
-            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
-            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
-            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
-            this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+        //    this.FilterPanel.RowDefinitions.Add(new RowDefinition());
+        //    this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+        //    this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+        //    this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+        //    this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
+        //    this.FilterPanel.ColumnDefinitions.Add(new ColumnDefinition());
 
-            int i = 0;
-            foreach (var attribute in attributeList)
-            {
-                var newButton = new Button()
-                {
-                    Text = attribute.ToString(),
-                    FontSize = 10,
-                    BackgroundColor = Color.Default
-                };
-                newButton.Clicked += FilterButtonClicked;
-                this.FilterPanel.Children.Add(newButton, i++, 0);
-            }
-        }
+        //    int i = 0;
+        //    foreach (var attribute in attributeList)
+        //    {
+        //        var newButton = new Button()
+        //        {
+        //            Text = attribute.ToString(),
+        //            FontSize = 10,
+        //            BackgroundColor = Color.Default
+        //        };
+        //        newButton.Clicked += FilterButtonClicked;
+        //        this.FilterPanel.Children.Add(newButton, i++, 0);
+        //    }
+        //}
 
         async void FilterButtonClicked(object sender, EventArgs args)
         {

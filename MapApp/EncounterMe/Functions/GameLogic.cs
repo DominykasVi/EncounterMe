@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using EncounterMe.Classes;
+using EncounterMe.Interfaces;
 
 namespace EncounterMe.Functions
 {
     public class GameLogic
     {
-        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, int distance)
+        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, int distance, ILogger errorLogger)
         {
             //LINQ query
             var locationsQuery =
@@ -24,6 +25,7 @@ namespace EncounterMe.Functions
 
             Random random = new Random();
             int index = random.Next(locationsSortedByDistance.Count);
+
             try
             {
                 Location location =  locationsSortedByDistance[index];
@@ -31,6 +33,10 @@ namespace EncounterMe.Functions
             }
             catch
             {
+                errorLogger.logErrorMessage("Could not sort location list");
+                errorLogger.logErrorList<Location>(locationsSortedByDistance);
+                //TODO create cutom exception class
+                throw new Exception();
             }
             return null;
         }
