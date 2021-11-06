@@ -12,16 +12,11 @@
 
   <ItemGroup>
     <Compile Remove="Models\**" />
+    <Compile Remove="Views\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Views\**" />
     <None Remove="Models\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Places.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Places.json" />
+    <None Remove="Views\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,12 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="SecondPage.xaml">
+    <EmbeddedResource Update="Pages\SecondPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\Profile.xaml">

@@ -64,7 +64,7 @@
       <Version>5.0.0.2196</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Visual.Material">
-      <Version>5.0.0.2125</Version>
+      <Version>5.0.0.2196</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\hamster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\idk.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

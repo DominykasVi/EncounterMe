@@ -47,7 +47,7 @@
                 Clicked="NavigateButton_OnClicked"
                 VerticalOptions="End"
                 HorizontalOptions="Start"
-                Margin="10, 0, 0, 23"
+                Margin="150, 0, 0, 130"
                  />
         <Button Text="Search"
                 Clicked="SearchForPlace"
@@ -61,20 +61,23 @@
                 HorizontalOptions="End"
                 Margin="0, 0, 75, 23"
                  />
-        <ImageButton 
-                     Source="hamster.png"
-                     Clicked="RedirectPage"
-                     VerticalOptions="End"
-                     HorizontalOptions="End"
-                     Margin="0, 0, 5, 535" />
+        
 
-        <!-- <Image Source="idk.png"/> -->
+        <Image 
+                Source="idk.png" 
+                VerticalOptions="End" 
+                HorizontalOptions="End"
+                Margin="0, 0, 5, 535">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="RedirectPage"/>
+            </Image.GestureRecognizers>
+        </Image>
 
 
         <Grid x:Name="FilterPanel"
-              Margin="75, 470, 75, 85"
-              RowSpacing="0"
-              ColumnSpacing="0">
+        Margin="75, 470, 75, 85"
+        RowSpacing="0"
+        ColumnSpacing="0">
 
         </Grid>
     </Grid>
