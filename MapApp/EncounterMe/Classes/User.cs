@@ -40,8 +40,6 @@ namespace EncounterMe
             accessLevel = (AccessLevel)info.GetValue("Password", typeof(AccessLevel));
         }
 
-
-
         private byte[] HashPassword(string password)
         {
             var provider = new SHA256CryptoServiceProvider();
@@ -61,8 +59,6 @@ namespace EncounterMe
             info.AddValue("Password", hashpassword);
             info.AddValue("AccessLevel", accessLevel);
         }
-
-
     }
 
     public class AccessRights

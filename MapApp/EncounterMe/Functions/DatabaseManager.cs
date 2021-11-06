@@ -47,7 +47,6 @@ namespace EncounterMe
         public void writeToFile<T>(List<T> records)
         {
 
-
             //Checks file size, if file is empty (less than 10 KB), if so cretes file, else appends to it
             FileInfo fi = new FileInfo(path);
 

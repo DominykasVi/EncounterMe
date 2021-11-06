@@ -96,7 +96,7 @@ namespace EncounterMe
         public float getRating ()
         {
             if (Upvote + Downvote == 0) return 0;
-            else return (float)(Upvote * 1.0 / (Upvote + Downvote) * 100);
+            else return (float)(Upvote * 1.0 / (Upvote + Downvote));
         }
     }
 }

@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 using EncounterMe.Classes;
+
+delegate bool ValidationDel (string toBeValidated);
 
 namespace EncounterMe.Functions
 {
     public class LogInManager
     {
-        private UserManager users = new UserManager();
+        private DatabaseManager um;
+        public LogInManager(DatabaseManager db)
+        {
+            um = db;
+        }
         public User CheckPassword(string username, string password)
         {
-            User user = users.FindUser(username);
+            var user = um.readFromFile<User>().Where(x => x.name == username).FirstOrDefault();
             if (user != null && user.CompareHashPassword(password))
             {
                 return user;
@@ -24,32 +31,27 @@ namespace EncounterMe.Functions
 
         public User CreateUser (string username, string email, string password)
         {
-            User user = users.FindUser(username);
+            var user = um.readFromFile<User>().Where(x => x.name == username).FirstOrDefault();
 
-            if (user == null && ValidPassword(password) && ValidEmail(email))
+            ValidationDel vd = delegate (string x)
+            {
+                Regex validPassword = new Regex("^.*(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$");
+                return validPassword.IsMatch(x);
+            };
+            ValidationDel ve = delegate (string x)
+            {
+                Regex validEmail = new Regex("^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
+                return validEmail.IsMatch(x);
+            };
+
+            if (user == null && vd(password) && ve(email))
             {
                 user = new User(username, email, password);
-                users.SaveUser(user);
+                um.writeToFile<User>(new List<User>() { user });
                 return user;
             }
             else
                 return null;
-        }
-
-        public bool ValidPassword(string input)
-        {
-            Regex hasNumbers = new Regex("[0-9]");
-            Regex hasLowercase = new Regex("[a-z]");
-            Regex hasUppercase = new Regex("[A-Z]");
-
-            return hasNumbers.IsMatch(input) && hasLowercase.IsMatch(input) && hasUppercase.IsMatch(input);
-            //Currently doesn't check for other characters, couldn't figure it out
-        }
-
-        public bool ValidEmail(string input)
-        {
-            //not implemented yet
-            return true;
         }
     }
 }
