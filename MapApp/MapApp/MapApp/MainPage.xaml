@@ -6,7 +6,8 @@
              xmlns:map="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              xmlns:local="clr-namespace:MapApp;assembly=MapApp"
              mc:Ignorable="d"
-             x:Class="MapApp.MainPage">
+             x:Class="MapApp.MainPage"
+             NavigationPage.HasNavigationBar="false">
 
     <Grid>
         <!-- TODO Fix design, add absolute layout-->
@@ -14,8 +15,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <local:CustomMap x:Name="MyMap" Grid.Row="0"
-                   MapType="Street" />
+        <local:CustomMap x:Name="MyMap" 
+                         Grid.Row="0"
+                         MapType="Street" />
         <!--<map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" Grid.Row="0">
             <map:Map.ItemTemplate>
                 <DataTemplate>
@@ -24,7 +26,7 @@
                              Label="{Binding PlaceName }" />
                 </DataTemplate>
             </map:Map.ItemTemplate>
-        </map:Map>-->
+        </map:Map>
         <Rectangle Fill="DodgerBlue" 
                WidthRequest="300"
                HeightRequest="170"
@@ -32,23 +34,14 @@
                VerticalOptions="End"
                Grid.Row="0"
                Margin="20"/>
-        <Label x:Name="SliderValue" TextColor="DarkOrange" VerticalOptions="End" HorizontalOptions="Center" Margin="0, 0, 0, 90"/>
-        <Slider x:Name="RadiusSlider"
-                Minimum="0"
-                Maximum="1000"
-                WidthRequest="300"
-                BackgroundColor="DarkOrange"
-                VerticalOptions="End"
-                ValueChanged="SliderValueChanged"
-                Grid.Row="0"
-                Margin="75, 0, 75, 70"/>
-        <Button Text="Second Page" 
-                BackgroundColor="Red" 
-                Clicked="NavigateButton_OnClicked"
-                VerticalOptions="End"
-                HorizontalOptions="Start"
-                Margin="150, 0, 0, 130"
-                 />
+        <Label x:Name="SliderValue"
+               Text="aaassa"
+               TextColor="Black" 
+               VerticalOptions="End" 
+               HorizontalOptions="End" 
+               Margin="180, 180, 180, 400"/>
+   
+        
         <Button Text="Search"
                 Clicked="SearchForPlace"
                 VerticalOptions="End"
@@ -60,25 +53,37 @@
                 VerticalOptions="End"
                 HorizontalOptions="End"
                 Margin="0, 0, 75, 23"
-                 />
-        
+                 />-->
 
-        <Image 
-                Source="idk.png" 
+        <Button Text="Search for Encounter"
+                FontSize="Large"
+                TextColor="White"
+                BackgroundColor="#6CD4FF" 
+                Clicked="PopupSearchEncounter"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                WidthRequest="300"
+                HeightRequest="60"
+                Margin="0, 0, 0, 80"
+                CornerRadius = "30"
+                 />
+
+        <Image  Source="idk.png" 
                 VerticalOptions="End" 
                 HorizontalOptions="End"
-                Margin="0, 0, 5, 535">
+                Margin="0, 0, 5, 590">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Tapped="RedirectPage"/>
             </Image.GestureRecognizers>
         </Image>
 
-
+        <!--
         <Grid x:Name="FilterPanel"
         Margin="75, 470, 75, 85"
         RowSpacing="0"
         ColumnSpacing="0">
-
         </Grid>
+        -->
+        
     </Grid>
 </ContentPage>

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+        xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+        xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+        x:Class="MapApp.Pages.SearchEncounter"
+        BackgroundInputTransparent="True"
+        CloseWhenBackgroundIsClicked="False"
+        BackgroundColor="Transparent"
+        NavigationPage.HasNavigationBar="false">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+                PositionIn="Bottom"
+                PositionOut="Bottom"
+               
+                DurationIn="400"
+                DurationOut="300"
+                EasingIn="SinOut"
+                EasingOut="SinIn"
+                HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <StackLayout 
+            VerticalOptions="EndAndExpand" 
+            HorizontalOptions="FillAndExpand" 
+           >
+        <Frame CornerRadius="20"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+            <StackLayout>
+                <Button Text="close"
+                        FontSize="Medium"
+                        TextColor="White"
+                        BackgroundColor="#6CD4FF" 
+                        VerticalOptions="End"
+                        HorizontalOptions="Center"
+                        WidthRequest="300"
+                        HeightRequest="40"
+                        CornerRadius = "30"
+                        Clicked="GoBack"/>
+                <Label x:Name="SliderValue"
+                       Text="Selected radius is: 0 m."
+                       TextColor="Black" 
+                       VerticalOptions="End" 
+                       HorizontalOptions="Center"/>
+                <Slider x:Name="RadiusSlider"
+                        Minimum="0"
+                        Maximum="1000"
+                        WidthRequest="400"
+                        BackgroundColor="#6CD4FF"
+                        VerticalOptions="End"
+                        HorizontalOptions="Center"
+                        ValueChanged="SliderValueChanged"
+                        Grid.Row="0"/>
+                <Button Text="categories"
+                        BackgroundColor="#6CD4FF"
+                        TextColor="White"
+                        WidthRequest="300"
+                        HeightRequest="40"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                
+                <Button Text="reset"
+                        BackgroundColor="#DA4167"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="0"/>
+                <Button Text="search"
+                        BackgroundColor="#EC9F2B"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+                </Grid>
+            </StackLayout>
+        </Frame>
+
+    </StackLayout>
+</pages:PopupPage>

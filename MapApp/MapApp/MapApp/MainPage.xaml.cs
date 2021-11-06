@@ -16,6 +16,8 @@ using Xamarin.Essentials;
 using Plugin.Geolocator;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.Storage.Streams;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
 
 namespace MapApp
 {
@@ -38,8 +40,9 @@ namespace MapApp
         Position userPosition;
         Distance searchRadius;
 
-        LocationAttributes filterList;
-        List<LocationAttributes> attributeList;
+        //LocationAttributes filterList;
+        //List<LocationAttributes> attributeList;
+
         public MainPage()
         {
             
@@ -114,7 +117,7 @@ namespace MapApp
             //read saved locations and put them into object, that google maps can read
             try
             {
-                GenerateFilterButtons();
+                //GenerateFilterButtons();
                 //Move view to current location
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 50;
@@ -128,9 +131,11 @@ namespace MapApp
                 {
                     Center = userPosition,
                     Radius = new Distance(0),
-                    StrokeColor = Color.FromHex("#88FF0000"),
+                    //StrokeColor = Color.FromHex("#88FF0000"),
+                    StrokeColor = Color.FromHex("#6CD4FF"),
                     StrokeWidth = 8,
-                    FillColor = Color.FromHex("#88FFC0CB")
+                    FillColor = Color.FromRgba(108,212,255,57)
+                    //FillColor = Color.FromHex("#88FFC0CB")
                 };
                 MyMap.MapElements.Add(userSearchCircle);
 
@@ -142,26 +147,42 @@ namespace MapApp
             }
         }
 
-
-        private async void UpdateMap()
+        async void RedirectPage(object sender, EventArgs e)
         {
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            //beta version
+            await Navigation.PushAsync(new Profile());
         }
 
-        private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
+        private async void PopupSearchEncounter(object sender, EventArgs e)
         {
-            SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
+            //SearchEncounter page pops out
+            MoveMap(-0.015, 0, 2);
+            await Navigation.PushPopupAsync(new Pages.SearchEncounter(this));
+            
+        }
+
+        public async void MoveMap(double latitude = 0, double longitude = 0, int kilometers = 3)
+        {
+            var myPosition = await CrossGeolocator.Current.GetPositionAsync();
+            MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(myPosition.Latitude + latitude, myPosition.Longitude + longitude), Distance.FromKilometers(kilometers)));
+        }
+
+        public void SliderValueChanged(Slider RadiusSlider)
+        {
+            //When the slider value is changed on SearchEncounter the map display changes
+            //SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
             searchRadius = new Distance(RadiusSlider.Value);
             userSearchCircle.Radius = searchRadius;
         }
 
+        /* private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
+         {
+             SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
+             searchRadius = new Distance(RadiusSlider.Value);
+             userSearchCircle.Radius = searchRadius;
+         }*/
+
+        /*
         private void SearchForPlace(Object sender, EventArgs args)
         {
             //read database and save locations locally
@@ -219,12 +240,14 @@ namespace MapApp
                 Console.WriteLine(pin.Label);
             }
         }
-
+        */
+        /*
         private async void NavigateButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SecondPage());
         }
-
+        */
+        /*
         private void GenerateFilterButtons()
         {
             LocationAttributes[] array = (LocationAttributes[])Enum.GetValues(typeof(LocationAttributes));
@@ -268,11 +291,6 @@ namespace MapApp
                 button.BackgroundColor = Color.Default;
                 filterList = filterList & ~tag;
             }
-        }
-
-        async void RedirectPage(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new Profile());
-        }
+        }*/
     }
 }
