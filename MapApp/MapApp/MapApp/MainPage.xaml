@@ -18,37 +18,8 @@
         <local:CustomMap x:Name="MyMap" 
                          Grid.Row="0"
                          MapType="Street" />
-        <!--<map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" Grid.Row="0">
-            <map:Map.ItemTemplate>
-                <DataTemplate>
-                    <map:Pin Position="{Binding Position}"
-                             Address="{Binding Address}"
-                             Label="{Binding PlaceName }" />
-                </DataTemplate>
-            </map:Map.ItemTemplate>
-        </map:Map>
-        <Rectangle Fill="DodgerBlue" 
-               WidthRequest="300"
-               HeightRequest="170"
-               HorizontalOptions="Center"
-               VerticalOptions="End"
-               Grid.Row="0"
-               Margin="20"/>
-        <Label x:Name="SliderValue"
-               Text="aaassa"
-               TextColor="Black" 
-               VerticalOptions="End" 
-               HorizontalOptions="End" 
-               Margin="180, 180, 180, 400"/>
-   
-        
-        <Button Text="Search"
-                Clicked="SearchForPlace"
-                VerticalOptions="End"
-                HorizontalOptions="Start"
-                Margin="75, 0, 0, 23"
-                 />
-        <Button Text="ShowAll"
+
+     <!--   <Button Text="ShowAll"
                 Clicked="ShowAll"
                 VerticalOptions="End"
                 HorizontalOptions="End"

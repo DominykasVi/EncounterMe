@@ -21,7 +21,6 @@ namespace MapApp.Pages
         {
             this.main = main;
             InitializeComponent();
-            
         }
         private async void GoBack(object sender, EventArgs e)
         {
@@ -32,8 +31,10 @@ namespace MapApp.Pages
         {
             main.SliderValueChanged(sender as Slider);
             SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
-            //mainpage.searchRadius = new Distance(RadiusSlider.Value);
-            //mainpage.userSearchCircle.Radius = mainpage.searchRadius;
+        }
+        private void Search(Object sender, EventArgs e)
+        {
+            main.SearchForPlace();
         }
     }
 }

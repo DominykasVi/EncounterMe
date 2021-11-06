@@ -163,6 +163,7 @@ namespace MapApp
 
         public async void MoveMap(double latitude = 0, double longitude = 0, int kilometers = 3)
         {
+            //moving map for optimal view
             var myPosition = await CrossGeolocator.Current.GetPositionAsync();
             MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(myPosition.Latitude + latitude, myPosition.Longitude + longitude), Distance.FromKilometers(kilometers)));
         }
@@ -170,20 +171,11 @@ namespace MapApp
         public void SliderValueChanged(Slider RadiusSlider)
         {
             //When the slider value is changed on SearchEncounter the map display changes
-            //SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
             searchRadius = new Distance(RadiusSlider.Value);
             userSearchCircle.Radius = searchRadius;
         }
 
-        /* private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
-         {
-             SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
-             searchRadius = new Distance(RadiusSlider.Value);
-             userSearchCircle.Radius = searchRadius;
-         }*/
-
-        /*
-        private void SearchForPlace(Object sender, EventArgs args)
+        public void SearchForPlace()
         {
             //read database and save locations locally
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
@@ -193,7 +185,8 @@ namespace MapApp
             foreach (EncounterMe.Location location in locationList)
             {
                 var dist = (double) location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
-                if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
+                //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
+                if (dist <= searchRadius.Kilometers)
                 {
                     MyMap.Pins.Add(new CustomPin
                     {
@@ -209,7 +202,7 @@ namespace MapApp
             //UpdateMap();
             //text.Text = new EncounterMe userPosition.Latitude.ToString();
         }
-
+        /*
         private void ShowAll(Object sender, EventArgs args)
         {
             //read database and save locations locally

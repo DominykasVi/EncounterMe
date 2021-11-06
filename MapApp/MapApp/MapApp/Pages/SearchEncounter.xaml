@@ -74,7 +74,8 @@
                         BackgroundColor="#EC9F2B"
                         TextColor="White"
                         Grid.Row="0"
-                        Grid.Column="1"/>
+                        Grid.Column="1"
+                        Clicked="Search"/>
                 </Grid>
             </StackLayout>
         </Frame>
