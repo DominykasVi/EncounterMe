@@ -14,7 +14,8 @@ namespace WebServer.Controllers
         //we probably shouldn't send passwords as strings to webservice, but rather hash them in the app
         public string SignIn(string username, string password)
         {
-            LogInManager logInManager = new LogInManager();
+            DatabaseManager databaseManager = new DatabaseManager();
+            LogInManager logInManager = new LogInManager(databaseManager);
             User user = logInManager.CheckPassword(username, password);
             if (user != null)
                 return null;
@@ -27,7 +28,8 @@ namespace WebServer.Controllers
         //change to hash when we start hashing in app
         public string SingUp(string username, string email, string password)
         {
-            LogInManager logInManager = new LogInManager();
+            DatabaseManager databaseManager = new DatabaseManager();
+            LogInManager logInManager = new LogInManager(databaseManager);
             User user = logInManager.CreateUser(username, email, password);
             if (user != null)
                 return null;

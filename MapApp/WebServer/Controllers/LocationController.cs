@@ -14,7 +14,8 @@ namespace WebServer.Controllers
         //should change string password to byte[] password later on
         public string[] GetLocationList(string username, string password)
         {
-            LogInManager logInManager = new LogInManager();
+            DatabaseManager databaseManager = new DatabaseManager();
+            LogInManager logInManager = new LogInManager(databaseManager);
 
             User user = logInManager.CheckPassword(username, password);
             if (user.accessLevel == AccessLevel.Admin)

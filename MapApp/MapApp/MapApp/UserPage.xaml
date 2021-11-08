@@ -1,0 +1,174 @@
+<ContentPage x:Class="MapApp.UserPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    NavigationPage.HasNavigationBar="false"
+	mc:Ignorable="d"
+	Title="main">
+    <ContentPage.Content>
+        <ScrollView>
+            <AbsoluteLayout
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                >
+                <BoxView x:Name="_bg__user"
+				Color="#ffeedd"
+				AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
+                <Label x:Name="Username"
+				FontFamily="Segoe UI"
+				FontSize="46"
+				TextColor="#000000"
+				AbsoluteLayout.LayoutBounds="205,130,182,200"
+				Text="Mr. Hamster"
+                   
+			 />
+
+                <AbsoluteLayout x:Name="group_24"
+				 AbsoluteLayout.LayoutBounds="16,409,380,82"
+				 >
+
+                    <Ellipse x:Name="locationsFound"
+                    WidthRequest="20"
+					HeightRequest="10"        
+					Fill="#6cd4ff"
+                    AbsoluteLayout.LayoutBounds="0,0,84,84" 
+					/>
+                    <Label x:Name="_28"
+					FontFamily="Noto Sans"
+					FontAttributes="Bold"
+					HorizontalTextAlignment="Center"
+					FontSize="40"
+					TextColor="#ffeedd"
+					AbsoluteLayout.LayoutBounds="9,14,66,85"
+					Text="28"
+				 />
+                    <Label x:Name="locations_found"
+					FontFamily="Noto Sans"
+					HorizontalTextAlignment="Center"
+					FontSize="36"
+					TextColor="#000000"
+					AbsoluteLayout.LayoutBounds="83,17,293,76"
+					Text="Locations found"
+				 />
+                </AbsoluteLayout>
+
+
+                <AbsoluteLayout x:Name="group_32"
+				 AbsoluteLayout.LayoutBounds="35,583,90,98"
+				 >
+
+                    <Image x:Name="tree"
+					Source="tree.png"
+					AbsoluteLayout.LayoutBounds="0,0,90,90" />
+                    <Image x:Name="yes"
+					Source="yes.png"
+					AbsoluteLayout.LayoutBounds="56,64,34,34" />
+                </AbsoluteLayout>
+
+
+                <AbsoluteLayout x:Name="group_33"
+				 AbsoluteLayout.LayoutBounds="162,583,90,90"
+				 >
+
+                    <Image x:Name="coffee"
+					Source="coffee.png"
+					AbsoluteLayout.LayoutBounds="0,0,90,90" />
+                    <Ellipse x:Name="ellipse_5"
+                             
+					Fill="#ffffff"
+					AbsoluteLayout.LayoutBounds="56,56,38,38" />
+                </AbsoluteLayout>
+
+
+                <AbsoluteLayout x:Name="group_34"
+				 AbsoluteLayout.LayoutBounds="289,583,90,90"
+				 >
+
+                    <Image x:Name="waterfall"
+					Source="waterfall.png"
+					AbsoluteLayout.LayoutBounds="0,0,90,90" />
+                    <Ellipse x:Name="ellipse_6"
+					Fill="#ffffff"
+					AbsoluteLayout.LayoutBounds="56,56,38,38" />
+                </AbsoluteLayout>
+
+                <Label x:Name="achievements"
+				FontFamily="Segoe UI"
+				FontAttributes="Bold"
+				Opacity="0.9"
+				FontSize="40"
+				TextColor="#000000"
+				AbsoluteLayout.LayoutBounds="16,525,338,83"
+				Text="Achievements"
+			 />
+                <Image x:Name="line_2"
+				Source="line_2.png"
+				AbsoluteLayout.LayoutBounds="9,525,365,1" />
+                <BoxView x:Name="rectangle_12"
+				CornerRadius="4.5"
+				Color="#6cd4ff"
+				AbsoluteLayout.LayoutBounds="396.25,545,11,69" />
+                <Ellipse
+				WidthRequest="150"
+				HeightRequest="150"
+                 x:Name="ellipse_14"
+                Stroke="#6D6FAB"
+				StrokeThickness="3"
+				Fill="#ffffff"
+                AbsoluteLayout.LayoutBounds="5,90,194,194" 
+				/>
+                <Image x:Name="hamster"
+				Source="hamster.png"
+				AbsoluteLayout.LayoutBounds="25,110,153,153" />
+                <ImageButton  x:Name="_union_6"
+				Source="_union_6.png"
+                BackgroundColor="Transparent"
+                Clicked="OnPreviousPageButtonClicked"
+				AbsoluteLayout.LayoutBounds="20.5,23.39,46,39.61" />
+                <BoxView x:Name="rectangle_29"
+				CornerRadius="30.5"
+				Color="#6cd4ff"
+				AbsoluteLayout.LayoutBounds="30,305,334,63" />
+                <Label x:Name="add_location"
+				FontFamily="Segoe UI"
+				FontSize="52"
+				TextColor="#000000"
+
+				AbsoluteLayout.LayoutBounds="52,302,309,107"
+				Text="Add location"
+			 />
+                <Image x:Name="_settings"
+				Source="_settings.png"
+				AbsoluteLayout.LayoutBounds="333,24,39,39" />
+                <Label x:Name="explorer"
+				FontFamily="Noto Sans"
+				HorizontalTextAlignment="Center"
+				FontSize="16"
+				TextColor="#000000"
+				AbsoluteLayout.LayoutBounds="30,684,100,35"
+				Text="Explorer"
+			 />
+                <Label x:Name="find_10_coffee_shops"
+				FontFamily="Noto Sans"
+				HorizontalTextAlignment="Center"
+				FontSize="16"
+				TextColor="#000000"
+				AbsoluteLayout.LayoutBounds="155,684,100,57"
+				Text="Find 10 coffee shops"
+			 />
+                <Label x:Name="find_10_locations"
+				FontFamily="Noto Sans"
+				HorizontalTextAlignment="Center"
+				FontSize="16"
+				TextColor="#000000"
+				AbsoluteLayout.LayoutBounds="282,684,100,57"
+				Text="Find 10 locations"
+			 />
+            </AbsoluteLayout>
+
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

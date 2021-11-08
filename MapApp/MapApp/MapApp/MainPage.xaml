@@ -6,6 +6,7 @@
              xmlns:map="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              xmlns:local="clr-namespace:MapApp;assembly=MapApp"
              mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="false"
              x:Class="MapApp.MainPage">
 
     <Grid>
@@ -14,6 +15,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+ 
+ 
+        
         <local:CustomMap x:Name="MyMap" Grid.Row="0"
                    MapType="Street" />
         <!--<map:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" Grid.Row="0">
@@ -42,13 +46,6 @@
                 ValueChanged="SliderValueChanged"
                 Grid.Row="0"
                 Margin="75, 0, 75, 70"/>
-        <Button Text="Second Page" 
-                BackgroundColor="Red" 
-                Clicked="NavigateButton_OnClicked"
-                VerticalOptions="End"
-                HorizontalOptions="Start"
-                Margin="10, 0, 0, 23"
-                 />
         <Button Text="Search"
                 Clicked="SearchForPlace"
                 VerticalOptions="End"
@@ -61,14 +58,19 @@
                 HorizontalOptions="End"
                 Margin="0, 0, 75, 23"
                  />
-        <ImageButton 
-                     Source="hamster.png"
-                     Clicked="RedirectPage"
-                     VerticalOptions="End"
-                     HorizontalOptions="End"
-                     Margin="0, 0, 5, 535" />
 
-        <!-- <Image Source="idk.png"/> -->
+        <Image x:Name="hamster"
+				Source="hamster.png"
+                  WidthRequest="10"
+				 Margin="5, 5, 320, 740">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                    Tapped="NavigateButton_OnClicked"
+                    NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+
+
 
 
         <Grid x:Name="FilterPanel"

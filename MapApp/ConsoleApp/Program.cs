@@ -16,20 +16,23 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            UserManager aa = new UserManager();
-            aa.createXML();
-            string input = Console.ReadLine();
-            if (input == "1") { Test_UserCreate(); }
-            else if (input == "2") { Test_UserLogIn(); }
-            else aa.printListOfUsers();
-            //else Console.ReadLine();
+            DatabaseManager db = new DatabaseManager("", "users");
+            LogInManager lm = new LogInManager(db);
+            /*
+            lm.CreateUser("Kristijonas", "kr@tr.com", "ZXfdsf123");
+            */
+            Test_UserLogIn();
+            var uss = db.readFromFile<User>();
+            foreach (User us in db.readFromFile<User>())
+            {
+                Console.WriteLine(us.name);
+            }
 
-            //string randomLocation = randomizer.NextWithReplacement();
-            //Console.WriteLine(randomLocation);
         }
-
+        
         static void Test_UserCreate()
         {
+            DatabaseManager db = new DatabaseManager("", "users");
             string name;
             string password;
             string email;
@@ -40,16 +43,18 @@ namespace ConsoleApp
             Console.WriteLine("Password:");
             password = Console.ReadLine();
 
-            LogInManager login = new LogInManager();
+            LogInManager login = new LogInManager(db);
+            
 
             User user = login.CreateUser(name, email, password);
 
             Console.ReadLine();
 
         }
-
+        
         static void Test_UserLogIn()
         {
+            DatabaseManager db = new DatabaseManager("", "users");
             string name;
             string password;
             Console.WriteLine("Name:");
@@ -57,7 +62,7 @@ namespace ConsoleApp
             Console.WriteLine("Password:");
             password = Console.ReadLine();
 
-            LogInManager login = new LogInManager();
+            LogInManager login = new LogInManager(db);
 
             User user = login.CheckPassword(name, password);
 
