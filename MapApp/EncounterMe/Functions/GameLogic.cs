@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EncounterMe.Classes;
+using EncounterMe.Functions;
 
 namespace EncounterMe.Functions
 {
@@ -13,26 +14,17 @@ namespace EncounterMe.Functions
             var locationsQuery =
                 (from loc in Locations
                 where loc.distanceToUser(Lat, Long) < distance
-                select loc);
+                select loc).ToList();
 
-            List<Location> locationsSortedByDistance = new List<Location>();
+            Dictionary<Location, float> locationsSortedByDistance = new Dictionary<Location, float>();
 
             foreach (Location loc in locationsQuery)
             {
-                locationsSortedByDistance.Add(loc);
+                locationsSortedByDistance.Add(loc, loc.getRating());
             }
 
-            Random random = new Random();
-            int index = random.Next(locationsSortedByDistance.Count);
-            try
-            {
-                Location location =  locationsSortedByDistance[index];
-                return location;
-            }
-            catch
-            {
-            }
-            return null;
+
+            return locationsSortedByDistance.weightedRandom(e => e.Value).Key;
         }
 
         public int getRadiusFromUser ()
