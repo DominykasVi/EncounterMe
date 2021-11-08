@@ -152,7 +152,7 @@ namespace MapApp
         async void RedirectPage(object sender, EventArgs e)
         {
             //beta version
-            await Navigation.PushAsync(new Profile());
+            await Navigation.PushAsync(new UserPage());
         }
 
         private async void PopupSearchEncounter(object sender, EventArgs e)
