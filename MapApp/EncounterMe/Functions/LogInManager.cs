@@ -35,11 +35,13 @@ namespace EncounterMe.Functions
 
             ValidationDel vd = delegate (string x)
             {
+                // regex that validates whether the password has more than 8 characters and at least one capital, non-capital and number character
                 Regex validPassword = new Regex("^.*(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$");
                 return validPassword.IsMatch(x);
             };
             ValidationDel ve = delegate (string x)
             {
+                // standard email verification regex
                 Regex validEmail = new Regex("^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
                 return validEmail.IsMatch(x);
             };
