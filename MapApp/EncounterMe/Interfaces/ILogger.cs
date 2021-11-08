@@ -4,9 +4,10 @@ using System.Text;
 
 namespace EncounterMe.Interfaces
 {
-    interface ILogger
+    public interface ILogger
     {
         void logErrorMessage(String message);
+        void logErrorList<T>(List<T> list);
         //void logErrortrace();
         //void logErrorDevice();
     }

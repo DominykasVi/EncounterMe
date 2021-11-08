@@ -16,20 +16,16 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            DatabaseManager db = new DatabaseManager("", "users");
-            LogInManager lm = new LogInManager(db);
-            /*
-            lm.CreateUser("Kristijonas", "kr@tr.com", "ZXfdsf123");
-            */
-            Test_UserLogIn();
-            var uss = db.readFromFile<User>();
-            foreach (User us in db.readFromFile<User>())
-            {
-                Console.WriteLine(us.name);
-            }
 
         }
-        
+
+        //static void TestIlogger()
+        //{
+        //    errorLogger.logErrorMessage("File: " + path + "not found");
+        //    errorLogger.logErrorMessage("Could not sort location list");
+
+        //}
+
         static void Test_UserCreate()
         {
             DatabaseManager db = new DatabaseManager("", "users");

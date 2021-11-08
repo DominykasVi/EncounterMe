@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using EncounterMe.Classes;
+using EncounterMe.Interfaces;
 using EncounterMe.Functions;
 
 namespace EncounterMe.Functions
 {
     public class GameLogic
     {
-        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, int distance)
+        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, int distance, ILogger errorLogger)
         {
             //LINQ query
             var locationsQuery =
@@ -23,8 +24,8 @@ namespace EncounterMe.Functions
                 locationsSortedByDistance.Add(loc, loc.getRating());
             }
 
-
             return locationsSortedByDistance.weightedRandom(e => e.Value).Key;
+
         }
 
         public int getRadiusFromUser ()
