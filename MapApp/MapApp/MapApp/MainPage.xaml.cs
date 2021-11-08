@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.Storage.Streams;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
+using EncounterMe.Classes;
 
 namespace MapApp
 {
@@ -91,7 +92,7 @@ namespace MapApp
         private List<EncounterMe.Location> AddLocations()
         {
             //left for first time initialization, remove later
-            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test");//it works i think// I made it work ;)
+            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());//it works i think// I made it work ;)
             IDGenerator idg = IDGenerator.Instance;
             idg.setID(new List<EncounterMe.Location> { });
 
@@ -151,7 +152,7 @@ namespace MapApp
         async void RedirectPage(object sender, EventArgs e)
         {
             //beta version
-            await Navigation.PushAsync(new Profile());
+            await Navigation.PushAsync(new UserPage());
         }
 
         private async void PopupSearchEncounter(object sender, EventArgs e)
