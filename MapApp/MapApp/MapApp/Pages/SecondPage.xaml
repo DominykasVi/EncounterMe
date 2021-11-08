@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MapApp.SecondPage" 
+             Title="Second Page"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <ScrollView>
+            <AbsoluteLayout>
+
+
+                <AbsoluteLayout x:Name="page_google_pixel_4__4xl___1_ek1"
+				 AbsoluteLayout.LayoutBounds="0,0,412,870"
+				 >
+
+                    <BoxView x:Name="_bg__google_pixel_4__4xl___1_ek2"
+					Color="Aqua"
+					AbsoluteLayout.LayoutBounds="0,0,412,870" />
+                    <BoxView x:Name="rectangle_1"
+					Color="#ffffff"
+					AbsoluteLayout.LayoutBounds="73,70,263,225" />
+                    <BoxView x:Name="rectangle_2"
+					Color="#ffffff"
+					AbsoluteLayout.LayoutBounds="73,338,263,278" />
+                    <BoxView x:Name="rectangle_3"
+					Color="#ffffff"
+					AbsoluteLayout.LayoutBounds="73,658,263,127" />
+                    <Image x:Name="polygon_1"
+					Source="polygon_1.png"
+					AbsoluteLayout.LayoutBounds="148,413,111,157" />
+                    <Image x:Name="polygon_2"
+					Source="polygon_2.png"
+					AbsoluteLayout.LayoutBounds="148,125,89,93" />
+                    <Image x:Name="polygon_3"
+					Source="polygon_3.png"
+					AbsoluteLayout.LayoutBounds="193,693,88,83" />
+                    <Button Text="Main Page" BackgroundColor="Blue" Clicked="NavigateButton_OnClicked">
+                    </Button>
+                </AbsoluteLayout>
+            </AbsoluteLayout>
+
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>  

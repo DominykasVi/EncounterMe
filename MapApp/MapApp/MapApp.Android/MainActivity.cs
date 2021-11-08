@@ -7,6 +7,8 @@ using Android.OS;
 using Android.Gms.Maps;
 using Android.Views;
 using Android.Gms.Maps.Model;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
 
 namespace MapApp.Droid
 {
@@ -17,6 +19,8 @@ namespace MapApp.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            Rg.Plugins.Popup.Popup.Init(this);
 
             Xamarin.FormsMaps.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
