@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Locations]
+(
+	[Id] INT NOT NULL PRIMARY KEY DEFAULT 0000, 
+    [Name] VARCHAR(50) NULL , 
+    [Latitude] FLOAT NOT NULL DEFAULT 54.729866061364845, 
+    [Longitude] FLOAT NOT NULL DEFAULT 25.263373943798094, 
+    [Upvotes] INT NULL, 
+    [Downvotes] INT NULL
+)

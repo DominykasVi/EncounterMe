@@ -16,20 +16,19 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            UserManager aa = new UserManager();
-            aa.createXML();
-            string input = Console.ReadLine();
-            if (input == "1") { Test_UserCreate(); }
-            else if (input == "2") { Test_UserLogIn(); }
-            else aa.printListOfUsers();
-            //else Console.ReadLine();
 
-            //string randomLocation = randomizer.NextWithReplacement();
-            //Console.WriteLine(randomLocation);
         }
+
+        //static void TestIlogger()
+        //{
+        //    errorLogger.logErrorMessage("File: " + path + "not found");
+        //    errorLogger.logErrorMessage("Could not sort location list");
+
+        //}
 
         static void Test_UserCreate()
         {
+            DatabaseManager db = new DatabaseManager("", "users");
             string name;
             string password;
             string email;
@@ -40,16 +39,18 @@ namespace ConsoleApp
             Console.WriteLine("Password:");
             password = Console.ReadLine();
 
-            LogInManager login = new LogInManager();
+            LogInManager login = new LogInManager(db);
+            
 
             User user = login.CreateUser(name, email, password);
 
             Console.ReadLine();
 
         }
-
+        
         static void Test_UserLogIn()
         {
+            DatabaseManager db = new DatabaseManager("", "users");
             string name;
             string password;
             Console.WriteLine("Name:");
@@ -57,7 +58,7 @@ namespace ConsoleApp
             Console.WriteLine("Password:");
             password = Console.ReadLine();
 
-            LogInManager login = new LogInManager();
+            LogInManager login = new LogInManager(db);
 
             User user = login.CheckPassword(name, password);
 
