@@ -133,10 +133,4 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\MapApp\MapApp.csproj">
-      <Project>{884D4F62-3777-4504-BB40-8AE05E2A1A6A}</Project>
-      <Name>MapApp</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
