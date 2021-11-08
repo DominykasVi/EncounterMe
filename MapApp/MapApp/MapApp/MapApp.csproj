@@ -12,8 +12,11 @@
 
   <ItemGroup>
     <Compile Remove="Models\**" />
+    <Compile Remove="Views\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Views\**" />
     <None Remove="Models\**" />
+    <None Remove="Views\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,10 +41,7 @@
     <ProjectReference Include="..\..\EncounterMe\EncounterMe.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
+
 
   <ItemGroup>
     <Compile Update="UserPage.xaml.cs">
