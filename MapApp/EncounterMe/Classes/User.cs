@@ -19,8 +19,9 @@ namespace EncounterMe
         public string email { get; set; }
         public byte[] hashpassword { get; set; }
         public AccessLevel accessLevel { get; set; }
-
-
+        public string Filename { get; set; }
+        public object Text { get; set; }
+        public object Date { get; set; }
 
         public User() { }
 

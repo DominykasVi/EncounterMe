@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using EncounterMe.Functions;
 using EncounterMe.Classes;
 using EncounterMe;
 using System.IO;
 using System.Reflection;
+using Weighted_Randomizer;
 
 namespace ConsoleApp
 {
@@ -61,6 +62,7 @@ namespace ConsoleApp
                 gl.showLocationInformation(gl.getLocationToFind(locations, (float)2.0, (float)3.0, 1));
                 
             }*/
+
         }
         
         static void Test_UserCreate()
@@ -78,6 +80,7 @@ namespace ConsoleApp
 
             LogInManager login = new LogInManager(db);
             
+
             User user = login.CreateUser(name, email, password);
 
             Console.ReadLine();

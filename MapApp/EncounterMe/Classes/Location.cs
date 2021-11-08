@@ -10,11 +10,20 @@ using System.Xml.Serialization;
 
 namespace EncounterMe
 {
+    [Flags]
+    public enum LocationAttributes
+    {
+        None = 0,
+        Normal = 1,
+        DifficultTerrain = 2,
+        DifficultToFind = 4,
+        FarFromCityCenter = 8,
+        CloseToCityCenter = 16
+    }
 
     [XmlRoot(ElementName = "Location", DataType = "Location", IsNullable = true)]
     public class Location : IComparable
     {
-
         private const double circumference = 6372.795477598;
         public uint ID { get; set; }
         public String Name { get; set; }
@@ -23,39 +32,23 @@ namespace EncounterMe
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
 
-        private uint Upvote = 0;
+        public uint Upvote = 0;
 
         private uint Downvote = 0;
 
-
-        public Location() { }
-
         IDGenerator id = IDGenerator.Instance;
 
-        [Flags]
-        public enum LocationAttributes
-        {
-            None = 0,
-            Normal = 1,
-            DifficultTerrain = 2,
-            DifficultToFind = 4,
-            FarFromCityCenter = 8,
-            CloseToCityCenter = 16
-        }
         public LocationAttributes attributes { get; set; }
-        public String Attributes
-        {
-            get { return attributes.ToString(); }
+        public String Attributes { get { return attributes.ToString(); } }
 
-        }
-
+        public Location() { }
         public Location(String Name, double Latitude, double Longtitude, LocationAttributes attributes = LocationAttributes.Normal, uint ID = 0)
 
         {
             this.ID = ID;
             this.Name = Name;
-            this.Latitude = (float) Latitude;
-            this.Longtitude = (float) Longtitude;
+            this.Latitude = (float)Latitude;
+            this.Longtitude = (float)Longtitude;
             if (this.ID == 0)
             {
                 this.ID = id.getID(this);
@@ -65,15 +58,15 @@ namespace EncounterMe
 
         public float distanceToUser(float lat, float lon)
         {
-            return (float) (circumference *
-                Math.Acos(Math.Sin(this.Latitude *Math.PI / 180.00) *
+            return (float)(circumference *
+                Math.Acos(Math.Sin(this.Latitude * Math.PI / 180.00) *
                 Math.Sin(lat * Math.PI / 180.00) +
                 Math.Cos(this.Latitude * Math.PI / 180.00) *
                 Math.Cos(lat * Math.PI / 180.00) *
                 Math.Cos((this.Longtitude - lon) * Math.PI / 180)));
         }
 
-        
+
         public int CompareTo(object obj)
         {
             Location other = (Location)obj;
@@ -82,7 +75,7 @@ namespace EncounterMe
             //While user location isn't implemented we are using the temp_Location class
         }
 
-        public void upvote ()
+        public void upvote()
         {
             Upvote++;
         }
@@ -90,10 +83,10 @@ namespace EncounterMe
         public void downvote()
         {
             Downvote++;
-            
+
         }
 
-        public float getRating ()
+        public float getRating()
         {
             if (Upvote + Downvote == 0) return 0;
             else return (float)(Upvote * 1.0 / (Upvote + Downvote));
