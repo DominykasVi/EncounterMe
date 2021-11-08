@@ -28,6 +28,7 @@ namespace MapApp
     {
         public static Position getPosition(this EncounterMe.Location loc)
         {
+            
             return new Position(loc.Latitude, loc.Longtitude);
         }
     }
@@ -236,8 +237,9 @@ namespace MapApp
         */
         /*
         private async void NavigateButton_OnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SecondPage());
+        {   
+            await Navigation.PushAsync(new  UserPage());
+            //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.Black;
         }
         */
         /*

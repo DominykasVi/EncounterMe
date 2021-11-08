@@ -24,8 +24,8 @@ namespace ConsoleApp
             else aa.printListOfUsers();
             //else Console.ReadLine();
 
-            string randomLocation = randomizer.NextWithReplacement();
-            Console.WriteLine(randomLocation);
+            //string randomLocation = randomizer.NextWithReplacement();
+            //Console.WriteLine(randomLocation);
         }
 
         static void Test_UserCreate()

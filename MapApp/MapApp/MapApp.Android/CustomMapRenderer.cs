@@ -24,6 +24,7 @@ namespace MapApp.Droid
         
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
+            Console.WriteLine("OnElementChanged");
             base.OnElementChanged(e);
 
             if (e.OldElement != null)
@@ -44,10 +45,12 @@ namespace MapApp.Droid
 
             NativeMap.InfoWindowClick += OnInfoWindowClick;
             NativeMap.SetInfoWindowAdapter(this);
+            Console.WriteLine("OnMapReady");
         }
 
         protected override MarkerOptions CreateMarker(Pin pin)
         {
+            Console.WriteLine("CreateMarker");
             var marker = new MarkerOptions();
             marker.SetPosition(new LatLng(pin.Position.Latitude, pin.Position.Longitude));
             marker.SetTitle(pin.Label);
@@ -58,7 +61,7 @@ namespace MapApp.Droid
 
         void OnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs e)
         {
-            
+            Console.WriteLine("OnInfoWindowClick");
             var customPin = GetCustomPin(e.Marker);
             if (customPin == null)
             {
@@ -77,6 +80,7 @@ namespace MapApp.Droid
         public Android.Views.View GetInfoContents(Marker marker)
         {
             var inflater = Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService) as Android.Views.LayoutInflater;
+            Console.WriteLine("GetInfoContents");
             if (inflater != null)
             {
                 Android.Views.View view;
