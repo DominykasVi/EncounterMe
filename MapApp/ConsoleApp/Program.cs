@@ -16,7 +16,7 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-
+            test_Events();
         }
 
         //static void TestIlogger()
@@ -25,7 +25,16 @@ namespace ConsoleApp
         //    errorLogger.logErrorMessage("Could not sort location list");
 
         //}
-
+        static void test_Events ()
+        {
+            GameLogic gl = new GameLogic();
+            EventManager ev = new EventManager(gl);
+            IDGenerator id = IDGenerator.Instance;
+            id.setID(new List<Location> { });
+            Location loc1 = new Location("asd", 1.0f, 1.0f);
+            gl.isLocationFound(loc1, 1.0f, 1.0f);
+            gl.isLocationFound(loc1, 2.0f, 3.0f);
+        }
 
     }
 }
