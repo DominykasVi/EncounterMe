@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 
 namespace EncounterMe.Classes
 {
+    //only use in database
     public class DatabaseLogger : ILogger
     {
         public void logErrorList<T>(List<T> list)
         {
-            //not implemented
+            foreach (var item in list)
+            {
+                using (StreamWriter sw = File.AppendText("logs/ErrorList.txt"))
+                {
+                    item.ToString();
+                }
+            }
         }
 
         public void logErrorMessage(string message)

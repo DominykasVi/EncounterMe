@@ -19,6 +19,8 @@ using Windows.Storage.Streams;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using EncounterMe.Classes;
+using EncounterMe.Interfaces;
+using System.Net.Http;
 
 namespace MapApp
 {
@@ -58,14 +60,16 @@ namespace MapApp
             var status = Permissions.RequestAsync<Permissions.StorageWrite>();
             var locStatus = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
-            db.writeToFile(AddLocations());
-            MyMap.CustomPins = AddPins();
+            //db.writeToFile(AddLocations());
+            //MyMap.CustomPins = AddPins();
+            //Task.Delay(2000);
+            var errorLogger = new AppLogger();
 
-            Task.Delay(2000);
-            InitMap();
+            InitMap(errorLogger);
             //UpdateMap();
         }
 
+        //Dominykas: redudndant but left for future reference
         private List<CustomPin> AddPins()
         {
             var pinList = new List<CustomPin>();
@@ -89,6 +93,7 @@ namespace MapApp
             return pinList;
         }
 
+        //redundant, can delete
         private List<EncounterMe.Location> AddLocations()
         {
             //left for first time initialization, remove later
@@ -114,8 +119,9 @@ namespace MapApp
             return locations;
         }
         
-        private async void InitMap()
+        private async void InitMap(ILogger errorLogger)
         {
+            //refactor code
             //read saved locations and put them into object, that google maps can read
             try
             {
@@ -145,6 +151,7 @@ namespace MapApp
             }
             catch (Exception ex)
             {
+                errorLogger.logErrorMessage("AppError when getting user location" + "\n" + ex.ToString());
                 Debug.WriteLine(ex);
             }
         }
@@ -177,29 +184,51 @@ namespace MapApp
             userSearchCircle.Radius = searchRadius;
         }
 
-        public void SearchForPlace()
+        private static readonly HttpClient client = new HttpClient();
+        public async void SearchForPlace()
         {
             //read database and save locations locally
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
             MyMap.Pins.Clear();
+            //Dominykas TODO: Add handling of null exception, also republish webserver
+            LocationToFind sendLocation = new LocationToFind(userPosition.Latitude, userPosition.Longitude, searchRadius.Kilometers);
+            var json = JsonConvert.SerializeObject(sendLocation);
 
-            var locationList = db.readFromFile<EncounterMe.Location>();
-            foreach (EncounterMe.Location location in locationList)
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var url = "https://testwebserverapi.azurewebsites.net/api/Location/FindLocation";
+            using HttpClient client = new HttpClient();
+
+            var response = await client.PostAsync(url, data);
+
+            string result = response.Content.ReadAsStringAsync().Result;
+            EncounterMe.Location locationToFind = JsonConvert.DeserializeObject<EncounterMe.Location>(result);
+
+            //var response = await client.PostAsync("https://localhost:44355/api/FindLocation", content);
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseString);
+
+            MyMap.Pins.Add(new CustomPin
             {
-                var dist = (double) location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
-                //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
-                if (dist <= searchRadius.Kilometers)
-                {
-                    MyMap.Pins.Add(new CustomPin
-                    {
-                        Position = location.getPosition(),
-                        Label = location.Name,
-                        Address = location.Name,
-                        Name = "Xamarin",
-                        Url = "http://xamarin.com/about/"
-                    });
-                }
-            }
+                Position = locationToFind.getPosition(),
+                Label = locationToFind.Name,
+                Address = locationToFind.Name,
+                Name = "Xamarin",
+                Url = "http://xamarin.com/about/"
+            });
+
+            //var locationList = db.readFromFile<EncounterMe.Location>();
+            //foreach (EncounterMe.Location location in locationList)
+            //{
+            //    var dist = (double) location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
+            //    //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
+            //    if (dist <= searchRadius.Kilometers)
+            //    {
+                    
+            //    }
+            //}
             //MyMap.ItemsSource = placesList;
             //UpdateMap();
             //text.Text = new EncounterMe userPosition.Latitude.ToString();

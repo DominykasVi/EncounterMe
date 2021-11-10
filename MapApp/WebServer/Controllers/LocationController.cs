@@ -5,40 +5,69 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EncounterMe;
+using EncounterMe.Classes;
 using EncounterMe.Functions;
 
 namespace WebServer.Controllers
 {
     public class LocationController : ApiController
     {
-        //should change string password to byte[] password later on
-        public string[] GetLocationList(string username, string password)
+        DatabaseManager db;
+        public string Get()
         {
-            DatabaseManager databaseManager = new DatabaseManager();
-            LogInManager logInManager = new LogInManager(databaseManager);
-
-            User user = logInManager.CheckPassword(username, password);
-            if (user.accessLevel == AccessLevel.Admin)
-            {
-                //DatabaseManager databaseManager = new DatabaseManager();
-
-                //get location list (after we rework DatabaseManager)\
-                //serialize location list into string[] and return it
-                return null;
-            }
-            else 
-                return null;
+            return "hello";
+        }
+        //should change string password to byte[] password later on
+        [Route("api/Location/Test")]
+        [HttpPost]
+        public string TestPostSimple([FromBody] string username)
+        {
+            Console.WriteLine(username);
+            return username;
         }
 
-        public string GetLocation (float longitude, float latitude, int distance)
+        public class TestUser 
         {
-            GameLogic gameLogic = new GameLogic();
-            List<Location> locations = null;
+            public string username { get; set; }
+            public string password { get; set; }
+        }
+        [Route("api/Location/GetLocationList")]
+        [HttpPost]
+        public string GetLocationList(TestUser temp)
+        {
+            return temp.username;
+            //this code returns errors
 
-            //we should probably change getLocationsToFind in a way that List<Location> is not needed as a parameter
-            var location = gameLogic.getLocationToFind(locations, latitude, longitude, distance);
+
+            //DatabaseManager databaseManager = new DatabaseManager();
+            //LogInManager logInManager = new LogInManager(databaseManager);
+
+            //User user = logInManager.CheckPassword(temp.username, temp.password);
+            //if (user.accessLevel == AccessLevel.Admin)
+            //{
+            //    //DatabaseManager databaseManager = new DatabaseManager();
+
+            //    //get location list (after we rework DatabaseManager)\
+            //    //serialize location list into string[] and return it
+            //    return "yes";
+            //}
+            //else
+            //    return "no";
+        }
+        [Route("api/Location/FindLocation")]
+        [HttpPost]
+        public Location GetLocation (LocationToFind userLocation)
+        {
+            //var distance = 50;
+            GameLogic gameLogic = new GameLogic();
+            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());
+            var locationList = db.readFromFile<EncounterMe.Location>();
+            //List<Location> locations = null;
+            //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
+                //we should probably change getLocationsToFind in a way that List<Location> is not needed as a parameter
+            var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance);
             //location should be serialized and returned
-            return null;
+            return location;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace EncounterMe.Functions
 {
     public class GameLogic
     {
-        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, int distance)
+        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance)
         {
             //LINQ query
             var locationsQuery =
