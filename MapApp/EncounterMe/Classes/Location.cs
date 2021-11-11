@@ -10,7 +10,8 @@ using System.Xml.Serialization;
 
 namespace EncounterMe
 {
-    [Flags]
+    //we are not using flags tfu
+    /*[Flags]
     public enum LocationAttributes
     {
         None = 0,
@@ -19,7 +20,7 @@ namespace EncounterMe
         DifficultToFind = 4,
         FarFromCityCenter = 8,
         CloseToCityCenter = 16
-    }
+    }*/
 
     [XmlRoot(ElementName = "Location", DataType = "Location", IsNullable = true)]
     public class Location : IComparable
@@ -38,11 +39,12 @@ namespace EncounterMe
 
         IDGenerator id = IDGenerator.Instance;
 
-        public LocationAttributes attributes { get; set; }
-        public String Attributes { get { return attributes.ToString(); } }
+        public List<EncounterMe.Classes.Attribute> Attributes { get; set; }
+        //public LocationAttributes attributes { get; set; }
+        //public String Attributes { get { return attributes.ToString(); } }
 
         public Location() { }
-        public Location(String Name, double Latitude, double Longtitude, LocationAttributes attributes = LocationAttributes.Normal, uint ID = 0)
+        public Location(String Name, double Latitude, double Longtitude, uint ID = 0)
 
         {
             this.ID = ID;
@@ -53,7 +55,7 @@ namespace EncounterMe
             {
                 this.ID = id.getID(this);
             }
-            this.attributes = attributes;
+            //this.attributes = attributes;
         }
 
         public float distanceToUser(float lat, float lon)
@@ -93,6 +95,11 @@ namespace EncounterMe
         }
 
         //for testing purposes only
+        public void giveAttributes(List<EncounterMe.Classes.Attribute> attributes)
+        {
+            this.Attributes = attributes;
+        }
+
         public void changeVote(uint upvote, uint downvote)
         {
             this.Upvote = upvote;

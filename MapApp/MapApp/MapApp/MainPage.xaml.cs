@@ -48,6 +48,7 @@ namespace MapApp
         //popup pages
         SearchEncounter searchEncounterPage;
 
+        List<EncounterMe.Classes.Attribute> attributes;
         //LocationAttributes filterList;
         //List<LocationAttributes> attributeList;
 
@@ -107,10 +108,10 @@ namespace MapApp
 
             EncounterMe.Location location1 = new EncounterMe.Location("VU MIF Naugardukas", 54.67518129701089, 25.273545582365784);
             EncounterMe.Location location2 = new EncounterMe.Location("VU MIF Baltupiai", 54.729775633971855, 25.263535399566603);
-            EncounterMe.Location location3 = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, LocationAttributes.FarFromCityCenter);
-            EncounterMe.Location location4 = new EncounterMe.Location("Jammi", 54.68446369057142, 25.273091438331683, LocationAttributes.DifficultToFind);
-            EncounterMe.Location location5 = new EncounterMe.Location("Mo Muziejus", 54.6791655393238, 25.277288631477447, LocationAttributes.CloseToCityCenter);
-            EncounterMe.Location location6 = new EncounterMe.Location("Reformatu Skveras", 54.6814502183355, 25.276301578559966, LocationAttributes.DifficultTerrain | LocationAttributes.DifficultToFind);
+            EncounterMe.Location location3 = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472);
+            EncounterMe.Location location4 = new EncounterMe.Location("Jammi", 54.68446369057142, 25.273091438331683);
+            EncounterMe.Location location5 = new EncounterMe.Location("Mo Muziejus", 54.6791655393238, 25.277288631477447);
+            EncounterMe.Location location6 = new EncounterMe.Location("Reformatu Skveras", 54.6814502183355, 25.276301578559966);
 
             List<EncounterMe.Location> locations = new List<EncounterMe.Location>();
             locations.Add(location1);
@@ -122,14 +123,32 @@ namespace MapApp
 
             return locations;
         }
-        
+
+        //should be put in database
+        private List<EncounterMe.Classes.Attribute> AddAttributes()
+        {
+            List<EncounterMe.Classes.Attribute> attributes = new List<EncounterMe.Classes.Attribute>();
+            EncounterMe.Classes.Attribute att1 = new EncounterMe.Classes.Attribute("Cafe", "coffee.png");
+            EncounterMe.Classes.Attribute att2 = new EncounterMe.Classes.Attribute("Forest", "tree.png");
+            EncounterMe.Classes.Attribute att3 = new EncounterMe.Classes.Attribute("Water Object", "waterfall.png");
+            EncounterMe.Classes.Attribute att4 = new EncounterMe.Classes.Attribute("Restaurant", "coffee.png");
+            attributes.Add(att1);
+            attributes.Add(att2);
+            attributes.Add(att3);
+            attributes.Add(att4);
+            return attributes;
+        }
+
+
         private async void InitMap(ILogger errorLogger)
         {
             //refactor code
             //read saved locations and put them into object, that google maps can read
             try
             {
-                //GenerateFilterButtons();
+                //creating attributes, only for testing now
+                attributes = AddAttributes();
+
                 //Move view to current location
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 50;
