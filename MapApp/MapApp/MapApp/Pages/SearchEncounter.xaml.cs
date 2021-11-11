@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
+using EncounterMe;
 
 namespace MapApp.Pages
 {
@@ -31,6 +32,11 @@ namespace MapApp.Pages
         {
             main.SliderValueChanged(sender as Slider);
             SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
+        }
+        public async void ShowLocation(Location location)
+        {
+            await Navigation.PopPopupAsync();
+            await Navigation.PushPopupAsync(new Pages.LocationPopup(main, location));
         }
         private void Search(Object sender, EventArgs e)
         {

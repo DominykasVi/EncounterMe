@@ -91,6 +91,13 @@ namespace EncounterMe
             if (Upvote + Downvote == 0) return 0;
             else return (float)(Upvote * 1.0 / (Upvote + Downvote));
         }
+
+        //for testing purposes only
+        public void changeVote(uint upvote, uint downvote)
+        {
+            this.Upvote = upvote;
+            this.Downvote = downvote;
+        }
     }
 }
 

@@ -40,9 +40,9 @@
                  />
 
         <Image  Source="idk.png" 
-                VerticalOptions="End" 
+                VerticalOptions="Start" 
                 HorizontalOptions="End"
-                Margin="0, 0, 5, 590">
+                Margin="0, 10, 10, 0">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Tapped="RedirectPage"/>
             </Image.GestureRecognizers>

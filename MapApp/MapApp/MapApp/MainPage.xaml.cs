@@ -21,6 +21,7 @@ using Rg.Plugins.Popup.Pages;
 using EncounterMe.Classes;
 using EncounterMe.Interfaces;
 using System.Net.Http;
+using MapApp.Pages;
 
 namespace MapApp
 {
@@ -43,6 +44,9 @@ namespace MapApp
 
         Position userPosition;
         Distance searchRadius;
+
+        //popup pages
+        SearchEncounter searchEncounterPage;
 
         //LocationAttributes filterList;
         //List<LocationAttributes> attributeList;
@@ -166,7 +170,7 @@ namespace MapApp
         {
             //SearchEncounter page pops out
             MoveMap(-0.015, 0, 2);
-            await Navigation.PushPopupAsync(new Pages.SearchEncounter(this));
+            await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
             
         }
 
@@ -192,16 +196,13 @@ namespace MapApp
             MyMap.Pins.Clear();
             //Dominykas TODO: Add handling of null exception, also republish webserver
             LocationToFind sendLocation = new LocationToFind(userPosition.Latitude, userPosition.Longitude, searchRadius.Kilometers);
+            
             var json = JsonConvert.SerializeObject(sendLocation);
-
-
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-
             var url = "https://testwebserverapi.azurewebsites.net/api/Location/FindLocation";
             using HttpClient client = new HttpClient();
 
             var response = await client.PostAsync(url, data);
-
             string result = response.Content.ReadAsStringAsync().Result;
             EncounterMe.Location locationToFind = JsonConvert.DeserializeObject<EncounterMe.Location>(result);
 
@@ -210,14 +211,20 @@ namespace MapApp
             var responseString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(responseString);
 
-            MyMap.Pins.Add(new CustomPin
+            if (locationToFind == null)
+                await DisplayAlert("Could Not Find Location", "We could not find any locations in your selected area. Please change your distance or location.", "OK");
+            else
             {
-                Position = locationToFind.getPosition(),
-                Label = locationToFind.Name,
-                Address = locationToFind.Name,
-                Name = "Xamarin",
-                Url = "http://xamarin.com/about/"
-            });
+                MyMap.Pins.Add(new CustomPin
+                {
+                    Position = locationToFind.getPosition(),
+                    Label = locationToFind.Name,
+                    Address = locationToFind.Name,
+                    Name = "Xamarin",
+                    Url = "http://xamarin.com/about/"
+                });
+                searchEncounterPage.ShowLocation(locationToFind);
+            }
 
             //var locationList = db.readFromFile<EncounterMe.Location>();
             //foreach (EncounterMe.Location location in locationList)
