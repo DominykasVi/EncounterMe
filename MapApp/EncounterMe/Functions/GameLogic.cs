@@ -9,7 +9,12 @@ namespace EncounterMe.Functions
 {
     public class GameLogic
     {
+
+        public delegate void LocationFoundDel(Location loc);
+        public event LocationFoundDel? LocationFound;
+        public event Action? LocationNotFound;
         public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance)
+
         {
             //LINQ query
             var locationsQuery =
@@ -28,13 +33,35 @@ namespace EncounterMe.Functions
 
         }
 
+        public void isLocationFound(Location loc, float lat, float lon)
+        {
+            Console.WriteLine(loc.Name);
+            if (loc.distanceToUser(lat, lon) < 0.005)
+            {
+                OnLocationFound(loc);
+            }
+            else
+            {
+                OnLocationNotFound();
+            }
+        }
+
+        protected virtual void OnLocationFound(Location loc)
+        {
+            LocationFound?.Invoke(loc);
+        }
+        protected virtual void OnLocationNotFound()
+        {
+            LocationNotFound?.Invoke();
+        }
+
         public int getRadiusFromUser ()
         {
             Console.WriteLine("Please write radius for Locations: ");
             try
             {
                 return Convert.ToInt32(Console.ReadLine());
-            } catch (FormatException e)
+            } catch (FormatException)
             {
                 Console.WriteLine("Invalid argument ");
                 return getRadiusFromUser();

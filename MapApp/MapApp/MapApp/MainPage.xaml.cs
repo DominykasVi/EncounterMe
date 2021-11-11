@@ -237,13 +237,11 @@ namespace MapApp
                 await DisplayAlert("Could Not Find Location", "We could not find any locations in your selected area. Please change your distance or location.", "OK");
             else
             {
-                MyMap.Pins.Add(new CustomPin
+                MyMap.Pins.Add(new Pin
                 {
-                    Position = locationToFind.getPosition(),
-                    Label = locationToFind.Name,
-                    Address = locationToFind.Name,
-                    Name = "Xamarin",
-                    Url = "http://xamarin.com/about/"
+                  Position = locationToFind.getPosition(),
+                  Label = locationToFind.Name,
+                  Address = locationToFind.Name,
                 });
                 searchEncounterPage.ShowLocation(locationToFind);
             }
