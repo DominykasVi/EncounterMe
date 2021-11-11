@@ -210,13 +210,11 @@ namespace MapApp
             var responseString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(responseString);
 
-            MyMap.Pins.Add(new CustomPin
+            MyMap.Pins.Add(new Pin
             {
                 Position = locationToFind.getPosition(),
                 Label = locationToFind.Name,
                 Address = locationToFind.Name,
-                Name = "Xamarin",
-                Url = "http://xamarin.com/about/"
             });
 
             //var locationList = db.readFromFile<EncounterMe.Location>();
