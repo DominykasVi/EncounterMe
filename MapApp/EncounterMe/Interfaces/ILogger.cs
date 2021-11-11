@@ -7,7 +7,6 @@ namespace EncounterMe.Interfaces
     public interface ILogger
     {
         void logErrorMessage(String message);
-        void logErrorList<T>(List<T> list);
         //void logErrortrace();
         //void logErrorDevice();
     }

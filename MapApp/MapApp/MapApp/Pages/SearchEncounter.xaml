@@ -44,7 +44,7 @@
                        HorizontalOptions="Center"/>
                 <Slider x:Name="RadiusSlider"
                         Minimum="0"
-                        Maximum="1000"
+                        Maximum="5000"
                         WidthRequest="400"
                         BackgroundColor="#6CD4FF"
                         VerticalOptions="End"
