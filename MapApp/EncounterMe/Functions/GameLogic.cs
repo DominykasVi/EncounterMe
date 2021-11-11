@@ -10,8 +10,8 @@ namespace EncounterMe.Functions
     public class GameLogic
     {
         public delegate void LocationFoundDel(Location loc);
-        public event LocationFoundDel LocationFound;
-        public event Action LocationNotFound;
+        public event LocationFoundDel? LocationFound;
+        public event Action? LocationNotFound;
         public Location getLocationToFind (List<Location> Locations, float Lat, float Long, int distance)
         {
             //LINQ query
