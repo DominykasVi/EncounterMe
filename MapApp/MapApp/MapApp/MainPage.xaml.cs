@@ -46,9 +46,9 @@ namespace MapApp
         Distance searchRadius;
 
         //popup pages
-        SearchEncounter searchEncounterPage;
+        public SearchEncounter searchEncounterPage;
 
-        List<EncounterMe.Classes.Attribute> attributes;
+        public List<EncounterMe.Classes.Attribute> attributes;
         //LocationAttributes filterList;
         //List<LocationAttributes> attributeList;
 
@@ -185,12 +185,15 @@ namespace MapApp
             await Navigation.PushAsync(new UserPage());
         }
 
-        private async void PopupSearchEncounter(object sender, EventArgs e)
+        public async void PopupSearchEncounter(object sender, EventArgs e)
         {
             //SearchEncounter page pops out
             MoveMap(-0.015, 0, 2);
-            await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
-            
+            if(searchEncounterPage == null)
+                await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
+            else
+                await Navigation.PushPopupAsync(searchEncounterPage);
+
         }
 
         public async void MoveMap(double latitude = 0, double longitude = 0, int kilometers = 3)
