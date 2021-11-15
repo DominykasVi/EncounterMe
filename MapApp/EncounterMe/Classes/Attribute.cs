@@ -8,6 +8,7 @@ namespace EncounterMe.Classes
     {
         public String Name { get; }
         public String Image { get; }
+        public Attribute() { }
 
         public Attribute(String name, String image)
         {

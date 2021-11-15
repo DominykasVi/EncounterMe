@@ -217,6 +217,7 @@ namespace MapApp
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
             MyMap.Pins.Clear();
             //Dominykas TODO: Add handling of null exception, also republish webserver
+            //externel class
             LocationToFind sendLocation = new LocationToFind(userPosition.Latitude, userPosition.Longitude, searchRadius.Kilometers);
             
             var json = JsonConvert.SerializeObject(sendLocation);
