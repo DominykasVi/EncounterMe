@@ -55,7 +55,8 @@
                         BackgroundColor="#6CD4FF"
                         TextColor="White"
                         WidthRequest="300"
-                        HeightRequest="40"/>
+                        HeightRequest="40"
+                        Clicked="Category"/>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
