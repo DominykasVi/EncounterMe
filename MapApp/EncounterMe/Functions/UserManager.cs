@@ -38,7 +38,7 @@ namespace EncounterMe.Functions
         public User FindUser (string username)
         {
             List<User> users = GetUsersFromMemory();
-            User user = users.Where(x => x.name == username).FirstOrDefault();
+            User user = users.Where(x => x.Name == username).FirstOrDefault();
             return user;
         }
 
@@ -63,7 +63,7 @@ namespace EncounterMe.Functions
             };
             var query = accessRights.GroupJoin (users,
                                                 rights => rights.accessLevel,
-                                                user => user.accessLevel,
+                                                user => user.AccessLevel,
                                                 (rights, userList) => new
                                                 {
                                                     Users = userList,
@@ -74,7 +74,7 @@ namespace EncounterMe.Functions
                 Console.WriteLine(item.AccessName);
                 foreach (var user in item.Users)
                 {
-                    Console.WriteLine("\t" + user.name);
+                    Console.WriteLine("\t" + user.Name);
                 }
             }
         }

@@ -15,30 +15,31 @@ namespace EncounterMe
     [Serializable]
     public class User : ISerializable
     {
-        public string name { get; set; }
-        public string email { get; set; }
-        public byte[] hashpassword { get; set; }
-        public AccessLevel accessLevel { get; set; }
-        public string Filename { get; set; }
-        public object Text { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public byte[] Hashpassword { get; set; }
+        public AccessLevel AccessLevel { get; set; }
         public object Date { get; set; }
+        public int LevelPoints { get; set; }
+        public int AchievementNum { get; set; }
+        public int FoundLocationNum { get; set; }
 
         public User() { }
 
         public User(string name, string email, string password)
         {
-            this.name = name;
-            this.email = email;
-            hashpassword = HashPassword(password);
-            accessLevel = AccessLevel.User;
+            this.Name = name;
+            this.Email = email;
+            Hashpassword = HashPassword(password);
+            AccessLevel = AccessLevel.User;
         }
 
         public User(SerializationInfo info, StreamingContext context)
         {
-            name = (string)info.GetValue("Username", typeof(string));
-            email = (string)info.GetValue("Email", typeof(string));
-            hashpassword = (byte[])info.GetValue("Password", typeof(byte[]));
-            accessLevel = (AccessLevel)info.GetValue("Password", typeof(AccessLevel));
+            Name = (string)info.GetValue("Username", typeof(string));
+            Email = (string)info.GetValue("Email", typeof(string));
+            Hashpassword = (byte[])info.GetValue("Password", typeof(byte[]));
+            AccessLevel = (AccessLevel)info.GetValue("Password", typeof(AccessLevel));
         }
 
         private byte[] HashPassword(string password)
@@ -50,15 +51,31 @@ namespace EncounterMe
 
         public bool CompareHashPassword(string password)
         {
-            return hashpassword.SequenceEqual(HashPassword(password));
+            return Hashpassword.SequenceEqual(HashPassword(password));
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("Username", name);
-            info.AddValue("Email", email);
-            info.AddValue("Password", hashpassword);
-            info.AddValue("AccessLevel", accessLevel);
+            info.AddValue("Username", Name);
+            info.AddValue("Email", Email);
+            info.AddValue("Password", Hashpassword);
+            info.AddValue("AccessLevel", AccessLevel);
+        }
+
+        public void CalculateLevel(out int level, out float completionPerc)
+        {
+            int expPoints = LevelPoints;
+            level = 0;
+            completionPerc = 0;
+            int levelOne = 100, exp = levelOne;
+
+            while (expPoints - exp > 0)
+            {
+                expPoints -= exp;
+                ++level;
+                exp = exp + (int)(exp * 0.1);
+            }
+            completionPerc = (float)(expPoints) / (float)(exp);
         }
     }
 

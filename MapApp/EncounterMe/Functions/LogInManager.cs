@@ -18,7 +18,7 @@ namespace EncounterMe.Functions
         }
         public User CheckPassword(string username, string password)
         {
-            var user = um.readFromFile<User>().Where(x => x.name == username).FirstOrDefault();
+            var user = um.readFromFile<User>().Where(x => x.Name == username).FirstOrDefault();
             if (user != null && user.CompareHashPassword(password))
             {
                 return user;
@@ -31,7 +31,7 @@ namespace EncounterMe.Functions
 
         public User CreateUser (string username, string email, string password)
         {
-            var user = um.readFromFile<User>().Where(x => x.name == username).FirstOrDefault();
+            var user = um.readFromFile<User>().Where(x => x.Name == username).FirstOrDefault();
 
             ValidationDel vd = delegate (string x)
             {
