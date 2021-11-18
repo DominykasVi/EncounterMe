@@ -21,7 +21,7 @@ namespace MapApp
         {
             InitializeComponent();
         }
-        async void OnPreviousPageButtonClicked(object sender, EventArgs e)
+        async void GoBack(object sender, EventArgs e)
         {
             //await Navigation.PushAsync(new MainPage());
             await Navigation.PopAsync();

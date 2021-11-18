@@ -22,6 +22,7 @@ using EncounterMe.Classes;
 using EncounterMe.Interfaces;
 using System.Net.Http;
 using MapApp.Pages;
+using Rg.Plugins.Popup.Services;
 
 namespace MapApp
 {
@@ -51,7 +52,7 @@ namespace MapApp
         public List<EncounterMe.Classes.Attribute> attributes;
         //LocationAttributes filterList;
         //List<LocationAttributes> attributeList;
-
+        public int test;
         public MainPage()
         {
             
@@ -179,9 +180,11 @@ namespace MapApp
             }
         }
 
-        async void RedirectPage(object sender, EventArgs e)
+        async void RedirectUserPage(object sender, EventArgs e)
         {
-            //beta version
+            //Open UserPage
+            if(PopupNavigation.Instance.PopupStack.Count > 0)
+                await Navigation.PopAllPopupAsync();
             await Navigation.PushAsync(new UserPage());
         }
 

@@ -44,7 +44,7 @@
                 HorizontalOptions="End"
                 Margin="0, 10, 10, 0">
             <Image.GestureRecognizers>
-                <TapGestureRecognizer Tapped="RedirectPage"/>
+                <TapGestureRecognizer Tapped="RedirectUserPage"/>
             </Image.GestureRecognizers>
         </Image>
 
