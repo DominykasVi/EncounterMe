@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 using System.Linq;
@@ -19,17 +18,21 @@ namespace EncounterMe
         public string Email { get; set; }
         public byte[] Hashpassword { get; set; }
         public AccessLevel AccessLevel { get; set; }
-        public object Date { get; set; }
         public int LevelPoints { get; set; }
         public int AchievementNum { get; set; }
         public int FoundLocationNum { get; set; }
 
-        public User() { }
+        public User() 
+        {
+            Name = "empty";
+            Email = "empty";
+            Hashpassword = HashPassword("empty");
+        }
 
         public User(string name, string email, string password)
         {
-            this.Name = name;
-            this.Email = email;
+            Name = name;
+            Email = email;
             Hashpassword = HashPassword(password);
             AccessLevel = AccessLevel.User;
         }
@@ -81,7 +84,12 @@ namespace EncounterMe
 
     public class AccessRights
     {
-        public AccessLevel accessLevel { get; set; }
-        public String accessName { get; set; }
+        public AccessLevel AccessLevel { get; set; }
+        public String AccessName { get; set; }
+
+        public AccessRights()
+        {
+            AccessName = "";
+        }
     }
 }

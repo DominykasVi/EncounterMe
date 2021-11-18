@@ -78,7 +78,6 @@ namespace MapApp
 
             //only for testing, all info should be in databse, delete later
             user = new User("Mr. Hamster", "mrhamster@gmail.com", "ilovehamsters");
-            user.Date = "2021-11-18";//????
             user.LevelPoints = 8520;
             user.AchievementNum = 10;
             user.FoundLocationNum = 23;

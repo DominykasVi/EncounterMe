@@ -58,16 +58,16 @@ namespace EncounterMe.Functions
             List<User> users = GetUsersFromMemory();
             List<AccessRights> accessRights = new List<AccessRights>
             {
-                new AccessRights { accessLevel = AccessLevel.Admin, accessName = "Admin"},
-                new AccessRights { accessLevel = AccessLevel.User, accessName = "User"}
+                new AccessRights { AccessLevel = AccessLevel.Admin, AccessName = "Admin"},
+                new AccessRights { AccessLevel = AccessLevel.User, AccessName = "User"}
             };
             var query = accessRights.GroupJoin (users,
-                                                rights => rights.accessLevel,
+                                                rights => rights.AccessLevel,
                                                 user => user.AccessLevel,
                                                 (rights, userList) => new
                                                 {
                                                     Users = userList,
-                                                    AccessName = rights.accessName
+                                                    AccessName = rights.AccessName
                                                 });
             foreach (var item in query)
             {
