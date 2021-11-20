@@ -20,12 +20,35 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            test_Events();
-            DominykasTest();
+            test_filters();
 
 
         }
 
+
+        static void test_filters()
+        {
+            GameLogic gl = new GameLogic();
+            IDGenerator id = IDGenerator.Instance;
+            List<Location> a = new List<Location>();
+            id.setID(a);
+            Location loc1 = new Location("asd", 1, 2);
+            Location loc2 = new Location("asda", 1, 2);
+            Location loc3 = new Location("asdas", 1, 2);
+            a.Add(loc1);
+            a.Add(loc2);
+            a.Add(loc3);
+            List<EncounterMe.Classes.Attribute> attr = new List<EncounterMe.Classes.Attribute>() { new EncounterMe.Classes.Attribute("asdAtr", "asdAtrImg") };
+            loc3.giveAttributes(attr);
+            loc2.giveAttributes(attr);
+            loc2.upvote();
+            loc3.upvote();
+            gl.getLocationToFind(a, 1, 2, 4, attr);
+            for (int i = 0; i<10;i++)
+            {
+                Console.WriteLine(gl.getLocationToFind(a, 1, 2, 4, attr).Name);
+            }
+        }
         static async Task DominykasTest() {
             //var task = DominykasTestErrors("random str");
             //task.Wait();
