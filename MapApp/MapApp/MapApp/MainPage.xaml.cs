@@ -22,6 +22,7 @@ using EncounterMe.Classes;
 using EncounterMe.Interfaces;
 using System.Net.Http;
 using MapApp.Pages;
+using Rg.Plugins.Popup.Services;
 
 namespace MapApp
 {
@@ -51,7 +52,9 @@ namespace MapApp
         public List<EncounterMe.Classes.Attribute> attributes;
         //LocationAttributes filterList;
         //List<LocationAttributes> attributeList;
+        public int test;
 
+        public User user;
         public MainPage()
         {
             
@@ -72,6 +75,12 @@ namespace MapApp
 
             InitMap(errorLogger);
             //UpdateMap();
+
+            //only for testing, all info should be in databse, delete later
+            user = new User("Mr. Hamster", "mrhamster@gmail.com", "ilovehamsters");
+            user.LevelPoints = 8520;
+            user.AchievementNum = 10;
+            user.FoundLocationNum = 23;
         }
 
         //Dominykas: redudndant but left for future reference
@@ -179,10 +188,12 @@ namespace MapApp
             }
         }
 
-        async void RedirectPage(object sender, EventArgs e)
+        async void RedirectUserPage(object sender, EventArgs e)
         {
-            //beta version
-            await Navigation.PushAsync(new UserPage());
+            //Open UserPage
+            if(PopupNavigation.Instance.PopupStack.Count > 0)
+                await Navigation.PopAllPopupAsync();
+            await Navigation.PushAsync(new UserPage(user));
         }
 
         public async void PopupSearchEncounter(object sender, EventArgs e)

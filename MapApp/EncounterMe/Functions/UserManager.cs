@@ -38,7 +38,7 @@ namespace EncounterMe.Functions
         public User FindUser (string username)
         {
             List<User> users = GetUsersFromMemory();
-            User user = users.Where(x => x.name == username).FirstOrDefault();
+            User user = users.Where(x => x.Name == username).FirstOrDefault();
             return user;
         }
 
@@ -58,23 +58,23 @@ namespace EncounterMe.Functions
             List<User> users = GetUsersFromMemory();
             List<AccessRights> accessRights = new List<AccessRights>
             {
-                new AccessRights { accessLevel = AccessLevel.Admin, accessName = "Admin"},
-                new AccessRights { accessLevel = AccessLevel.User, accessName = "User"}
+                new AccessRights { AccessLevel = AccessLevel.Admin, AccessName = "Admin"},
+                new AccessRights { AccessLevel = AccessLevel.User, AccessName = "User"}
             };
             var query = accessRights.GroupJoin (users,
-                                                rights => rights.accessLevel,
-                                                user => user.accessLevel,
+                                                rights => rights.AccessLevel,
+                                                user => user.AccessLevel,
                                                 (rights, userList) => new
                                                 {
                                                     Users = userList,
-                                                    AccessName = rights.accessName
+                                                    AccessName = rights.AccessName
                                                 });
             foreach (var item in query)
             {
                 Console.WriteLine(item.AccessName);
                 foreach (var user in item.Users)
                 {
-                    Console.WriteLine("\t" + user.name);
+                    Console.WriteLine("\t" + user.Name);
                 }
             }
         }
