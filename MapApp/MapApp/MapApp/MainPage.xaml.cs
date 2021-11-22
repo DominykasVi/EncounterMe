@@ -216,12 +216,38 @@ namespace MapApp
             //read database and save locations locally
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
             MyMap.Pins.Clear();
+            await Navigation.PopPopupAsync();
+            await Navigation.PushAsync(new HintPage());
             //Dominykas TODO: Add handling of null exception, also republish webserver
-            //externel class
-            LocationToFind sendLocation = new LocationToFind(userPosition.Latitude, userPosition.Longitude, searchRadius.Kilometers);
-            
+            //externel classs
+
+
+            //*****************************************************************
+            //removed for debug, return in main app
+            //LocationToFind sendLocation = new LocationToFind(userPosition.Latitude, userPosition.Longitude, searchRadius.Kilometers);
+
+            //EncounterMe.Location locationToFind = await sendPostrequestAsync(sendLocation);
+
+            //if (locationToFind == null)
+            //    await DisplayAlert("Could Not Find Location", "We could not find any locations in your selected area. Please change your distance or location.", "OK");
+            //else
+            //{
+            //    MyMap.Pins.Add(new Pin
+            //    {
+            //      Position = locationToFind.getPosition(),
+            //      Label = locationToFind.Name,
+            //      Address = locationToFind.Name,
+            //    });
+            //    searchEncounterPage.ShowLocation(locationToFind);
+            //}
+        }
+
+        private async Task<EncounterMe.Location> sendPostrequestAsync(LocationToFind sendLocation)
+        {
             var json = JsonConvert.SerializeObject(sendLocation);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
+            //var response = await client.PostAsync("https://localhost:44355/api/FindLocation", content);
+
             var url = "https://testwebserverapi.azurewebsites.net/api/Location/FindLocation";
             using HttpClient client = new HttpClient();
 
@@ -229,37 +255,11 @@ namespace MapApp
             string result = response.Content.ReadAsStringAsync().Result;
             EncounterMe.Location locationToFind = JsonConvert.DeserializeObject<EncounterMe.Location>(result);
 
-            //var response = await client.PostAsync("https://localhost:44355/api/FindLocation", content);
+            return locationToFind;
 
-            var responseString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(responseString);
-
-            if (locationToFind == null)
-                await DisplayAlert("Could Not Find Location", "We could not find any locations in your selected area. Please change your distance or location.", "OK");
-            else
-            {
-                MyMap.Pins.Add(new Pin
-                {
-                  Position = locationToFind.getPosition(),
-                  Label = locationToFind.Name,
-                  Address = locationToFind.Name,
-                });
-                searchEncounterPage.ShowLocation(locationToFind);
-            }
-
-            //var locationList = db.readFromFile<EncounterMe.Location>();
-            //foreach (EncounterMe.Location location in locationList)
-            //{
-            //    var dist = (double) location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
-            //    //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
-            //    if (dist <= searchRadius.Kilometers)
-            //    {
-                    
-            //    }
-            //}
-            //MyMap.ItemsSource = placesList;
-            //UpdateMap();
-            //text.Text = new EncounterMe userPosition.Latitude.ToString();
+            //for debug
+            //var responseString = await response.Content.ReadAsStringAsync();
+            //Console.WriteLine(responseString);
         }
         /*
         private void ShowAll(Object sender, EventArgs args)
