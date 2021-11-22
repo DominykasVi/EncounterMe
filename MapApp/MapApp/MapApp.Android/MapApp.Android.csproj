@@ -33,6 +33,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <BundleAssemblies>false</BundleAssemblies>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -180,6 +185,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\idk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\check_mark_unchecked.png" />
+    <AndroidResource Include="Resources\drawable\check_mark_checked.png" />
+    <AndroidResource Include="Resources\drawable\custom_checkmark.png" />
+    <AndroidResource Include="Resources\drawable\navigation_selected.png" />
+    <AndroidResource Include="Resources\drawable\navigation_unselected.png" />
+    <Content Include="Resources\drawable\pilis.jpg" />
+    <AndroidResource Include="Resources\drawable\temp.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
