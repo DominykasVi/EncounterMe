@@ -26,35 +26,44 @@ namespace MapApp.Pages
             gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
             gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
             gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
-            gridLayout.RowDefinitions.Add(new RowDefinition());
 
-            List<RadioButton> radioButtons = new List<RadioButton>();
+            List<CheckBox> checkBoxes = new List<CheckBox>();
 
             int i = -1;
             int j = 0;
             foreach (var attribute in attributeList)
             {
-                var newRadioButton = new RadioButton()
+                //create new checkbox
+                var newCheckBox = new CheckBox()
                 {
-                    Content = attribute.Name,
-                    GroupName = "buttons",
-                    FontSize = 15,
+                    ClassId = attribute.Name,
                     BackgroundColor = Color.Default
                 };
-                radioButtons.Add(newRadioButton);
+                checkBoxes.Add(newCheckBox);
 
+                //grid for checkbox and label to be side by side
+                Grid newGrid = new Grid();
+                newGrid.RowDefinitions.Add(new RowDefinition());
+                newGrid.ColumnDefinitions.Add(new ColumnDefinition() {Width = 30});
+                newGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                newGrid.Children.Add(newCheckBox, 0, 0);
+                newGrid.Children.Add(new Label { Text = attribute.Name, HorizontalOptions = LayoutOptions.Start }, 1, 0);
+
+                //add grid and Image in stacklayout
                 StackLayout stackLayout = new StackLayout
                 {
                     Children =
                     {
-                        newRadioButton,
+                        newGrid,
                         new Image {Source = attribute.Image }
                     }
                 };
 
+                //assign to proper place in whole grid
                 i++;
                 if (i == 3)
                 {
+                    gridLayout.RowDefinitions.Add(new RowDefinition());
                     i = 0;
                     j++;
                 }
