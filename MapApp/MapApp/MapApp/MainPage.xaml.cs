@@ -201,10 +201,13 @@ namespace MapApp
             if (PopupNavigation.Instance.PopupStack.Count > 0)
                 await Navigation.PopAllPopupAsync();
             MoveMap(-0.015, 0, 2);
-            if(searchEncounterPage == null)
+            if (searchEncounterPage == null)
                 await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
             else
+            {
+                searchEncounterPage.GeneratePickedAttributes();
                 await Navigation.PushPopupAsync(searchEncounterPage);
+            }
 
         }
 
