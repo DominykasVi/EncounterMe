@@ -43,7 +43,7 @@ namespace MapApp
         DatabaseManager db;
         Circle userSearchCircle;
 
-        Position userPosition;
+        public Position userPosition;
         Distance searchRadius;
 
         //popup pages
@@ -228,7 +228,7 @@ namespace MapApp
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
             MyMap.Pins.Clear();
             await Navigation.PopPopupAsync();
-            await Navigation.PushAsync(new HintPage());
+            await Navigation.PushPopupAsync(new HintPage(this, new EncounterMe.Location("Pilaite Jammi", 54.7073118, 25.1846521, 100)));
             //Dominykas TODO: Add handling of null exception, also republish webserver
             //externel classs
 
