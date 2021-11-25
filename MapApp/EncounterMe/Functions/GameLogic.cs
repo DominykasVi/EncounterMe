@@ -13,7 +13,7 @@ namespace EncounterMe.Functions
         public delegate void LocationFoundDel(Location loc);
         public event LocationFoundDel? LocationFound;
         public event Action? LocationNotFound;
-        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance, List<EncounterMe.Classes.Attribute> attributes)
+        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance, List<Classes.Attribute> attributes)
         {
             //LINQ query
             var locationsQuery =
@@ -23,10 +23,9 @@ namespace EncounterMe.Functions
 
             List<Location> byAttr = new List<Location> ();
 
-            foreach (EncounterMe.Classes.Attribute at in attributes)
+            foreach (Classes.Attribute at in attributes)
             {
-                byAttr = locationsQuery.FindAll(s => s.Attributes.Contains(at));
-                
+                byAttr.AddRange (locationsQuery.FindAll(s => s.Attributes.Contains(at)));
             }
             
 
@@ -34,7 +33,8 @@ namespace EncounterMe.Functions
 
             foreach (Location loc in byAttr)
             {
-                locationsSortedByDistance.Add(loc, loc.getRating());
+                if (!locationsSortedByDistance.ContainsKey(loc))
+                    locationsSortedByDistance.Add(loc, loc.getRating());
             }
 
             return locationsSortedByDistance.weightedRandom(e => e.Value).Key;
