@@ -90,19 +90,6 @@ namespace MapApp.Pages
                 pickedAttributes.Add(attributes.Find(e => e.Name == attributeName));
             else
                 pickedAttributes.Remove(attribute);
-        }
-
-        /*private List<EncounterMe.Classes.Attribute> returnAttributeList()
-        {
-            foreach(var attribute in attributes)
-            {
-                if (checkBoxes.Contains(new Action <CheckBox, r>
-                {
-                    return r.ClassId == attribute.Name;
-                })) ;
-            }
-        }*/
-
-    }
-
+        } 
+    } 
 }
