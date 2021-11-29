@@ -19,6 +19,7 @@ namespace MapApp.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HintPage : Rg.Plugins.Popup.Pages.PopupPage
     {
+        //16 as variable
         MainPage main;
         Location locationToFind;
         GameLogic gameLogic;
@@ -46,8 +47,8 @@ namespace MapApp.Pages
             hintImage.GestureRecognizers.Add(leftSwipe);
             hintImage.GestureRecognizers.Add(rightSwipe);
 
-            animationView.GestureRecognizers.Add(leftSwipe);
-            animationView.GestureRecognizers.Add(rightSwipe);
+            shade.GestureRecognizers.Add(leftSwipe);
+            shade.GestureRecognizers.Add(rightSwipe);
 
 
 
