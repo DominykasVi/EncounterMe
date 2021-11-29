@@ -14,63 +14,98 @@ namespace MapApp.Pages
     public partial class CategoryPage : ContentPage
     {
         MainPage main;
+        List<EncounterMe.Classes.Attribute> pickedAttributes;
+        List<EncounterMe.Classes.Attribute> attributes;
+
         public CategoryPage(MainPage main)
         {
             InitializeComponent();
-            CreateGrid(main.attributes);
+            this.main = main;
+            pickedAttributes = main.pickedAttributes;
+            attributes = main.attributes;
+            CreateGrid(3, attributes);
         }
 
-        private void CreateGrid(List<EncounterMe.Classes.Attribute> attributeList)
+        private void CreateGrid(int columnNum, List<EncounterMe.Classes.Attribute> attributeList)
         {
             gridLayout.RowDefinitions.Add(new RowDefinition());
-            gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
-            gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
-            gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
-            gridLayout.RowDefinitions.Add(new RowDefinition());
+            for(int i = 0; i<columnNum ; i++)
+                gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
+            FillGridWithElements(gridLayout, columnNum, attributeList);
+        }
 
-            List<RadioButton> radioButtons = new List<RadioButton>();
-
-            int i = -1;
-            int j = 0;
+        private void FillGridWithElements(Grid grid, int columnNum, List<EncounterMe.Classes.Attribute> attributeList)
+        {
+            int column = -1;
+            int row = 0;
             foreach (var attribute in attributeList)
             {
-                var newRadioButton = new RadioButton()
-                {
-                    Content = attribute.Name,
-                    GroupName = "buttons",
-                    FontSize = 15,
-                    BackgroundColor = Color.Default
-                };
-                radioButtons.Add(newRadioButton);
-
+                //add grid and Image in stacklayout
                 StackLayout stackLayout = new StackLayout
                 {
                     Children =
                     {
-                        newRadioButton,
+                        CreateGridForAttribute(attribute),
                         new Image {Source = attribute.Image }
                     }
                 };
 
-                i++;
-                if (i == 3)
+                //assign to proper place in whole grid
+                column++;
+                if (column == columnNum)
                 {
-                    i = 0;
-                    j++;
+                    grid.RowDefinitions.Add(new RowDefinition());
+                    column = 0;
+                    row++;
                 }
-                gridLayout.Children.Add(stackLayout, i, j);
-                //gridLayout.Children.Add(newRadioButton, i, j);
+                grid.Children.Add(stackLayout, column, row);
             }
-
         }
+
+        private Grid CreateGridForAttribute(EncounterMe.Classes.Attribute attribute)
+        {
+            Grid newGrid = new Grid();
+            newGrid.RowDefinitions.Add(new RowDefinition());
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = 30 });
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            newGrid.Children.Add(CreateCheckBoxFromAttribute(attribute), 0, 0);
+            newGrid.Children.Add(CreateLabelFromAttribute(attribute), 1, 0);
+            return newGrid;
+        }
+
+        private Label CreateLabelFromAttribute(EncounterMe.Classes.Attribute attribute)
+        {
+            return new Label { Text = attribute.Name, HorizontalOptions = LayoutOptions.Start };
+        }
+
+        private CheckBox CreateCheckBoxFromAttribute(EncounterMe.Classes.Attribute attribute)
+        {
+            CheckBox newCheckBox = new CheckBox()
+            {
+                ClassId = attribute.Name,
+                BackgroundColor = Color.Default,
+                IsChecked = pickedAttributes.Contains(attribute),
+            };
+            newCheckBox.CheckedChanged += CheckedAttribute;
+
+            return newCheckBox;
+        }
+
         private async void GoBack(object sender, EventArgs e)
         {
-            //main.PopupSearchEncounter(sender, e);
-            //await Navigation.PushPopupAsync(main.searchEncounterPage);
-            //doesnt work with calling SearchEncounter dont know why
+            main.pickedAttributes = pickedAttributes;
             await Navigation.PopAsync();
+            main.PopupSearchEncounter(sender, e);
         }
 
-    }
-
+        private async void CheckedAttribute(object sender, EventArgs e)
+        {
+            String attributeName = (sender as CheckBox).ClassId;
+            var attribute = pickedAttributes.Find(e => e.Name == attributeName);
+            if (attribute == null)
+                pickedAttributes.Add(attributes.Find(e => e.Name == attributeName));
+            else
+                pickedAttributes.Remove(attribute);
+        } 
+    } 
 }
