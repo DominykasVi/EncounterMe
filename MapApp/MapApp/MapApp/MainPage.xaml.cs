@@ -49,10 +49,9 @@ namespace MapApp
         //popup pages
         public SearchEncounter searchEncounterPage;
 
+        //attribute variables
         public List<EncounterMe.Classes.Attribute> attributes;
-        //LocationAttributes filterList;
-        //List<LocationAttributes> attributeList;
-        public int test;
+        public List<EncounterMe.Classes.Attribute> pickedAttributes = new List<EncounterMe.Classes.Attribute>();
 
         public User user;
         public MainPage()
@@ -199,11 +198,16 @@ namespace MapApp
         public async void PopupSearchEncounter(object sender, EventArgs e)
         {
             //SearchEncounter page pops out
+            if (PopupNavigation.Instance.PopupStack.Count > 0)
+                await Navigation.PopAllPopupAsync();
             MoveMap(-0.015, 0, 2);
-            if(searchEncounterPage == null)
+            if (searchEncounterPage == null)
                 await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
             else
+            {
+                searchEncounterPage.GeneratePickedAttributes();
                 await Navigation.PushPopupAsync(searchEncounterPage);
+            }
 
         }
 

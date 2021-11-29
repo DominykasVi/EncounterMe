@@ -55,7 +55,7 @@ namespace EncounterMe
             {
                 this.ID = id.getID(this);
             }
-            //this.attributes = attributes;
+            Attributes = new List<Classes.Attribute>();
         }
 
         public float distanceToUser(float lat, float lon)

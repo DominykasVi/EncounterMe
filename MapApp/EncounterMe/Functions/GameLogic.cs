@@ -17,6 +17,7 @@ namespace EncounterMe.Functions
 
         public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance)
 
+
         {
             //LINQ query
             var locationsQuery =
@@ -24,11 +25,20 @@ namespace EncounterMe.Functions
                 where loc.distanceToUser(Lat, Long) < distance
                 select loc).ToList();
 
+            List<Location> byAttr = new List<Location> ();
+
+            foreach (Classes.Attribute at in attributes)
+            {
+                byAttr.AddRange (locationsQuery.FindAll(s => s.Attributes.Contains(at)));
+            }
+            
+
             Dictionary<Location, float> locationsSortedByDistance = new Dictionary<Location, float>();
 
-            foreach (Location loc in locationsQuery)
+            foreach (Location loc in byAttr)
             {
-                locationsSortedByDistance.Add(loc, loc.getRating());
+                if (!locationsSortedByDistance.ContainsKey(loc))
+                    locationsSortedByDistance.Add(loc, loc.getRating());
             }
 
             return locationsSortedByDistance.weightedRandom(e => e.Value).Key;
@@ -37,7 +47,6 @@ namespace EncounterMe.Functions
 
         public void isLocationFound(Location loc, float lat, float lon)
         {
-            Console.WriteLine(loc.Name);
             if (loc.distanceToUser(lat, lon) < 0.005)
             {
                 OnLocationFound(loc);
