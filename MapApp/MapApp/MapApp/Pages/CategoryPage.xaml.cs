@@ -23,58 +23,74 @@ namespace MapApp.Pages
             this.main = main;
             pickedAttributes = main.pickedAttributes;
             attributes = main.attributes;
-            CreateGrid(attributes);
+            CreateGrid(3, attributes);
         }
 
-        private void CreateGrid(List<EncounterMe.Classes.Attribute> attributeList)
+        private void CreateGrid(int columnNum, List<EncounterMe.Classes.Attribute> attributeList)
         {
             gridLayout.RowDefinitions.Add(new RowDefinition());
-            gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
-            gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
-            gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
+            for(int i = 0; i<columnNum ; i++)
+                gridLayout.ColumnDefinitions.Add(new ColumnDefinition());
+            FillGridWithElements(gridLayout, columnNum, attributeList);
+        }
 
-            int i = -1;
-            int j = 0;
+        private void FillGridWithElements(Grid grid, int columnNum, List<EncounterMe.Classes.Attribute> attributeList)
+        {
+            int column = -1;
+            int row = 0;
             foreach (var attribute in attributeList)
             {
-                //create new checkbox
-                var newCheckBox = new CheckBox()
-                {
-                    ClassId = attribute.Name,
-                    BackgroundColor = Color.Default,
-                    IsChecked = pickedAttributes.Contains(attribute),
-                };
-                newCheckBox.CheckedChanged += CheckedAttribute;
-
-                //grid for checkbox and label to be side by side
-                Grid newGrid = new Grid();
-                newGrid.RowDefinitions.Add(new RowDefinition());
-                newGrid.ColumnDefinitions.Add(new ColumnDefinition() {Width = 30});
-                newGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                newGrid.Children.Add(newCheckBox, 0, 0);
-                newGrid.Children.Add(new Label { Text = attribute.Name, HorizontalOptions = LayoutOptions.Start }, 1, 0);
-
                 //add grid and Image in stacklayout
                 StackLayout stackLayout = new StackLayout
                 {
                     Children =
                     {
-                        newGrid,
+                        CreateGridForAttribute(attribute),
                         new Image {Source = attribute.Image }
                     }
                 };
 
                 //assign to proper place in whole grid
-                i++;
-                if (i == 3)
+                column++;
+                if (column == columnNum)
                 {
                     gridLayout.RowDefinitions.Add(new RowDefinition());
-                    i = 0;
-                    j++;
+                    column = 0;
+                    row++;
                 }
-                gridLayout.Children.Add(stackLayout, i, j);
+                gridLayout.Children.Add(stackLayout, column, row);
             }
         }
+
+        private Grid CreateGridForAttribute(EncounterMe.Classes.Attribute attribute)
+        {
+            Grid newGrid = new Grid();
+            newGrid.RowDefinitions.Add(new RowDefinition());
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = 30 });
+            newGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            newGrid.Children.Add(CreateCheckBoxFromAttribute(attribute), 0, 0);
+            newGrid.Children.Add(CreateLabelFromAttribute(attribute), 1, 0);
+            return newGrid;
+        }
+
+        private Label CreateLabelFromAttribute(EncounterMe.Classes.Attribute attribute)
+        {
+            return new Label { Text = attribute.Name, HorizontalOptions = LayoutOptions.Start };
+        }
+
+        private CheckBox CreateCheckBoxFromAttribute(EncounterMe.Classes.Attribute attribute)
+        {
+            CheckBox newCheckBox = new CheckBox()
+            {
+                ClassId = attribute.Name,
+                BackgroundColor = Color.Default,
+                IsChecked = pickedAttributes.Contains(attribute),
+            };
+            newCheckBox.CheckedChanged += CheckedAttribute;
+
+            return newCheckBox;
+        }
+
         private async void GoBack(object sender, EventArgs e)
         {
             main.pickedAttributes = pickedAttributes;
