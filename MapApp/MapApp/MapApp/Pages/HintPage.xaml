@@ -3,8 +3,8 @@
         xmlns="http://xamarin.com/schemas/2014/forms"
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-        xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-        x:Class="MapApp.Pages.HintPage"
+        xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    x:Class="MapApp.Pages.HintPage"
         BackgroundInputTransparent="True"
         CloseWhenBackgroundIsClicked="False"
         BackgroundColor="Transparent"
@@ -27,16 +27,41 @@
            >
         <Frame CornerRadius="20"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#FFEEDD">
             <StackLayout>
+                <Grid HeightRequest="250" HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
 
-                <Image  Source="pilis.png"
+                    <forms:AnimationView
+                    x:Name="animationView"
+                    Animation="circle.json"
+                    AutoPlay="true"
+                    RepeatCount="1000000000"
+                    Margin="10, 10, 10, 10"
+                    Opacity="100"
+                            Grid.Column="0"
+                        IsVisible="false"
+                    />
+                    
+
+
+                    <Image  Source="pilis.png"
                         x:Name="hintImage"
-                VerticalOptions="Start" 
-                HorizontalOptions="CenterAndExpand"
-                Aspect="AspectFill"
-                Margin="10, 10, 10, 10" 
-                >
-                </Image>
-                <!-- <Label x:Name="debugText" TextColor="#77d065" FontSize = "20" Text="Start" />-->
+                        VerticalOptions="Start" 
+                        HorizontalOptions="CenterAndExpand"
+                        Aspect="AspectFill"
+                        IsVisible="true"
+                        ></Image>
+                    <BoxView x:Name="shade" HeightRequest="300" HorizontalOptions="FillAndExpand" BackgroundColor="#FFEEDD" Opacity="0.8" Grid.Column="0" IsVisible="false"/>
+
+                </Grid>
+                
+                
+                <Label x:Name="debugText" TextColor="#77d065" FontSize = "20" Text="Start" IsVisible="true" />
 
                 <StackLayout HeightRequest="34"
                              WidthRequest="0"
@@ -70,7 +95,7 @@
                             Margin="10, 10, 10, 10"
                             Grid.Row="0"
                             Grid.Column="0"
-                            IsVisible="False"
+                            IsVisible="True"
                             >
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="CheckMarkOneTapped"/>
@@ -127,6 +152,7 @@
                             Margin="10, 10, 10, 10"
                             Grid.Row="0"
                             Grid.Column="0"
+                            IsVisible="False"
                             >
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="CheckMarkOneUntapped"/>
@@ -155,6 +181,7 @@
                         TextColor="White"
                         Grid.Row="0"
                         Grid.Column="1"
+                        Clicked="Test"
                         CornerRadius = "30" />
                 </Grid>
             </StackLayout>

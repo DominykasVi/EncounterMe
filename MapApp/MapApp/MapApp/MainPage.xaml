@@ -12,7 +12,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <local:CustomMap x:Name="MyMap" 
+        <local:CustomMap x:Name="MyMap"
+                         x:FieldModifier="public"
                          Grid.Row="0"
                          MapType="Street" />
         
