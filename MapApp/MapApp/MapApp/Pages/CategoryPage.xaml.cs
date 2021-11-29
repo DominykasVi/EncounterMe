@@ -54,11 +54,11 @@ namespace MapApp.Pages
                 column++;
                 if (column == columnNum)
                 {
-                    gridLayout.RowDefinitions.Add(new RowDefinition());
+                    grid.RowDefinitions.Add(new RowDefinition());
                     column = 0;
                     row++;
                 }
-                gridLayout.Children.Add(stackLayout, column, row);
+                grid.Children.Add(stackLayout, column, row);
             }
         }
 

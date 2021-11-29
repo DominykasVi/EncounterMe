@@ -57,23 +57,32 @@ namespace MapApp.Pages
             if (pickedAttributes.Count == 0)
                 return;
 
-            categoryGrid.RowDefinitions.Add(new RowDefinition() { Height = 30 });
-            for(int l = 0; l < 10; l++) 
-                categoryGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = 30 });
+            CreateGrid(10, pickedAttributes);
+        }
 
-            int i = -1;
-            int j = 0;
-            foreach (var attribute in pickedAttributes)
+        private void CreateGrid(int columnNum, List<EncounterMe.Classes.Attribute> attributeList)
+        {
+            categoryGrid.RowDefinitions.Add(new RowDefinition() { Height = 30 });
+            for (int i = 0; i < columnNum; i++)
+                categoryGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = 30 });
+            FillGridWithElements(categoryGrid, columnNum, attributeList);
+        }
+
+        private void FillGridWithElements(Grid grid, int columnNum, List<EncounterMe.Classes.Attribute> attributeList)
+        {
+            int column = -1;
+            int row = 0;
+            foreach (var attribute in attributeList)
             {
                 //assign to proper place in whole grid
-                i++;
-                if (i == 10)
+                column++;
+                if (column == columnNum)
                 {
-                    categoryGrid.RowDefinitions.Add(new RowDefinition());
-                    i = 0;
-                    j++;
+                    grid.RowDefinitions.Add(new RowDefinition());
+                    column = 0;
+                    row++;
                 }
-                categoryGrid.Children.Add(new Image { Source = attribute.Image }, i, j);
+                grid.Children.Add(new Image { Source = attribute.Image }, column, row);
             }
         }
     }
