@@ -15,7 +15,7 @@ namespace EncounterMe.Functions
         public event Action? LocationNotFound;
         private const double circumference = 6372.795477598;
 
-        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance)
+        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance, List<Classes.Attribute> attributes)
 
 
         {
