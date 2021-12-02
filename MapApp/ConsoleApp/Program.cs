@@ -20,7 +20,7 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            test_filters();
+            test_bearing();
 
 
         }
@@ -109,5 +109,10 @@ namespace ConsoleApp
             gl.isLocationFound(loc1, 2.0f, 3.0f);
         }
 
+        static void test_bearing ()
+        {
+            GameLogic gl = new GameLogic();
+            Console.WriteLine(gl.getBearingFromUser(1, 1, 100, 100));
+        }
     }
 }

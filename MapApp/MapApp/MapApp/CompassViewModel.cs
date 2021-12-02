@@ -56,7 +56,15 @@ namespace CompassViewModel
 
         void Compass_ReadingChanged(object sender, CompassChangedEventArgs e)
         {
-            Heading = Math.Abs (e.Reading.HeadingMagneticNorth - bearing.bearingToUser);
+            var o = bearing.bearingToUser; // objekto azimutas
+            var z = e.Reading.HeadingMagneticNorth; // zmogaus krypties azimutas
+            if (z > o)
+            {
+                Heading = (360 - z + o)%360;
+            }
+            else Heading = o - z;
+            Console.WriteLine(Heading);
+            //Heading = Math.Abs (bearing.bearingToUser - e.Reading.HeadingMagneticNorth);
             HeadingDisplay = $"Heading: {Heading.ToString()}";
         }
     }

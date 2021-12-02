@@ -129,8 +129,8 @@ namespace MapApp.Pages
             LocationUpdateService = DependencyService.Get<ILocationUpdateService>();
             LocationUpdateService.LocationChanged += (object sender, ILocationEventArgs args) =>
             {
-                bearing.bearingToUser = gameLogic.getBearingFromUser((float)args.Latitude, (float)args.Longitude, locationToFind.Latitude, locationToFind.Longtitude);
-                debugText.Text = bearing.ToString();
+                bearing.bearingToUser = gameLogic.getBearingFromUser(locationToFind.Latitude, locationToFind.Longtitude, args.Latitude, args.Longitude);
+                debugText.Text = bearing.bearingToUser.ToString();
             };
             LocationUpdateService.GetUserLocation();
 
