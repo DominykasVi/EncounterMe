@@ -169,12 +169,12 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="Go Back"
-                        BackgroundColor="#6CD4FF"
+                    <Button Text="Give Up"
+                        BackgroundColor="#DA4167"
                         TextColor="White"
                         Grid.Row="0"
                         Grid.Column="0"
-                        Clicked="GoBack"
+                        Clicked="GiveUp"
                         CornerRadius = "30"/>
                     <Button Text="Found It!"
                         BackgroundColor="#6CD4FF"
@@ -184,6 +184,14 @@
                         Clicked="Test"
                         CornerRadius = "30" />
                 </Grid>
+
+                <Button Text="Go Back"
+                        BackgroundColor="#6CD4FF"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Clicked="GoBack"
+                        CornerRadius = "30"/>
             </StackLayout>
         </Frame>
 

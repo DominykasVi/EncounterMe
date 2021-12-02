@@ -198,7 +198,13 @@ namespace MapApp.Pages
         }
         private async void GoBack(object sender, EventArgs e)
         {
-            //main.MoveMap();
+            //function to close temporary HintPage
+            await Navigation.PopPopupAsync();
+        }
+        private async void GiveUp(object sender, EventArgs e)
+        {
+            //function to go back to location search
+            main.ChangeButtonToSearchForEncounter(sender, e);
             await Navigation.PopPopupAsync();
         }
         private void SliderValueChanged(Object sender, ValueChangedEventArgs e)

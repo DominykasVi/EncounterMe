@@ -17,11 +17,12 @@
                          Grid.Row="0"
                          MapType="Street" />
         
-        <Button Text="Search for Encounter"
+        <Button x:Name="mainButton"
+                Text="Search for Encounter"
                 FontSize="Large"
                 TextColor="White"
                 BackgroundColor="#6CD4FF" 
-                Clicked="PopupSearchEncounter"
+                Clicked="MainButtonClicked"
                 VerticalOptions="End"
                 HorizontalOptions="Center"
                 WidthRequest="300"
