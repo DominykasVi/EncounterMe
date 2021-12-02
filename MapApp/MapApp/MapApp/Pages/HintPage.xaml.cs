@@ -29,6 +29,7 @@ namespace MapApp.Pages
 
         private int imagePosition = 1;
         private int hintTwoPosition;
+        CancellationTokenSource cts;
 
         ILocationUpdateService LocationUpdateService;
 
@@ -58,6 +59,7 @@ namespace MapApp.Pages
         {
             checkMarkOneTapped.IsVisible = false;
             checkMarkOneUntapped.IsVisible = true;
+            
             //main.MoveMap();
             //await Navigation.PopPopupAsync();
         }
@@ -119,15 +121,18 @@ namespace MapApp.Pages
         
         private async void CheckMarkOneTapped(object sender, EventArgs e)
         {
-            checkMarkOneTapped.IsVisible = true;
+            checkMarkOneTapped.Source = "check_mark_checked.png";
             checkMarkOneUntapped.IsVisible = false;
+            compassImage.IsVisible = true;
             UpdateNavigation();
-            //Debug.WriteLine(horizontalStack.);
-            //foreach (var child in horizontalStack)
-            //{
-
-            //};
-            //horizontalStack.C
+            Bearing bearing = Bearing.Instance;
+            LocationUpdateService = DependencyService.Get<ILocationUpdateService>();
+            LocationUpdateService.LocationChanged += (object sender, ILocationEventArgs args) =>
+            {
+                bearing.bearingToUser = gameLogic.getBearingFromUser((float)args.Latitude, (float)args.Longitude, locationToFind.Latitude, locationToFind.Longtitude);
+                debugText.Text = bearing.ToString();
+            };
+            LocationUpdateService.GetUserLocation();
 
 
         }
@@ -261,5 +266,19 @@ namespace MapApp.Pages
                     break;
             }
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (!DesignMode.IsDesignModeEnabled)
+                ((CompassViewModel.CompassViewModel)BindingContext).StartCommand.Execute(null);
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (!DesignMode.IsDesignModeEnabled)
+                ((CompassViewModel.CompassViewModel)BindingContext).StopCommand.Execute(null);
+        }
+
     }
 }

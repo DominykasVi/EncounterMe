@@ -4,7 +4,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
         xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
-    x:Class="MapApp.Pages.HintPage"
+        x:Class="MapApp.Pages.HintPage"
+        xmlns:local="clr-namespace:CompassViewModel"
         BackgroundInputTransparent="True"
         CloseWhenBackgroundIsClicked="False"
         BackgroundColor="Transparent"
@@ -20,6 +21,9 @@
                 EasingOut="SinIn"
                 HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
+    <pages:PopupPage.BindingContext>
+        <local:CompassViewModel/>
+    </pages:PopupPage.BindingContext>
 
     <StackLayout 
             VerticalOptions="EndAndExpand" 
@@ -55,6 +59,15 @@
                         HorizontalOptions="CenterAndExpand"
                         Aspect="AspectFill"
                         IsVisible="true"
+                        ></Image>
+                    
+                    <Image  Source="pilis.png"
+                        x:Name="compassImage"
+                        VerticalOptions="Start" 
+                        HorizontalOptions="CenterAndExpand"
+                        Aspect="AspectFill"
+                        Rotation="{Binding Heading}"
+                        IsVisible="false"
                         ></Image>
                     <BoxView x:Name="shade" HeightRequest="300" HorizontalOptions="FillAndExpand" BackgroundColor="#FFEEDD" Opacity="0.8" Grid.Column="0" IsVisible="false"/>
 
