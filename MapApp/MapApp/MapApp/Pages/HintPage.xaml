@@ -159,7 +159,8 @@
                         </Image.GestureRecognizers>
                     </Image>
                 </Grid>
-                
+
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />

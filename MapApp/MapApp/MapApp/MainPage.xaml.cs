@@ -44,7 +44,7 @@ namespace MapApp
         Circle userSearchCircle;
 
         public Position userPosition;
-        Distance searchRadius;
+        public Distance searchRadius;
 
         //popup pages
         public SearchEncounter searchEncounterPage;
@@ -80,6 +80,25 @@ namespace MapApp
             user.LevelPoints = 8520;
             user.AchievementNum = 10;
             user.FoundLocationNum = 23;
+
+            
+        }
+
+        private void ShrinkCircleHint(object sender, EventArgs e)
+        {
+            var location = new EncounterMe.Location("Mo Muziejus", 54.6791655393238, 25.277288631477447, 100);
+
+            var pin = new CustomPin
+            {
+                Position = location.getPosition(),
+                Label = location.Name,
+                Address = location.Name,
+                Name = "Xamarin",
+                Url = "http://xamarin.com/about/"
+            };
+            MyMap.Pins.Add(pin);
+            ChangeSearchRadius(1500);
+            Navigation.PushPopupAsync(new ShrinkSearchCircle(this));
         }
 
         //Dominykas: redudndant but left for future reference
@@ -169,7 +188,7 @@ namespace MapApp
                 userSearchCircle = new Circle
                 {
                     Center = userPosition,
-                    Radius = new Distance(0),
+                    Radius = new Distance(0), //changed for testing
                     //StrokeColor = Color.FromHex("#88FF0000"),
                     StrokeColor = Color.FromHex("#6CD4FF"),
                     StrokeWidth = 8,
@@ -220,8 +239,15 @@ namespace MapApp
 
         public void SliderValueChanged(Slider RadiusSlider)
         {
+            //might change this that only ChangeSearchRadius exists
             //When the slider value is changed on SearchEncounter the map display changes
             searchRadius = new Distance(RadiusSlider.Value);
+            userSearchCircle.Radius = searchRadius;
+        }
+
+        public void ChangeSearchRadius(float size)
+        {
+            searchRadius = new Distance(size);
             userSearchCircle.Radius = searchRadius;
         }
 

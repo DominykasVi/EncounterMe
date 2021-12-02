@@ -30,6 +30,16 @@
                 Margin="0, 0, 0, 80"
                 CornerRadius = "30"
                  />
+        <Button Text="Shrink Circle"
+                BackgroundColor="#4BD961"
+                TextColor="White"
+                Clicked="ShrinkCircleHint"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                WidthRequest="100"
+                HeightRequest="40"
+                Margin="0, 0, 0, 40"
+                CornerRadius = "30"/>
 
         <Image  Source="idk.png" 
                 VerticalOptions="Start" 
