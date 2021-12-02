@@ -197,6 +197,7 @@
     <AndroidResource Include="Resources\drawable\custom_checkmark.png" />
     <AndroidResource Include="Resources\drawable\navigation_selected.png" />
     <AndroidResource Include="Resources\drawable\navigation_unselected.png" />
+    <AndroidResource Include="Resources\drawable\arrow.png" />
     <Content Include="Resources\drawable\pilis.jpg" />
     <AndroidResource Include="Resources\drawable\temp.jpg" />
   </ItemGroup>

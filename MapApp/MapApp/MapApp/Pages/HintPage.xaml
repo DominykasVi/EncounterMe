@@ -61,7 +61,7 @@
                         IsVisible="true"
                         ></Image>
                     
-                    <Image  Source="pilis.png"
+                    <Image  Source="arrow.png"
                         x:Name="compassImage"
                         VerticalOptions="Start" 
                         HorizontalOptions="CenterAndExpand"
