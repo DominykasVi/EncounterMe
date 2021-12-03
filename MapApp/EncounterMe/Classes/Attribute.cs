@@ -6,6 +6,7 @@ namespace EncounterMe.Classes
 {
     public class Attribute
     {
+        public int Id { get; set; }
         public String Name { get; }
         public String Image { get; }
         public Attribute() { }

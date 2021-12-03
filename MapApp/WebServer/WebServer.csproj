@@ -189,6 +189,14 @@
     <Compile Include="Migrations\202112030407119_TestingUsersTable.designer.cs">
       <DependentUpon>202112030407119_TestingUsersTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112030438333_CreatingUsers.cs" />
+    <Compile Include="Migrations\202112030438333_CreatingUsers.designer.cs">
+      <DependentUpon>202112030438333_CreatingUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112030450456_CreatingLocations.cs" />
+    <Compile Include="Migrations\202112030450456_CreatingLocations.designer.cs">
+      <DependentUpon>202112030450456_CreatingLocations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -298,6 +306,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112030407119_TestingUsersTable.resx">
       <DependentUpon>202112030407119_TestingUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112030438333_CreatingUsers.resx">
+      <DependentUpon>202112030438333_CreatingUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112030450456_CreatingLocations.resx">
+      <DependentUpon>202112030450456_CreatingLocations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

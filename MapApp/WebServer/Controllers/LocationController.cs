@@ -54,20 +54,20 @@ namespace WebServer.Controllers
             //else
             //    return "no";
         }
-        [Route("api/Location/FindLocation")]
-        [HttpPost]
-        public Location GetLocation (LocationToFind userLocation)
-        {
-            //var distance = 50;
-            GameLogic gameLogic = new GameLogic();
-            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());
-            var locationList = db.readFromFile<EncounterMe.Location>();
-            //List<Location> locations = null;
-            //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
-                //we should probably change getLocationsToFind in a way that List<Location> is not needed as a parameter
-            var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance);
-            //location should be serialized and returned
-            return location;
-        }
+        //    [Route("api/Location/FindLocation")]
+        //    [HttpPost]
+        //    public Location GetLocation (LocationToFind userLocation)
+        //    {
+        //        //var distance = 50;
+        //        GameLogic gameLogic = new GameLogic();
+        //        this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());
+        //        var locationList = db.readFromFile<EncounterMe.Location>();
+        //        //List<Location> locations = null;
+        //        //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
+        //            //we should probably change getLocationsToFind in a way that List<Location> is not needed as a parameter
+        //        var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance);
+        //        //location should be serialized and returned
+        //        return location;
+        //    }
     }
 }

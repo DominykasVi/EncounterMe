@@ -9,7 +9,7 @@ namespace WebServer.Controllers
 {
     public class DatabaseContext : DbContext
     {
-        
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }
