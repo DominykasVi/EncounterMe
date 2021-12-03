@@ -22,7 +22,7 @@ namespace WebServer.Controllers
 
         private void FistInit()
         {
-            db.writeToFile(AddLocations());
+            //db.writeToFile(AddLocations());
 
         }
 

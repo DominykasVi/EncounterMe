@@ -15,6 +15,7 @@ namespace EncounterMe
     [Serializable]
     public class User : ISerializable
     {
+        public int Id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
         public byte[] hashpassword { get; set; }
