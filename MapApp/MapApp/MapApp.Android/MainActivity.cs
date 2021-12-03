@@ -9,17 +9,20 @@ using Android.Views;
 using Android.Gms.Maps.Model;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
+using Android.Content;
+
 
 namespace MapApp.Droid
 {
     [Activity(Label = "MapApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        
+        public static Context Context;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
+            Context = this.ApplicationContext;
             Rg.Plugins.Popup.Popup.Init(this);
 
             Xamarin.FormsMaps.Init(this, savedInstanceState);

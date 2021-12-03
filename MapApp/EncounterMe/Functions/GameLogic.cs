@@ -13,7 +13,10 @@ namespace EncounterMe.Functions
         public delegate void LocationFoundDel(Location loc);
         public event LocationFoundDel? LocationFound;
         public event Action? LocationNotFound;
-        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance)
+        private const double circumference = 6372.795477598;
+
+        public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance, List<Classes.Attribute> attributes)
+
 
         {
             //LINQ query
@@ -22,11 +25,20 @@ namespace EncounterMe.Functions
                 where loc.distanceToUser(Lat, Long) < distance
                 select loc).ToList();
 
+            List<Location> byAttr = new List<Location> ();
+
+            foreach (Classes.Attribute at in attributes)
+            {
+                byAttr.AddRange (locationsQuery.FindAll(s => s.Attributes.Contains(at)));
+            }
+            
+
             Dictionary<Location, float> locationsSortedByDistance = new Dictionary<Location, float>();
 
-            foreach (Location loc in locationsQuery)
+            foreach (Location loc in byAttr)
             {
-                locationsSortedByDistance.Add(loc, loc.getRating());
+                if (!locationsSortedByDistance.ContainsKey(loc))
+                    locationsSortedByDistance.Add(loc, loc.getRating());
             }
 
             return locationsSortedByDistance.weightedRandom(e => e.Value).Key;
@@ -35,7 +47,6 @@ namespace EncounterMe.Functions
 
         public void isLocationFound(Location loc, float lat, float lon)
         {
-            Console.WriteLine(loc.Name);
             if (loc.distanceToUser(lat, lon) < 0.005)
             {
                 OnLocationFound(loc);
@@ -44,6 +55,16 @@ namespace EncounterMe.Functions
             {
                 OnLocationNotFound();
             }
+        }
+
+        public float distanceBetweenPoints(float firstLat, float firstLon, float secondLat, float secondLon)
+        {
+            return (float)(circumference *
+                Math.Acos(Math.Sin(firstLat * Math.PI / 180.00) *
+                Math.Sin(secondLat * Math.PI / 180.00) +
+                Math.Cos(firstLat * Math.PI / 180.00) *
+                Math.Cos(secondLat * Math.PI / 180.00) *
+                Math.Cos((firstLon - secondLon) * Math.PI / 180)));
         }
 
         protected virtual void OnLocationFound(Location loc)

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+        xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+        xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    x:Class="MapApp.Pages.HintPage"
+        BackgroundInputTransparent="True"
+        CloseWhenBackgroundIsClicked="False"
+        BackgroundColor="Transparent"
+        NavigationPage.HasNavigationBar="false">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+                PositionIn="Bottom"
+                PositionOut="Bottom"
+               
+                DurationIn="400"
+                DurationOut="300"
+                EasingIn="SinOut"
+                EasingOut="SinIn"
+                HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <StackLayout 
+            VerticalOptions="EndAndExpand" 
+            HorizontalOptions="FillAndExpand" 
+           >
+        <Frame CornerRadius="20"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#FFEEDD">
+            <StackLayout>
+                <Grid HeightRequest="250" HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+
+                    <forms:AnimationView
+                    x:Name="animationView"
+                    Animation="circle.json"
+                    AutoPlay="true"
+                    RepeatCount="1000000000"
+                    Margin="10, 10, 10, 10"
+                    Opacity="100"
+                            Grid.Column="0"
+                        IsVisible="false"
+                    />
+                    
+
+
+                    <Image  Source="pilis.png"
+                        x:Name="hintImage"
+                        VerticalOptions="Start" 
+                        HorizontalOptions="CenterAndExpand"
+                        Aspect="AspectFill"
+                        IsVisible="true"
+                        ></Image>
+                    <BoxView x:Name="shade" HeightRequest="300" HorizontalOptions="FillAndExpand" BackgroundColor="#FFEEDD" Opacity="0.8" Grid.Column="0" IsVisible="false"/>
+
+                </Grid>
+                
+                
+                <Label x:Name="debugText" TextColor="#77d065" FontSize = "20" Text="Start" IsVisible="true" />
+
+                <StackLayout HeightRequest="34"
+                             WidthRequest="0"
+                      x:Name="horizontalStack"
+                      Orientation="Horizontal"
+                      HorizontalOptions="Center"
+                      Spacing="0">
+                </StackLayout>
+
+
+                <Label Text="Hints" 
+                       TextColor="#6CD4FF"
+                       VerticalOptions="End"
+                       FontSize = "40" 
+                       HorizontalOptions="Center"
+                       />
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Image  Source="check_mark_unchecked.png"
+                            x:Name="checkMarkOneUntapped"
+                            VerticalOptions="Start" 
+                            HorizontalOptions="CenterAndExpand"
+                            Aspect="AspectFill"
+                            Margin="10, 10, 10, 10"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            IsVisible="True"
+                            >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="CheckMarkOneTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <Image  Source="check_mark_unchecked.png" 
+                            x:Name="checkMarkTwo"
+                            VerticalOptions="Start" 
+                            HorizontalOptions="CenterAndExpand"
+                            Aspect="AspectFill"
+                            Margin="10, 10, 10, 10" 
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="CheckMarkTwoTapped"/>
+                            </Image.GestureRecognizers>
+                    </Image>
+
+                    <Image  Source="check_mark_unchecked.png"
+                            x:Name="checkMarkThree"
+                            VerticalOptions="Start" 
+                            HorizontalOptions="CenterAndExpand"
+                            Aspect="AspectFill"
+                            Margin="10, 10, 10, 10" 
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="CheckMarkThreeTapped"/>
+                            </Image.GestureRecognizers>
+                    </Image>
+
+                    <Image  Source="check_mark_unchecked.png" 
+                            x:Name="checkMarkFour"
+                            VerticalOptions="Start" 
+                            HorizontalOptions="CenterAndExpand"
+                            Aspect="AspectFill"
+                            Margin="10, 10, 10, 10"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="CheckMarkFourTapped"/>
+                            </Image.GestureRecognizers>
+                    </Image>
+                    <!-- untapped-->
+                    <Image  Source="check_mark_checked.png" 
+                            x:Name="checkMarkOneTapped"
+                            VerticalOptions="Start" 
+                            HorizontalOptions="CenterAndExpand"
+                            Aspect="AspectFill"
+                            Margin="10, 10, 10, 10"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            IsVisible="False"
+                            >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="CheckMarkOneUntapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="Go Back"
+                        BackgroundColor="#6CD4FF"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Clicked="GoBack"
+                        CornerRadius = "30"/>
+                    <Button Text="Found It!"
+                        BackgroundColor="#6CD4FF"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Clicked="Test"
+                        CornerRadius = "30" />
+                </Grid>
+            </StackLayout>
+        </Frame>
+
+    </StackLayout>
+</pages:PopupPage>

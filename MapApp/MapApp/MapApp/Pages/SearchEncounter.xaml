@@ -57,6 +57,7 @@
                         WidthRequest="300"
                         HeightRequest="40"
                         Clicked="Category"/>
+                <Grid x:Name="categoryGrid"/>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />

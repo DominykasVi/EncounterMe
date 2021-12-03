@@ -8,24 +8,15 @@
              mc:Ignorable="d"
              x:Class="MapApp.MainPage"
              NavigationPage.HasNavigationBar="false">
-
     <Grid>
-        <!-- TODO Fix design, add absolute layout-->
-
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <local:CustomMap x:Name="MyMap" 
+        <local:CustomMap x:Name="MyMap"
+                         x:FieldModifier="public"
                          Grid.Row="0"
                          MapType="Street" />
-
-     <!--   <Button Text="ShowAll"
-                Clicked="ShowAll"
-                VerticalOptions="End"
-                HorizontalOptions="End"
-                Margin="0, 0, 75, 23"
-                 />-->
-
+        
         <Button Text="Search for Encounter"
                 FontSize="Large"
                 TextColor="White"
@@ -44,17 +35,8 @@
                 HorizontalOptions="End"
                 Margin="0, 10, 10, 0">
             <Image.GestureRecognizers>
-                <TapGestureRecognizer Tapped="RedirectPage"/>
+                <TapGestureRecognizer Tapped="RedirectUserPage"/>
             </Image.GestureRecognizers>
         </Image>
-
-        <!--
-        <Grid x:Name="FilterPanel"
-        Margin="75, 470, 75, 85"
-        RowSpacing="0"
-        ColumnSpacing="0">
-        </Grid>
-        -->
-        
     </Grid>
 </ContentPage>

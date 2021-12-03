@@ -22,6 +22,7 @@ using EncounterMe.Classes;
 using EncounterMe.Interfaces;
 using System.Net.Http;
 using MapApp.Pages;
+using Rg.Plugins.Popup.Services;
 
 namespace MapApp
 {
@@ -42,16 +43,17 @@ namespace MapApp
         DatabaseManager db;
         Circle userSearchCircle;
 
-        Position userPosition;
+        public Position userPosition;
         Distance searchRadius;
 
         //popup pages
         public SearchEncounter searchEncounterPage;
 
+        //attribute variables
         public List<EncounterMe.Classes.Attribute> attributes;
-        //LocationAttributes filterList;
-        //List<LocationAttributes> attributeList;
+        public List<EncounterMe.Classes.Attribute> pickedAttributes = new List<EncounterMe.Classes.Attribute>();
 
+        public User user;
         public MainPage()
         {
             
@@ -72,6 +74,12 @@ namespace MapApp
 
             InitMap(errorLogger);
             //UpdateMap();
+
+            //only for testing, all info should be in databse, delete later
+            user = new User("Mr. Hamster", "mrhamster@gmail.com", "ilovehamsters");
+            user.LevelPoints = 8520;
+            user.AchievementNum = 10;
+            user.FoundLocationNum = 23;
         }
 
         //Dominykas: redudndant but left for future reference
@@ -179,20 +187,27 @@ namespace MapApp
             }
         }
 
-        async void RedirectPage(object sender, EventArgs e)
+        async void RedirectUserPage(object sender, EventArgs e)
         {
-            //beta version
-            await Navigation.PushAsync(new UserPage());
+            //Open UserPage
+            if(PopupNavigation.Instance.PopupStack.Count > 0)
+                await Navigation.PopAllPopupAsync();
+            await Navigation.PushAsync(new UserPage(user));
         }
 
         public async void PopupSearchEncounter(object sender, EventArgs e)
         {
             //SearchEncounter page pops out
+            if (PopupNavigation.Instance.PopupStack.Count > 0)
+                await Navigation.PopAllPopupAsync();
             MoveMap(-0.015, 0, 2);
-            if(searchEncounterPage == null)
+            if (searchEncounterPage == null)
                 await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
             else
+            {
+                searchEncounterPage.GeneratePickedAttributes();
                 await Navigation.PushPopupAsync(searchEncounterPage);
+            }
 
         }
 
@@ -216,12 +231,38 @@ namespace MapApp
             //read database and save locations locally
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
             MyMap.Pins.Clear();
+            await Navigation.PopPopupAsync();
+            await Navigation.PushPopupAsync(new HintPage(this, new EncounterMe.Location("Pilaite Jammi", 54.7073118, 25.1846521, 100)));
             //Dominykas TODO: Add handling of null exception, also republish webserver
-            //externel class
-            LocationToFind sendLocation = new LocationToFind(userPosition.Latitude, userPosition.Longitude, searchRadius.Kilometers);
-            
+            //externel classs
+
+
+            //*****************************************************************
+            //removed for debug, return in main app
+            //LocationToFind sendLocation = new LocationToFind(userPosition.Latitude, userPosition.Longitude, searchRadius.Kilometers);
+
+            //EncounterMe.Location locationToFind = await sendPostrequestAsync(sendLocation);
+
+            //if (locationToFind == null)
+            //    await DisplayAlert("Could Not Find Location", "We could not find any locations in your selected area. Please change your distance or location.", "OK");
+            //else
+            //{
+            //    MyMap.Pins.Add(new Pin
+            //    {
+            //      Position = locationToFind.getPosition(),
+            //      Label = locationToFind.Name,
+            //      Address = locationToFind.Name,
+            //    });
+            //    searchEncounterPage.ShowLocation(locationToFind);
+            //}
+        }
+
+        private async Task<EncounterMe.Location> sendPostrequestAsync(LocationToFind sendLocation)
+        {
             var json = JsonConvert.SerializeObject(sendLocation);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
+            //var response = await client.PostAsync("https://localhost:44355/api/FindLocation", content);
+
             var url = "https://testwebserverapi.azurewebsites.net/api/Location/FindLocation";
             using HttpClient client = new HttpClient();
 
@@ -229,37 +270,11 @@ namespace MapApp
             string result = response.Content.ReadAsStringAsync().Result;
             EncounterMe.Location locationToFind = JsonConvert.DeserializeObject<EncounterMe.Location>(result);
 
-            //var response = await client.PostAsync("https://localhost:44355/api/FindLocation", content);
+            return locationToFind;
 
-            var responseString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(responseString);
-
-            if (locationToFind == null)
-                await DisplayAlert("Could Not Find Location", "We could not find any locations in your selected area. Please change your distance or location.", "OK");
-            else
-            {
-                MyMap.Pins.Add(new Pin
-                {
-                  Position = locationToFind.getPosition(),
-                  Label = locationToFind.Name,
-                  Address = locationToFind.Name,
-                });
-                searchEncounterPage.ShowLocation(locationToFind);
-            }
-
-            //var locationList = db.readFromFile<EncounterMe.Location>();
-            //foreach (EncounterMe.Location location in locationList)
-            //{
-            //    var dist = (double) location.distanceToUser((float)userPosition.Latitude, (float)userPosition.Longitude);
-            //    //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
-            //    if (dist <= searchRadius.Kilometers)
-            //    {
-                    
-            //    }
-            //}
-            //MyMap.ItemsSource = placesList;
-            //UpdateMap();
-            //text.Text = new EncounterMe userPosition.Latitude.ToString();
+            //for debug
+            //var responseString = await response.Content.ReadAsStringAsync();
+            //Console.WriteLine(responseString);
         }
         /*
         private void ShowAll(Object sender, EventArgs args)
