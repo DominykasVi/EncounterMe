@@ -86,19 +86,18 @@ namespace MapApp
 
         private void ShrinkCircleHint(object sender, EventArgs e)
         {
-            var location = new EncounterMe.Location("Mo Muziejus", 54.6791655393238, 25.277288631477447, 100);
-
-            var pin = new CustomPin
+            EncounterMe.Location location = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, 10);
+            var circle = new Circle
             {
-                Position = location.getPosition(),
-                Label = location.Name,
-                Address = location.Name,
-                Name = "Xamarin",
-                Url = "http://xamarin.com/about/"
+                Center = location.getPosition(),
+                Radius = new Distance(50),
+                StrokeColor = Color.FromHex("#6CD4FF"),
+                StrokeWidth = 8,
+                FillColor = Color.FromRgba(108, 212, 255, 57)
             };
-            MyMap.Pins.Add(pin);
+            MyMap.MapElements.Add(circle);
             ChangeSearchRadius(1500);
-            Navigation.PushPopupAsync(new ShrinkSearchCircle(this));
+            Navigation.PushPopupAsync(new ShrinkSearchCircle(this, location.Latitude, location.Longtitude ,userPosition.Latitude,userPosition.Longitude));
         }
 
         //Dominykas: redudndant but left for future reference
@@ -249,6 +248,10 @@ namespace MapApp
         {
             searchRadius = new Distance(size);
             userSearchCircle.Radius = searchRadius;
+        }
+        public void ChangeSearchCentre(Position position)
+        {
+            userSearchCircle.Center = position;
         }
 
         private static readonly HttpClient client = new HttpClient();

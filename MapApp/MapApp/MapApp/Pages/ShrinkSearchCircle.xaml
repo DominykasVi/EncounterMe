@@ -39,21 +39,25 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <RadioButton    x:Name="size2500"
+                                    Value="2500"
                                      GroupName="Size"
                                      HorizontalOptions="Center"
                                      Grid.Row="0"
                                      Grid.Column="0"/>
                     <RadioButton x:Name="size1000"
+                                 Value="1000"
                                      GroupName="Size"
                                      HorizontalOptions="Center"
                                      Grid.Row="0"
                                      Grid.Column="1"/>
                     <RadioButton x:Name="size500"
+                                 Value="500"
                                      GroupName="Size"
                                      HorizontalOptions="Center"
                                      Grid.Row="0"
                                      Grid.Column="2"/>
                     <RadioButton x:Name="size50"
+                                 Value="50"
                                      GroupName="Size"
                                      HorizontalOptions="Center"
                                      Grid.Row="0"
@@ -95,7 +99,8 @@
                         BackgroundColor="#EC9F2B"
                         TextColor="White"
                         Grid.Row="0"
-                        Grid.Column="1"/>
+                        Grid.Column="1"
+                        Clicked="ShrinkCircle"/>
                 </Grid>
             </StackLayout>
         </Frame>
