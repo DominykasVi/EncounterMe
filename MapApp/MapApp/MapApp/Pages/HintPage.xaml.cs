@@ -13,24 +13,24 @@ using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 using System.Threading;
 using Xamarin.Forms.DetectUserLocationCange.Services;
+using MapApp.Hints;
 
 namespace MapApp.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HintPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        //16 as variable
         MainPage main;
-        Location locationToFind;
+        public Location locationToFind;
         GameLogic gameLogic;
 
+        List<IHint> HintList = new List<IHint>();
+
         private int stackWidth = 0;
-        private int currentPostion = 0;
+        private int bubbleWidth = 16;
+        private int currentPosition = 0;
 
-        private int imagePosition = 1;
-        private int hintTwoPosition;
 
-        ILocationUpdateService LocationUpdateService;
 
         public HintPage(MainPage main, Location loc)
         {
@@ -44,8 +44,8 @@ namespace MapApp.Pages
             leftSwipe.Swiped += OnSwiped;
             rightSwipe.Swiped += OnSwiped;
 
-            hintImage.GestureRecognizers.Add(leftSwipe);
-            hintImage.GestureRecognizers.Add(rightSwipe);
+            //hintImage.GestureRecognizers.Add(leftSwipe);
+            //hintImage.GestureRecognizers.Add(rightSwipe);
 
             shade.GestureRecognizers.Add(leftSwipe);
             shade.GestureRecognizers.Add(rightSwipe);
@@ -54,27 +54,20 @@ namespace MapApp.Pages
 
         }
 
-        private async void CheckMarkOneUntapped(object sender, EventArgs e)
-        {
-            checkMarkOneTapped.IsVisible = false;
-            checkMarkOneUntapped.IsVisible = true;
-            //main.MoveMap();
-            //await Navigation.PopPopupAsync();
-        }
 
         private void UpdateNavigation() 
         {
-            //debugText.Text = (stackWidth%16).ToString();
+            //debugText.Text = (stackWidth%bubbleWidth).ToString();
 
-            var unselectedIcons = stackWidth / 16;
-            stackWidth += 16;
-            currentPostion += 1;
+            var unselectedIcons = stackWidth / bubbleWidth;
+            stackWidth += bubbleWidth;
+            currentPosition += 1;
             UpdateStack();
         }
 
         private void UpdateStack()
         {
-            if (currentPostion > 4)
+            if (currentPosition > 4)
             {
                 return;
             }
@@ -82,14 +75,14 @@ namespace MapApp.Pages
             horizontalStack.Children.Clear();
             horizontalStack.WidthRequest = stackWidth;
 
-            if(currentPostion == 0)
+            if(currentPosition == 0)
             {
-                currentPostion++;
+                currentPosition++;
             }
 
-            for (int i = 0; i < stackWidth / 16; i++)
+            for (int i = 0; i < stackWidth / bubbleWidth; i++)
             {
-                if (currentPostion == i + 1)
+                if (currentPosition == i + 1)
                 {
                     horizontalStack.Children.Add(new Image
                     {
@@ -114,87 +107,48 @@ namespace MapApp.Pages
                 }
             }
 
-            debugText.Text = currentPostion.ToString();
+            //debugText.Text = currentPosition.ToString();
         }
         
         private async void CheckMarkOneTapped(object sender, EventArgs e)
         {
-            checkMarkOneTapped.IsVisible = true;
-            checkMarkOneUntapped.IsVisible = false;
-            UpdateNavigation();
-            //Debug.WriteLine(horizontalStack.);
-            //foreach (var child in horizontalStack)
-            //{
-
-            //};
-            //horizontalStack.C
-
+            updateCheckMark(new HintCompass(this), checkMarkOne);
 
         }
 
 
         private async void CheckMarkTwoTapped(object sender, EventArgs e)
         {
-            checkMarkTwo.Source = "check_mark_checked.png";
-            UpdateNavigation();
-            LocationUpdateService = DependencyService.Get<ILocationUpdateService>();
-            LocationUpdateService.LocationChanged += (object sender, ILocationEventArgs args) =>
-            {
-                var distance = gameLogic.distanceBetweenPoints((float)args.Latitude, (float)args.Longitude, locationToFind.Latitude, locationToFind.Longtitude);
-                UpdateDistanceVisual(distance);
-                debugText.Text = distance.ToString();
-            };
-
-            LocationUpdateService.GetUserLocation();
-            hintTwoPosition = currentPostion;
-            hintImage.IsVisible = false;
-            animationView.IsVisible = true;
-            shade.IsVisible = true;
-
+            //check if it hasnt been clicked before
+            updateCheckMark(new HintDistance(this, gameLogic), checkMarkTwo);
+            //hintTwoPosition = currentPosition;        
         }
 
-        private double startingDistance = -1;
-        private double lastDistance;
-
-        private double opacity;
-        private double startingOpacity = 0.7;
+        
      
-        private void UpdateDistanceVisual(double distance)
-        {
-            if(startingDistance == -1)
-            {
-                startingDistance = distance;
-                lastDistance = distance;
-                opacity = startingOpacity;
-
-                animationView.HeightRequest = 100;
-                animationView.WidthRequest = 100;
-
-                shade.Opacity = opacity;
-                return;
-            }
-
-            var differencePercentage = (startingDistance - distance) / startingDistance;
-            opacity = startingOpacity - (startingOpacity * differencePercentage);
-            shade.Opacity = opacity;
-
-            animationView.HeightRequest = 100 + (150*differencePercentage);
-            animationView.WidthRequest = 100 + (150 * differencePercentage);
-    
-        }
+        
 
         private async void CheckMarkThreeTapped(object sender, EventArgs e)
         {
-            checkMarkThree.Source = "check_mark_checked.png";
-            UpdateNavigation();
+            updateCheckMark(new HintCircle(this), checkMarkThree);
 
         }
 
         private async void CheckMarkFourTapped(object sender, EventArgs e)
         {
-            checkMarkFour.Source = "check_mark_checked.png";
-            UpdateNavigation();
+            updateCheckMark(new HintCircle(this), checkMarkFour);
+            //TODO: fourth Hint
+        }
 
+        private void updateCheckMark(IHint hint, Image image)
+        {
+            if (image.Source.ToString() != "File: check_mark_checked.png")
+            {
+                image.Source = "check_mark_checked.png";
+                HintList.Insert(currentPosition, hint);
+                UpdateNavigation();
+                //HintList.Add(hint);
+            }
         }
         private async void GoBack(object sender, EventArgs e)
         {
@@ -219,45 +173,49 @@ namespace MapApp.Pages
         }
         private async void Test(object sender, EventArgs e)
         {
-            var locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 50;
-            var myPosition = await locator.GetPositionAsync();
+            //var locator = CrossGeolocator.Current;
+            //locator.DesiredAccuracy = 50;
+            //var myPosition = await locator.GetPositionAsync();
 
-            LocationUpdateService = DependencyService.Get<ILocationUpdateService>();
+            //LocationUpdateService = DependencyService.Get<ILocationUpdateService>();
 
-            //main.userPosition = new Position(myPosition.Latitude, myPosition.Longitude);
-            debugText.Text = myPosition.Latitude.ToString();
+            ////main.userPosition = new Position(myPosition.Latitude, myPosition.Longitude);
+            //debugText.Text = myPosition.Latitude.ToString();
         }
 
- 
 
         void OnSwiped(object sender, SwipedEventArgs e)
         {
             //horizontalStack.Children.Clear();
-            if (currentPostion == 0)
+            if (HintList.Count() < 2)
             {
                 return;
             }
-            hintImage.Source = "temp.jpg";
-            //debugText.Text = e.Direction.ToString();
 
+            
+            //debugText.Text = e.Direction.ToString();
+            int newPosition;
             switch (e.Direction)
             {
                 case SwipeDirection.Left:
-
-                    if ((currentPostion + 1) <= stackWidth/16)
+                    newPosition = PositionBoundsCheck(1);
+                    //checks if we need to update hint
+                    if (newPosition != currentPosition)
                     {
-                        currentPostion += 1;
+                        UpdateHint(newPosition);
+                        currentPosition = newPosition;
+                        UpdateStack();
                     }
-                    UpdateStack();
                     break;
                 case SwipeDirection.Right:
-
-                    if ((currentPostion - 1) > 0)
+                    newPosition = PositionBoundsCheck(-1);
+                    //checks if we need to update hint
+                    if (newPosition != currentPosition)
                     {
-                        currentPostion -= 1;
+                        UpdateHint(newPosition);
+                        currentPosition = newPosition;
+                        UpdateStack();
                     }
-                    UpdateStack();
                     break;
                 case SwipeDirection.Up:
                     // Handle the swipe
@@ -266,6 +224,26 @@ namespace MapApp.Pages
                     // Handle the swipe
                     break;
             }
+            //debugText.Text = currentPosition.ToString();
+
+        }
+
+        void UpdateHint(int newPostion)
+        {
+            HintList[currentPosition - 1].hideHint(this);
+            HintList[newPostion - 1].show(this);
+            debugText.Text = currentPosition.ToString() + " " + newPostion.ToString() + " " + HintList[newPostion - 1].ToString();
+        }
+        int PositionBoundsCheck(int change)
+        {
+
+            if (((currentPosition + change) <= stackWidth / bubbleWidth) && (currentPosition + change) > 0)
+            {
+                var newPosition = currentPosition + change;
+                return newPosition;
+            }
+
+            return currentPosition;
         }
     }
 }

@@ -16,8 +16,6 @@ namespace EncounterMe.Functions
         private const double circumference = 6372.795477598;
 
         public Location getLocationToFind (List<Location> Locations, float Lat, float Long, double distance, List<Classes.Attribute> attributes)
-
-
         {
             //LINQ query
             var locationsQuery =
