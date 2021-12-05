@@ -10,6 +10,8 @@ using System.Net;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace ConsoleApp
 {
@@ -20,17 +22,54 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            test_Events();
+            //test_Events();
             DominykasTest();
-
+            string userName = Console.ReadLine();
 
         }
 
         static async Task DominykasTest() {
             //var task = DominykasTestErrors("random str");
             //task.Wait();
-            var erro = new AppLogger();
-            erro.logErrorMessage("some value");
+            var program = new Program();
+            //string userName = Console.ReadLine();
+
+            //var erro = new AppLogger();
+            //erro.logErrorMessage("some value");
+
+            LocationToFind sendLocation = new LocationToFind(54.7074356, 25.1720581, 1000);
+
+            EncounterMe.Location locationToFind = await program.sendPostrequestAsync(sendLocation);
+            Console.WriteLine(locationToFind.ToString());
+            
+        }
+
+        private async Task<EncounterMe.Location> sendPostrequestAsync(LocationToFind sendLocation)
+        {
+            var json = JsonConvert.SerializeObject(sendLocation);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            //var response = await client.PostAsync("https://localhost:44355/api/FindLocation", content);
+
+            var url = "https://localhost:5001/api/Location/FindLocation";
+            using HttpClient client = new HttpClient();
+            try
+            {
+                var response = await client.PostAsync(url, data);
+                string result = response.Content.ReadAsStringAsync().Result;
+                //EncounterMe.Location locationToFind = JsonConvert.DeserializeObject<EncounterMe.Location>(result);
+                var responseString = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(responseString);
+
+
+                //return locationToFind;
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return null;
+            //for debug
+            
         }
         private static readonly HttpClient client = new HttpClient();
 

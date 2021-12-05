@@ -1,26 +1,39 @@
-﻿using EncounterMe;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EncounterMe;
 using EncounterMe.Classes;
 using EncounterMe.Functions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.IO;
 
-namespace WebServer.Controllers
+namespace WebApiV2
 {
-    public class HomeController : Controller
+    public class Program
     {
         DatabaseManager db;
-        public ActionResult Index()
+        public static void Main(string[] args)
         {
-            ViewBag.Title = "Home Page";
-            FistInit();
-            return View();
+            var program = new Program();
+            CreateHostBuilder(args).Build().Run();
+            program.FirstInit();
         }
 
-        private void FistInit()
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>()
+                    .UseContentRoot(Directory.GetCurrentDirectory());
+                });
+
+        private void FirstInit()
         {
             this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());//it works i think// I made it work ;)
             db.writeToFile(AddLocations());
