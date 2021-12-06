@@ -276,6 +276,32 @@ namespace MapApp
             //var responseString = await response.Content.ReadAsStringAsync();
             //Console.WriteLine(responseString);
         }
+
+        private async void MainButtonClicked(object sender, EventArgs e)
+        {
+            if ((sender as Button).Text == "Search for Encounter")
+                PopupSearchEncounter(sender, e);
+            else if ((sender as Button).Text == "View Location")
+                ViewLocation();
+        }
+
+        public async void ViewLocation()
+        {
+            //when HintPage will need to remember, change this with reference!
+            await Navigation.PushPopupAsync(new HintPage(this, new EncounterMe.Location("Pilaite Jammi", 54.7073118, 25.1846521, 100)));
+        }
+
+            public async void ChangeButtonToViewLocation(object sender, EventArgs e)
+        {
+            mainButton.Text = "View Location";
+            mainButton.BackgroundColor = Color.FromHex("#EC9F2B");
+        }
+
+        public async void ChangeButtonToSearchForEncounter(object sender, EventArgs e)
+        {
+            mainButton.Text = "Search for Encounter";
+            mainButton.BackgroundColor = Color.FromHex("#6CD4FF");
+        }
         /*
         private void ShowAll(Object sender, EventArgs args)
         {

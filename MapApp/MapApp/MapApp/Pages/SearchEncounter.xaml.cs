@@ -40,6 +40,7 @@ namespace MapApp.Pages
         }
         private void Search(Object sender, EventArgs e)
         {
+            main.ChangeButtonToViewLocation(sender, e);
             main.SearchForPlace();
         }
         private async void Category(Object sender, EventArgs e)
