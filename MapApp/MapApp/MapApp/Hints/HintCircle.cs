@@ -7,9 +7,11 @@ namespace MapApp.Hints
 {
     internal class HintCircle : IHint
     {
-        public HintCircle(HintPage hint)
+        public HintCircle(HintPage hintPage)
         {
+            hintPage.hintImage.IsVisible = true;
 
+            hintPage.hintImage.Source = "temp.jpg";
         }
         public void hideHint(HintPage hintPage)
         {

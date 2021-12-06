@@ -9,7 +9,8 @@ namespace MapApp.Hints
     {
         public HintCompass(HintPage hintPage)
         {
-
+            hintPage.hintImage.IsVisible = true;
+            hintPage.hintImage.Source = "pilis.png";
         }
         public void hideHint(HintPage hintPage)
         {

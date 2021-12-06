@@ -112,6 +112,8 @@ namespace MapApp.Pages
         
         private async void CheckMarkOneTapped(object sender, EventArgs e)
         {
+            initCheck();
+
             updateCheckMark(new HintCompass(this), checkMarkOne);
 
         }
@@ -119,6 +121,8 @@ namespace MapApp.Pages
 
         private async void CheckMarkTwoTapped(object sender, EventArgs e)
         {
+            initCheck();
+
             //check if it hasnt been clicked before
             updateCheckMark(new HintDistance(this, gameLogic), checkMarkTwo);
             //hintTwoPosition = currentPosition;        
@@ -130,21 +134,35 @@ namespace MapApp.Pages
 
         private async void CheckMarkThreeTapped(object sender, EventArgs e)
         {
+            initCheck();
+
             updateCheckMark(new HintCircle(this), checkMarkThree);
 
         }
 
         private async void CheckMarkFourTapped(object sender, EventArgs e)
         {
+            initCheck();
             updateCheckMark(new HintCircle(this), checkMarkFour);
             //TODO: fourth Hint
         }
 
-        private void updateCheckMark(IHint hint, Image image)
+        private void initCheck()
         {
-            if (image.Source.ToString() != "File: check_mark_checked.png")
+            if (currentPosition != 0)
             {
-                image.Source = "check_mark_checked.png";
+                HintList[currentPosition - 1].hideHint(this);
+            }
+        }
+
+        
+        private void updateCheckMark(IHint hint, Image image, String newImageSource= "check_mark_checked.png")
+        {
+            
+
+            if (image.Source.ToString() != "File: " + newImageSource)
+            {
+                image.Source = newImageSource;
                 HintList.Insert(currentPosition, hint);
                 UpdateNavigation();
                 //HintList.Add(hint);
