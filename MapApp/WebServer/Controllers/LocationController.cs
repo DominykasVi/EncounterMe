@@ -64,8 +64,8 @@ namespace WebServer.Controllers
             var locationList = db.readFromFile<EncounterMe.Location>();
             //List<Location> locations = null;
             //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
-                //we should probably change getLocationsToFind in a way that List<Location> is not needed as a parameter
-            var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance);
+                //TODO: check if works with null, pass attributes from categories
+            var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance, null);
             //location should be serialized and returned
             return location;
         }
