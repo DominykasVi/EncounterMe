@@ -44,7 +44,7 @@ namespace MapApp
         Circle userSearchCircle;
 
         public Position userPosition;
-        Distance searchRadius;
+        public Distance searchRadius;
 
         //popup pages
         public SearchEncounter searchEncounterPage;
@@ -80,6 +80,24 @@ namespace MapApp
             user.LevelPoints = 8520;
             user.AchievementNum = 10;
             user.FoundLocationNum = 23;
+
+            
+        }
+
+        private void ShrinkCircleHint(object sender, EventArgs e)
+        {
+            EncounterMe.Location location = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, 10);
+            var circle = new Circle
+            {
+                Center = location.getPosition(),
+                Radius = new Distance(50),
+                StrokeColor = Color.FromHex("#6CD4FF"),
+                StrokeWidth = 8,
+                FillColor = Color.FromRgba(108, 212, 255, 57)
+            };
+            MyMap.MapElements.Add(circle);
+            ChangeSearchRadius(1500);
+            Navigation.PushPopupAsync(new ShrinkSearchCircle(this, location.Latitude, location.Longtitude ,userPosition.Latitude,userPosition.Longitude));
         }
 
         //Dominykas: redudndant but left for future reference
@@ -169,7 +187,7 @@ namespace MapApp
                 userSearchCircle = new Circle
                 {
                     Center = userPosition,
-                    Radius = new Distance(0),
+                    Radius = new Distance(0), //changed for testing
                     //StrokeColor = Color.FromHex("#88FF0000"),
                     StrokeColor = Color.FromHex("#6CD4FF"),
                     StrokeWidth = 8,
@@ -220,9 +238,20 @@ namespace MapApp
 
         public void SliderValueChanged(Slider RadiusSlider)
         {
+            //might change this that only ChangeSearchRadius exists
             //When the slider value is changed on SearchEncounter the map display changes
             searchRadius = new Distance(RadiusSlider.Value);
             userSearchCircle.Radius = searchRadius;
+        }
+
+        public void ChangeSearchRadius(float size)
+        {
+            searchRadius = new Distance(size);
+            userSearchCircle.Radius = searchRadius;
+        }
+        public void ChangeSearchCentre(Position position)
+        {
+            userSearchCircle.Center = position;
         }
 
         private static readonly HttpClient client = new HttpClient();
