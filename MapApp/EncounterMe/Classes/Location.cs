@@ -26,7 +26,7 @@ namespace EncounterMe
     public class Location : IComparable
     {
         private const double circumference = 6372.795477598;
-        public uint ID { get; set; }
+        public int Id { get; set; }
         public String Name { get; set; }
         //Coordiantes are to be written in Decimal Degree (DD) notation. See more here: https://en.wikipedia.org/wiki/Decimal_degrees
         //Might not require duoble precision, can be switched to float later
@@ -37,24 +37,20 @@ namespace EncounterMe
 
         private uint Downvote = 0;
 
-        IDGenerator id = IDGenerator.Instance;
+        //IdGenerator Id = IdGenerator.Instance;
 
         public List<EncounterMe.Classes.Attribute> Attributes { get; set; }
         //public LocationAttributes attributes { get; set; }
         //public String Attributes { get { return attributes.ToString(); } }
 
         public Location() { }
-        public Location(String Name, double Latitude, double Longtitude, uint ID = 0)
+        public Location(String Name, double Latitude, double Longtitude, int Id = 0)
 
         {
-            this.ID = ID;
+            this.Id = Id;
             this.Name = Name;
             this.Latitude = (float)Latitude;
             this.Longtitude = (float)Longtitude;
-            if (this.ID == 0)
-            {
-                this.ID = id.getID(this);
-            }
             Attributes = new List<Classes.Attribute>();
         }
 

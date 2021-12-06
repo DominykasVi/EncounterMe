@@ -17,7 +17,7 @@ namespace EncounterMe.Functions
         {
         }
 
-        private uint id = 0;
+        private int id = 0;
 
         private bool idIsSet = false;
 
@@ -28,14 +28,14 @@ namespace EncounterMe.Functions
             {
                 foreach (Location location in loc)
                 {
-                    locations.Add(location.ID, location);
-                    if (location.ID > id) id = location.ID;
+                    locations.Add(location.Id, location);
+                    if (location.Id > id) id = location.Id;
                 }
             }
             idIsSet = true;
         }
 
-        public uint getID (Location loc)
+        public int getID (Location loc)
         {
             if (idIsSet == true)
             {

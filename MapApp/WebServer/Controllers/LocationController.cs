@@ -54,6 +54,7 @@ namespace WebServer.Controllers
             //else
             //    return "no";
         }
+
         [Route("api/Location/FindLocation")]
         [HttpPost]
         public Location GetLocation (LocationToFind userLocation)
@@ -69,5 +70,6 @@ namespace WebServer.Controllers
             //location should be serialized and returned
             return location;
         }
+
     }
 }
