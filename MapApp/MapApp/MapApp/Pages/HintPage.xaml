@@ -81,28 +81,30 @@
                       Spacing="0">
                 </StackLayout>
 
-
+                <!--
                 <Label Text="Hints" 
                        TextColor="#6CD4FF"
                        VerticalOptions="End"
                        FontSize = "40" 
                        HorizontalOptions="Center"
                        />
+                -->
                 <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="80"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Image  Source="check_mark_unchecked.png"
+                    <Image  Source="compasslocked.png"
                             x:Name="checkMarkOne"
-                            VerticalOptions="Start" 
+                            VerticalOptions="CenterAndExpand" 
                             HorizontalOptions="CenterAndExpand"
                             Aspect="AspectFill"
-                            Margin="10, 10, 10, 10"
                             Grid.Row="0"
                             Grid.Column="0"
                             IsVisible="True"
@@ -112,12 +114,17 @@
                         </Image.GestureRecognizers>
                     </Image>
 
-                    <Image  Source="check_mark_unchecked.png" 
+                    <Label Text="Compass"
+                           HorizontalOptions="Center"
+                           FontSize="15"
+                           Grid.Row="1"
+                           Grid.Column="0"/>
+
+                    <Image  Source="bubblelocked.png" 
                             x:Name="checkMarkTwo"
-                            VerticalOptions="Start" 
+                            VerticalOptions="CenterAndExpand" 
                             HorizontalOptions="CenterAndExpand"
                             Aspect="AspectFill"
-                            Margin="10, 10, 10, 10" 
                             Grid.Row="0"
                             Grid.Column="1"
                             >
@@ -126,12 +133,17 @@
                             </Image.GestureRecognizers>
                     </Image>
 
-                    <Image  Source="check_mark_unchecked.png"
+                    <Label Text="Distance"
+                           HorizontalOptions="Center"
+                           FontSize="15"
+                           Grid.Row="1"
+                           Grid.Column="1"/>
+
+                    <Image  Source="shrinklocked.png"
                             x:Name="checkMarkThree"
-                            VerticalOptions="Start" 
+                            VerticalOptions="End" 
                             HorizontalOptions="CenterAndExpand"
                             Aspect="AspectFill"
-                            Margin="10, 10, 10, 10" 
                             Grid.Row="0"
                             Grid.Column="2"
                             >
@@ -140,9 +152,16 @@
                             </Image.GestureRecognizers>
                     </Image>
 
+                    <Label Text="Shrink"
+                           HorizontalOptions="Center"
+                           FontSize="15"
+                           Grid.Row="1"
+                           Grid.Column="2"/>
+
+                    <!--
                     <Image  Source="check_mark_unchecked.png" 
                             x:Name="checkMarkFour"
-                            VerticalOptions="Start" 
+                            VerticalOptions="End" 
                             HorizontalOptions="CenterAndExpand"
                             Aspect="AspectFill"
                             Margin="10, 10, 10, 10"
@@ -153,13 +172,14 @@
                                 <TapGestureRecognizer Tapped="CheckMarkFourTapped"/>
                             </Image.GestureRecognizers>
                     </Image>
+                    -->
                     
                 </Grid>
 
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition />
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -185,8 +205,6 @@
                 <Button Text="Go Back"
                         BackgroundColor="#6CD4FF"
                         TextColor="White"
-                        Grid.Row="0"
-                        Grid.Column="0"
                         Clicked="GoBack"
                         CornerRadius = "30"/>
             </StackLayout>

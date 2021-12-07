@@ -30,12 +30,16 @@ namespace MapApp.Pages
         private int bubbleWidth = 16;
         private int currentPosition = 0;
 
+        HintCompass hintCompass;
+        HintCircle hintCircle;
+        HintDistance hintDistance;
 
 
         public HintPage(MainPage main, Location loc)
         {
             this.main = main;
             this.locationToFind = loc;
+
             gameLogic = new GameLogic();
             InitializeComponent();
             var leftSwipe = new SwipeGestureRecognizer { Direction = SwipeDirection.Left};
@@ -48,17 +52,11 @@ namespace MapApp.Pages
             //hintImage.GestureRecognizers.Add(rightSwipe);
 
             shade.GestureRecognizers.Add(leftSwipe);
-            shade.GestureRecognizers.Add(rightSwipe);
-
-
-
+            shade.GestureRecognizers.Add(rightSwipe);   
         }
-
 
         private void UpdateNavigation() 
         {
-            //debugText.Text = (stackWidth%bubbleWidth).ToString();
-
             var unselectedIcons = stackWidth / bubbleWidth;
             stackWidth += bubbleWidth;
             currentPosition += 1;
@@ -112,20 +110,29 @@ namespace MapApp.Pages
         
         private async void CheckMarkOneTapped(object sender, EventArgs e)
         {
-            initCheck();
-
-            updateCheckMark(new HintCompass(this), checkMarkOne);
-
+            //CompassHint
+            
+            //initCheck();
+            if(hintCompass == null)
+            {
+                checkMarkOne.Source = "compass.png";
+                hintCompass = new HintCompass(this);
+                updateCheckMark(hintCompass);
+            }
         }
 
 
         private async void CheckMarkTwoTapped(object sender, EventArgs e)
         {
-            initCheck();
+            //DistanceHint
 
-            //check if it hasnt been clicked before
-            updateCheckMark(new HintDistance(this, gameLogic), checkMarkTwo);
-            //hintTwoPosition = currentPosition;        
+            //initCheck();
+            if (hintDistance == null)
+            {
+                checkMarkTwo.Source = "bubble.png";
+                hintDistance = new HintDistance(this, gameLogic);
+                updateCheckMark(hintDistance);
+            }       
         }
 
         
@@ -134,18 +141,23 @@ namespace MapApp.Pages
 
         private async void CheckMarkThreeTapped(object sender, EventArgs e)
         {
-            initCheck();
-
-            updateCheckMark(new HintCircle(this), checkMarkThree);
-
+            //initCheck();
+            if (hintCircle == null)
+            {
+                checkMarkThree.Source = "shrink.png";
+                hintCircle = new HintCircle(this);
+                updateCheckMark(hintCircle);
+            }
         }
 
+        /*
         private async void CheckMarkFourTapped(object sender, EventArgs e)
         {
             initCheck();
             updateCheckMark(new HintCircle(this), checkMarkFour);
             //TODO: fourth Hint
         }
+        */
 
         private void initCheck()
         {
@@ -156,39 +168,18 @@ namespace MapApp.Pages
         }
 
         
-        private void updateCheckMark(IHint hint, Image image, String newImageSource= "check_mark_checked.png")
+        private void updateCheckMark(IHint hint)
         {
-            
-
-            if (image.Source.ToString() != "File: " + newImageSource)
+            //for location's picture
+            if (currentPosition == 0)
             {
-                image.Source = newImageSource;
-                HintList.Insert(currentPosition, hint);
+                HintList.Insert(currentPosition, new HintCircle(this));
                 UpdateNavigation();
-                //HintList.Add(hint);
             }
+            HintList.Insert(currentPosition, hint);
+            UpdateNavigation();
         }
-        private async void GoBack(object sender, EventArgs e)
-        {
-            //function to close temporary HintPage
-            await Navigation.PopPopupAsync();
-        }
-        private async void GiveUp(object sender, EventArgs e)
-        {
-            //function to go back to location search
-            main.ChangeButtonToSearchForEncounter(sender, e);
-            await Navigation.PopPopupAsync();
-        }
-        private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
-        {
-            //main.SliderValueChanged(sender as Slider);
-            //SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
-        }
-        public async void ShowLocation(Location location)
-        {
-            //await Navigation.PopPopupAsync();
-            //await Navigation.PushPopupAsync(new LocationPopup(main, location));
-        }
+        
         private async void Test(object sender, EventArgs e)
         {
             //var locator = CrossGeolocator.Current;
@@ -205,11 +196,12 @@ namespace MapApp.Pages
         void OnSwiped(object sender, SwipedEventArgs e)
         {
             //horizontalStack.Children.Clear();
+            /* ???what
             if (HintList.Count() < 2)
             {
-                return;
+                //return;
             }
-
+            */
             
             //debugText.Text = e.Direction.ToString();
             int newPosition;
@@ -262,6 +254,18 @@ namespace MapApp.Pages
             }
 
             return currentPosition;
+        }
+
+        private async void GoBack(object sender, EventArgs e)
+        {
+            //function to close temporary HintPage
+            await Navigation.PopPopupAsync();
+        }
+        private async void GiveUp(object sender, EventArgs e)
+        {
+            //function to go back to location search
+            main.ChangeButtonToSearchForEncounter(sender, e);
+            await Navigation.PopPopupAsync();
         }
     }
 }
