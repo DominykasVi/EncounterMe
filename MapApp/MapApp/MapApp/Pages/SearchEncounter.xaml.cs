@@ -30,7 +30,7 @@ namespace MapApp.Pages
         }
         private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
         {
-            main.SliderValueChanged(sender as Slider);
+            main.ChangeSearchRadius((float)(sender as Slider).Value);
             SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
         }
         public async void ShowLocation(Location location)

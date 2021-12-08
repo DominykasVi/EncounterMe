@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -14,10 +11,7 @@ using EncounterMe.Functions;
 using EncounterMe;
 using Xamarin.Essentials;
 using Plugin.Geolocator;
-using Windows.UI.Xaml.Controls.Maps;
-using Windows.Storage.Streams;
 using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Pages;
 using EncounterMe.Classes;
 using EncounterMe.Interfaces;
 using System.Net.Http;
@@ -41,35 +35,28 @@ namespace MapApp
     public partial class MainPage : ContentPage
     {
         DatabaseManager db;
-        Circle userSearchCircle;
 
+        //user data
+        public User user;
+        Circle userSearchCircle;
+        public Position searchCircleCentre;
         public Position userPosition;
         public Distance searchRadius;
 
         //popup pages
         public SearchEncounter searchEncounterPage;
+        public HintPage hintPage;
 
         //attribute variables
         public List<EncounterMe.Classes.Attribute> attributes;
         public List<EncounterMe.Classes.Attribute> pickedAttributes = new List<EncounterMe.Classes.Attribute>();
-
-        public User user;
+        
         public MainPage()
         {
-            
-            /*Dominykas TODO: clean up code
-                              make search feature work
-                              delete function in database
-                              draw radius based and live location*/
-
             //Request accesto to location and storage
             InitializeComponent();
             var status = Permissions.RequestAsync<Permissions.StorageWrite>();
             var locStatus = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-
-            //db.writeToFile(AddLocations());
-            //MyMap.CustomPins = AddPins();
-            //Task.Delay(2000);
             var errorLogger = new AppLogger();
 
             InitMap(errorLogger);
@@ -79,9 +66,7 @@ namespace MapApp
             user = new User("Mr. Hamster", "mrhamster@gmail.com", "ilovehamsters");
             user.LevelPoints = 8520;
             user.AchievementNum = 10;
-            user.FoundLocationNum = 23;
-
-            
+            user.FoundLocationNum = 23;   
         }
 
         private void ShrinkCircleHint(object sender, EventArgs e)
@@ -97,7 +82,7 @@ namespace MapApp
             };
             MyMap.MapElements.Add(circle);
             ChangeSearchRadius(1500);
-            Navigation.PushPopupAsync(new ShrinkSearchCircle(this, location.Latitude, location.Longtitude ,userPosition.Latitude,userPosition.Longitude));
+            //Navigation.PushPopupAsync(new Hints.ShrinkSearchCircle(this, location.Latitude, location.Longtitude, userPosition.Latitude, userPosition.Longitude));
         }
 
         //Dominykas: redudndant but left for future reference
@@ -124,7 +109,7 @@ namespace MapApp
             return pinList;
         }
 
-        //redundant, can delete
+        //redundant, can delete;; delete when database works
         private List<EncounterMe.Location> AddLocations()
         {
             //left for first time initialization, remove later
@@ -150,7 +135,7 @@ namespace MapApp
             return locations;
         }
 
-        //should be put in database
+        //should be put in database;; delete when database works
         private List<EncounterMe.Classes.Attribute> AddAttributes()
         {
             List<EncounterMe.Classes.Attribute> attributes = new List<EncounterMe.Classes.Attribute>();
@@ -172,7 +157,7 @@ namespace MapApp
             //read saved locations and put them into object, that google maps can read
             try
             {
-                //creating attributes, only for testing now
+                //creating attributes, only for testing now, delete when database works
                 attributes = AddAttributes();
 
                 //Move view to current location
@@ -182,7 +167,6 @@ namespace MapApp
                 userPosition = new Position(myPosition.Latitude, myPosition.Longitude);
                 MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(userPosition, Distance.FromKilometers(3)));
 
-                // MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(47.6370891183, -122.123736172), Distance.FromKilometers(3)));
                 //initiazlize search circle
                 userSearchCircle = new Circle
                 {
@@ -220,13 +204,12 @@ namespace MapApp
                 await Navigation.PopAllPopupAsync();
             MoveMap(-0.015, 0, 2);
             if (searchEncounterPage == null)
-                await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
+                await Navigation.PushPopupAsync(searchEncounterPage = new SearchEncounter(this));
             else
             {
                 searchEncounterPage.GeneratePickedAttributes();
                 await Navigation.PushPopupAsync(searchEncounterPage);
             }
-
         }
 
         public async void MoveMap(double latitude = 0, double longitude = 0, int kilometers = 3)
@@ -236,22 +219,16 @@ namespace MapApp
             MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(myPosition.Latitude + latitude, myPosition.Longitude + longitude), Distance.FromKilometers(kilometers)));
         }
 
-        public void SliderValueChanged(Slider RadiusSlider)
-        {
-            //might change this that only ChangeSearchRadius exists
-            //When the slider value is changed on SearchEncounter the map display changes
-            searchRadius = new Distance(RadiusSlider.Value);
-            userSearchCircle.Radius = searchRadius;
-        }
-
         public void ChangeSearchRadius(float size)
         {
             searchRadius = new Distance(size);
             userSearchCircle.Radius = searchRadius;
         }
+
         public void ChangeSearchCentre(Position position)
         {
             userSearchCircle.Center = position;
+            searchCircleCentre = position;
         }
 
         private static readonly HttpClient client = new HttpClient();
@@ -260,8 +237,13 @@ namespace MapApp
             //read database and save locations locally
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
             MyMap.Pins.Clear();
+            var myPosition = await CrossGeolocator.Current.GetPositionAsync();
+            searchCircleCentre = new Position(myPosition.Latitude, myPosition.Longitude);
+
+            //change this when database works
+            hintPage = new HintPage(this, new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, 100));
             await Navigation.PopPopupAsync();
-            await Navigation.PushPopupAsync(new HintPage(this, new EncounterMe.Location("Pilaite Jammi", 54.7073118, 25.1846521, 100)));
+            await Navigation.PushPopupAsync(hintPage);
             //Dominykas TODO: Add handling of null exception, also republish webserver
             //externel classs
 
@@ -306,7 +288,7 @@ namespace MapApp
             //Console.WriteLine(responseString);
         }
 
-        private async void MainButtonClicked(object sender, EventArgs e)
+        private void MainButtonClicked(object sender, EventArgs e)
         {
             if ((sender as Button).Text == "Search for Encounter")
                 PopupSearchEncounter(sender, e);
@@ -316,17 +298,16 @@ namespace MapApp
 
         public async void ViewLocation()
         {
-            //when HintPage will need to remember, change this with reference!
-            await Navigation.PushPopupAsync(new HintPage(this, new EncounterMe.Location("Pilaite Jammi", 54.7073118, 25.1846521, 100)));
+            await Navigation.PushPopupAsync(hintPage);
         }
 
-            public async void ChangeButtonToViewLocation(object sender, EventArgs e)
+        public void ChangeButtonToViewLocation(object sender, EventArgs e)
         {
             mainButton.Text = "View Location";
             mainButton.BackgroundColor = Color.FromHex("#EC9F2B");
         }
 
-        public async void ChangeButtonToSearchForEncounter(object sender, EventArgs e)
+        public void ChangeButtonToSearchForEncounter(object sender, EventArgs e)
         {
             mainButton.Text = "Search for Encounter";
             mainButton.BackgroundColor = Color.FromHex("#6CD4FF");

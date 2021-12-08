@@ -31,7 +31,7 @@ namespace MapApp.Pages
         private int currentPosition = 0;
 
         HintCompass hintCompass;
-        HintCircle hintCircle;
+        ShrinkSearchCircle hintCircle;
         HintDistance hintDistance;
 
 
@@ -141,12 +141,24 @@ namespace MapApp.Pages
 
         private async void CheckMarkThreeTapped(object sender, EventArgs e)
         {
+            //Shrink Circle hint
+
             //initCheck();
             if (hintCircle == null)
             {
                 checkMarkThree.Source = "shrink.png";
-                hintCircle = new HintCircle(this);
-                updateCheckMark(hintCircle);
+                //this should not be userPosition, since the circles centre is the starting point!
+                hintCircle = new ShrinkSearchCircle(main, this, locationToFind.Latitude, locationToFind.Longtitude);
+                await Navigation.PopPopupAsync();
+                await Navigation.PushPopupAsync(hintCircle);
+                //updateCheckMark(hintCircle);
+            }
+            else
+            {
+                hintCircle.Update();
+                await Navigation.PopPopupAsync();
+                await Navigation.PushPopupAsync(hintCircle);
+                
             }
         }
 

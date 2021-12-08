@@ -10,14 +10,16 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
+using MapApp.Pages;
 using EncounterMe;
 
-namespace MapApp.Pages
+namespace MapApp.Hints
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShrinkSearchCircle : Rg.Plugins.Popup.Pages.PopupPage
     {
         MainPage main;
+        HintPage hintPage;
         double locX;
         double locY;
         double bigX;
@@ -27,19 +29,32 @@ namespace MapApp.Pages
         double newR; //new circle radius
         double bigR; //big circle radius
 
-        public ShrinkSearchCircle(MainPage main, double locY, double locX, double bigY, double bigX)
+        public ShrinkSearchCircle(MainPage main, HintPage hintPage, double locY, double locX)
         {
             this.main = main;
+            this.hintPage = hintPage;
+
             this.locX = locX;
             this.locY = locY;
-            this.bigX = bigX;
-            this.bigY = bigY;
+            this.bigX = main.searchCircleCentre.Longitude;
+            this.bigY = main.searchCircleCentre.Latitude;
             this.bigR = main.searchRadius.Meters;
             InitializeComponent();
             DisableTooBigSizes();
         }
 
-        private void DisableTooBigSizes()
+        public void Update()
+        {
+            //update search radius
+            bigR = main.searchRadius.Meters;
+            //update display
+            DisableTooBigSizes();
+            //update search center
+            bigX = main.searchCircleCentre.Longitude;
+            bigY = main.searchCircleCentre.Latitude;
+        }
+
+        public void DisableTooBigSizes()
         {
             if (bigR <= 2500)
                 size2500.IsEnabled = false;
@@ -54,6 +69,7 @@ namespace MapApp.Pages
         private async void GoBack(object sender, EventArgs e)
         {
             await Navigation.PopPopupAsync();
+            await Navigation.PushPopupAsync(hintPage);
         }
         private void ShrinkCircle(object sender, EventArgs e)
         {
