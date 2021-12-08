@@ -14,7 +14,7 @@ using EncounterMe.Classes;
 
 namespace EncounterMe
 {
-    public class DatabaseManager 
+    public class DatabaseManager : IDatabaseManager
     {
         public String path { get; set; }
 
@@ -23,7 +23,7 @@ namespace EncounterMe
         public DatabaseManager(string newPath, string filename, ILogger errorLogger)
         {
             //var name = filename + ".csv";
-           
+
             path = Path.Combine(newPath, filename + ".xml");
             this.dbErrorLogger = errorLogger;
 
@@ -41,7 +41,7 @@ namespace EncounterMe
                 }
 
             }
-            
+
         }
 
 
@@ -65,7 +65,7 @@ namespace EncounterMe
             }
             else
             {
-                
+
                 //read all records
                 var readRecords = readFromFile<T>();
 
@@ -121,7 +121,7 @@ namespace EncounterMe
             FileStream fs = new FileStream(path, FileMode.Open);
             var result = serializer.Deserialize(fs);
             fs.Close();
-            return (List<T>) result;
+            return (List<T>)result;
         }
 
         public String getPath()
