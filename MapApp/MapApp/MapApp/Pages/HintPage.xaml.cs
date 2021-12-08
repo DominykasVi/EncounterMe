@@ -114,7 +114,7 @@ namespace MapApp.Pages
         {
             initCheck();
 
-            updateCheckMark(new HintCompass(this), checkMarkOne);
+            updateCheckMark(new HintCompass(this, gameLogic), checkMarkOne);
 
         }
 
@@ -263,5 +263,18 @@ namespace MapApp.Pages
 
             return currentPosition;
         }
+        /*protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (!DesignMode.IsDesignModeEnabled)
+                ((HintCompass)BindingContext).StartCommand.Execute(null);
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (!DesignMode.IsDesignModeEnabled)
+                ((HintCompass)BindingContext).StopCommand.Execute(null);
+        }*/
     }
 }
