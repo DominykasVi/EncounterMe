@@ -98,7 +98,7 @@ namespace MapApp.Pages
             main.PopupSearchEncounter(sender, e);
         }
 
-        private async void CheckedAttribute(object sender, EventArgs e)
+        private void CheckedAttribute(object sender, EventArgs e)
         {
             String attributeName = (sender as CheckBox).ClassId;
             var attribute = pickedAttributes.Find(e => e.Name == attributeName);

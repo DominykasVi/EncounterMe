@@ -108,7 +108,7 @@ namespace MapApp.Pages
             //debugText.Text = currentPosition.ToString();
         }
         
-        private async void CheckMarkOneTapped(object sender, EventArgs e)
+        private void CheckMarkOneTapped(object sender, EventArgs e)
         {
             //CompassHint
             
@@ -122,7 +122,7 @@ namespace MapApp.Pages
         }
 
 
-        private async void CheckMarkTwoTapped(object sender, EventArgs e)
+        private void CheckMarkTwoTapped(object sender, EventArgs e)
         {
             //DistanceHint
 
@@ -192,7 +192,7 @@ namespace MapApp.Pages
             UpdateNavigation();
         }
         
-        private async void Test(object sender, EventArgs e)
+        private void Test(object sender, EventArgs e)
         {
             //var locator = CrossGeolocator.Current;
             //locator.DesiredAccuracy = 50;
