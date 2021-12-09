@@ -25,10 +25,14 @@ namespace EncounterMe.Functions
 
             List<Location> byAttr = new List<Location> ();
 
-            foreach (Classes.Attribute at in attributes)
+            if (attributes != null)
             {
-                byAttr.AddRange (locationsQuery.FindAll(s => s.Attributes.Contains(at)));
+                foreach (Classes.Attribute at in attributes)
+                {
+                    byAttr.AddRange(locationsQuery.FindAll(s => s.Attributes.Contains(at)));
+                }
             }
+            
             
 
             Dictionary<Location, float> locationsSortedByDistance = new Dictionary<Location, float>();

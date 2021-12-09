@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
             //List<Location> locations = null;
             //if (dist <= searchRadius.Kilometers && ((location.attributes & filterList) > 0))
             //we should probably change getLocationsToFind in a way that List<Location> is not needed as a parameter
-            var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance);
+            var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance, null);
             //location should be serialized and returned
             //return location;
             return location;

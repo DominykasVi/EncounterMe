@@ -6,7 +6,7 @@ namespace EncounterMe.Interfaces
 {
     public interface IGame
     {
-        public Location getLocationToFind(List<Location> Locations, float Lat, float Long, double distance);
+        public Location getLocationToFind(List<Location> Locations, float Lat, float Long, double distance, List<Classes.Attribute> attributes);
 
         public void isLocationFound(Location loc, float lat, float lon);
 
