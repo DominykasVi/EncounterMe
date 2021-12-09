@@ -197,6 +197,7 @@
     <AndroidResource Include="Resources\drawable\custom_checkmark.png" />
     <AndroidResource Include="Resources\drawable\navigation_selected.png" />
     <AndroidResource Include="Resources\drawable\navigation_unselected.png" />
+    <AndroidResource Include="Resources\drawable\arrow.png" />
     <AndroidResource Include="Resources\drawable\bubble.png" />
     <AndroidResource Include="Resources\drawable\bubblelocked.png" />
     <AndroidResource Include="Resources\drawable\compasslocked.png" />
