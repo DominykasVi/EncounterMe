@@ -55,8 +55,8 @@ namespace WebAPI
                 // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
                 NLog.LogManager.Shutdown();
             }
-            //var prog = new Program();
-            //prog.FirstInit();
+            var prog = new Program();
+            prog.FirstInit();
         }
 
 
@@ -90,7 +90,8 @@ namespace WebAPI
             //Debug.Write("#################################################################");
             //Debug.Write(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
             //Debug.Write("#################################################################");
-
+            var attr = new EncounterMe.Classes.Attribute("asdAtr", "asdAtrImg");
+            List<EncounterMe.Classes.Attribute> attr1 = new List<EncounterMe.Classes.Attribute>() { attr };
             IDGenerator idg = IDGenerator.Instance;
             idg.setID(new List<EncounterMe.Location> { });
 
@@ -101,6 +102,13 @@ namespace WebAPI
             EncounterMe.Location location5 = new EncounterMe.Location("Mo Muziejus", 54.6791655393238, 25.277288631477447);
             EncounterMe.Location location6 = new EncounterMe.Location("Reformatu Skveras", 54.6814502183355, 25.276301578559966);
             EncounterMe.Location location7 = new EncounterMe.Location("Pilaite Jammi", 54.7073118, 25.1846521);
+            location1.giveAttributes(attr1);
+            location2.giveAttributes(attr1);
+            location3.giveAttributes(attr1);
+            location4.giveAttributes(attr1);
+            location5.giveAttributes(attr1);
+            location6.giveAttributes(attr1);
+            location7.giveAttributes(attr1);
 
             List<EncounterMe.Location> locations = new List<EncounterMe.Location>();
             locations.Add(location1);

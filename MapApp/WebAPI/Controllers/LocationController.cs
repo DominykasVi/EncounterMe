@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
             var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance, null);
             //location should be serialized and returned
             //return location;
-            return location;
+            return locationList[0];
         }
     }
 }

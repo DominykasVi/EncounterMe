@@ -4,10 +4,10 @@ using System.Text;
 
 namespace EncounterMe.Classes
 {
-    public class LocationToFind : Location
+    public class LocationToFind 
     {
-        //public float Latitude { get; set; }
-        //public float Longtitude { get; set; }
+        public float Latitude { get; set; }
+        public float Longtitude { get; set; }
         public LocationToFind() { }
         public LocationToFind(double latitude, double longtitude, double distance)
         {
