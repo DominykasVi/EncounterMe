@@ -1,30 +1,27 @@
 ﻿using EncounterMe;
 using EncounterMe.Classes;
 using EncounterMe.Functions;
+using EncounterMe.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
-namespace WebApiV2.Controllers
+namespace WebAPI.Controllers
 {
-    public class LocationController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LocationController : ControllerBase
     {
         DatabaseManager db;
-        //private readonly ILogger<LocationController> _logger = null;
+        IGame gameLogic;
 
-
-        //public LocationController(
-        //    ILogger<LocationController> logger)
-        //{
-        //    _logger = logger;
-        //}
-        public string Get()
+        public LocationController(IGame gameLogic)
         {
-            return "hello";
+            this.gameLogic = gameLogic;
         }
         //should change string password to byte[] password later on
-        [Route("api/Location/Test")]
+        [Route("Test")]
         [HttpPost]
         public string TestPostSimple([FromBody] string username)
         {
@@ -37,9 +34,9 @@ namespace WebApiV2.Controllers
             public string username { get; set; }
             public string password { get; set; }
         }
-        [Route("api/Location/GetLocationList")]
-        [HttpPost]
-        public List<Location> GetLocationList(TestUser temp)
+        [Route("GetLocationList")]
+        [HttpGet]
+        public List<Location> GetLocationList()
         {
             this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());
             var locationList = db.readFromFile<EncounterMe.Location>();
@@ -62,12 +59,13 @@ namespace WebApiV2.Controllers
             //else
             //    return "no";
         }
-        [Route("api/Location/FindLocation")]
+        [Route("FindLocation")]
         [HttpPost]
-        public Location GetLocation([FromBody]LocationToFind userLocation)
+        //public Location GetLocation(LocationToFind userLocation)
+        public Location GetLocation(LocationToFind userLocation)
         {
             //var distance = 50;
-            GameLogic gameLogic = new GameLogic();
+            //GameLogic gameLogic = new GameLogic();
             this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());
             var locationList = db.readFromFile<EncounterMe.Location>();
             //List<Location> locations = null;
@@ -75,6 +73,7 @@ namespace WebApiV2.Controllers
             //we should probably change getLocationsToFind in a way that List<Location> is not needed as a parameter
             var location = gameLogic.getLocationToFind(locationList, userLocation.Latitude, userLocation.Longtitude, userLocation.Distance);
             //location should be serialized and returned
+            //return location;
             return location;
         }
     }

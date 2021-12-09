@@ -4,7 +4,7 @@ using Serilog;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace WebApiV2.Middleware
+namespace MiddlewareExamples.WebApi.Middleware
 {
     public class StatisticsMiddleware
     {
@@ -22,7 +22,7 @@ namespace WebApiV2.Middleware
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var controllerActionDescriptor =
+            var controllerActionDescriptor = 
                 context
                 .GetEndpoint()
                 .Metadata
@@ -30,7 +30,7 @@ namespace WebApiV2.Middleware
 
             var controllerName = controllerActionDescriptor.ControllerName;
             var actionName = controllerActionDescriptor.ActionName;
-
+            
             await _next(context);
 
             sw.Stop();

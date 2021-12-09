@@ -1,22 +1,22 @@
-﻿using System.Threading.Tasks;
-using System.IO;
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Net;
 using Newtonsoft.Json;
 using Serilog;
+using System;
+using System.Net;
+using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Http.Extensions;
 
-namespace WebApiV2.Middleware
+namespace MiddlewareExamples.WebApi.Middleware
 {
-    public class MethodCallMiddleware
+    public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
         private readonly IHostingEnvironment _environment;
 
-        public MethodCallMiddleware(RequestDelegate next, ILogger logger, IHostingEnvironment environment)
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger logger, IHostingEnvironment environment)
         {
             _next = next;
             _logger = logger;

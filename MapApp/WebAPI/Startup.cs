@@ -1,3 +1,10 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Autofac.Extras.DynamicProxy;
+using Autofac.Extras.NLog;
+using Castle.DynamicProxy;
+using EncounterMe.Functions;
+using EncounterMe.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,14 +14,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApiV2.Middleware;
+using WebAPI.Middleware;
 
-namespace WebApiV2
+namespace WebAPI
 {
     public class Startup
     {
@@ -23,43 +29,55 @@ namespace WebApiV2
             Configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; private set; }
 
-
-        public IConfiguration Configuration { get; }
+        public ILifetimeScope AutofacContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiV2", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
+        }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule<NLogModule>();
+
+
+            builder.Register(c => new LogicInterceptor());
+
+            builder.RegisterType<GameLogic>().As<IGame>()
+                .EnableInterfaceInterceptors().InterceptedBy(typeof(LogicInterceptor))
+                .InstancePerDependency();
+      
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiV2 v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
 
-            //app.UseMiddleware<MethodCallMiddleware>();
+            this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            //app.UseMiddleware<StatisticsMiddleware>();
-
             app.UseAuthorization();
+
+            app.UseRequestResponseLogging();
 
             app.UseEndpoints(endpoints =>
             {

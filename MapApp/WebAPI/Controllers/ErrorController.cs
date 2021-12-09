@@ -1,14 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
-namespace WebApiV2.Controllers
+namespace WebAPI.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    public class ErrorController : Controller
+    public class ErrorController : ControllerBase
     {
+        // GET api/<controller>
+        
+        // GET api/<controller>/5
+        [HttpGet]
+        public string Get(int id)
+        {
+            return "value";
+        }
 
         // POST api/<controller>
         [HttpPost]
@@ -22,6 +30,5 @@ namespace WebApiV2.Controllers
             }
             return value;
         }
-
     }
 }
