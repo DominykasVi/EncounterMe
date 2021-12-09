@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
-using EncounterMe.Classes;
+using EncounterMe.Interfaces;
 
 delegate bool ValidationDel (string toBeValidated);
 
@@ -11,8 +11,8 @@ namespace EncounterMe.Functions
 {
     public class LogInManager
     {
-        private DatabaseManager um;
-        public LogInManager(DatabaseManager db)
+        private IDatabaseManager um;
+        public LogInManager(IDatabaseManager db)
         {
             um = db;
         }
@@ -52,8 +52,22 @@ namespace EncounterMe.Functions
                 um.writeToFile<User>(new List<User>() { user });
                 return user;
             }
+            else if (user != null)
+            {
+                throw new Exception("User already exists!");
+            }
+            else if (!vd(password))
+            {
+                throw new Exception("Password should be at least 8 characters long and contain at least one number, one non-capital and one capital letter.");
+            }
+            else if (!ve(email))
+            {
+                throw new Exception("Invalid email.");
+            }
             else
-                return null;
+            {
+                throw new Exception("Unknown error");
+            }
         }
     }
 }
