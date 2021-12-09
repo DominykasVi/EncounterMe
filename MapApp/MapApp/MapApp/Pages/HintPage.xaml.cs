@@ -118,7 +118,7 @@ namespace MapApp.Pages
             if(hintCompass == null)
             {
                 checkMarkOne.Source = "compass.png";
-                hintCompass = new HintCompass(this);
+                hintCompass = new HintCompass(this, gameLogic);
                 updateCheckMark(hintCompass);
                 posCompass = hintNum;
             }

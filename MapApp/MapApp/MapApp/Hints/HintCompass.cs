@@ -36,7 +36,8 @@ namespace MapApp.Hints
         void updateBearing (object sender, ILocationEventArgs args, GameLogic gameLogic)
         {
             Bearing = gameLogic.getBearingFromUser(HintPage.locationToFind.Latitude, HintPage.locationToFind.Longtitude, args.Latitude, args.Longitude);
-            HintPage.hintImage.Rotation = Bearing;
+            if (isActive)
+                HintPage.hintImage.Rotation = Bearing;
         }
 
         void Stop()
