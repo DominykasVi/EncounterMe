@@ -6,6 +6,9 @@ namespace EncounterMe.Classes
 {
     public class LocationToFind : Location
     {
+        //public float Latitude { get; set; }
+        //public float Longtitude { get; set; }
+        public LocationToFind() { }
         public LocationToFind(double latitude, double longtitude, double distance)
         {
             this.Latitude = (float) latitude;

@@ -7,7 +7,7 @@ using EncounterMe.Functions;
 
 namespace EncounterMe.Functions
 {
-    public class GameLogic
+    public class GameLogic : IGame
     {
 
         public delegate void LocationFoundDel(Location loc);
