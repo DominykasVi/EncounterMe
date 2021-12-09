@@ -22,8 +22,7 @@ namespace WebServer.Controllers
 
         private void FistInit()
         {
-            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());//it works i think// I made it work ;)
-            db.writeToFile(AddLocations());
+            //db.writeToFile(AddLocations());
 
         }
 

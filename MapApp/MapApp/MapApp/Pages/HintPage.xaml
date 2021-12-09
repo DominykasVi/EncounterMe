@@ -38,6 +38,7 @@
 
                     <forms:AnimationView
                     x:Name="animationView"
+                    x:FieldModifier="public"
                     Animation="circle.json"
                     AutoPlay="true"
                     RepeatCount="1000000000"
@@ -51,17 +52,26 @@
 
                     <Image  Source="pilis.png"
                         x:Name="hintImage"
+                        x:FieldModifier="public"
                         VerticalOptions="Start" 
                         HorizontalOptions="CenterAndExpand"
                         Aspect="AspectFill"
                         IsVisible="true"
                         ></Image>
-                    <BoxView x:Name="shade" HeightRequest="300" HorizontalOptions="FillAndExpand" BackgroundColor="#FFEEDD" Opacity="0.8" Grid.Column="0" IsVisible="false"/>
+                    
+                    <BoxView x:Name="shade"
+                             x:FieldModifier="public"
+                             HeightRequest="300" 
+                             HorizontalOptions="FillAndExpand" 
+                             BackgroundColor="#FFEEDD" 
+                             Opacity="0" 
+                             Grid.Column="0" 
+                             IsVisible="true"/>
 
                 </Grid>
-                
-                
-                <Label x:Name="debugText" TextColor="#77d065" FontSize = "20" Text="Start" IsVisible="true" />
+
+
+                <Label x:Name="debugText" x:FieldModifier="public" TextColor="#77d065" FontSize = "20" Text="Start" IsVisible="true" />
 
                 <StackLayout HeightRequest="34"
                              WidthRequest="0"
@@ -88,7 +98,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Image  Source="check_mark_unchecked.png"
-                            x:Name="checkMarkOneUntapped"
+                            x:Name="checkMarkOne"
                             VerticalOptions="Start" 
                             HorizontalOptions="CenterAndExpand"
                             Aspect="AspectFill"
@@ -143,23 +153,10 @@
                                 <TapGestureRecognizer Tapped="CheckMarkFourTapped"/>
                             </Image.GestureRecognizers>
                     </Image>
-                    <!-- untapped-->
-                    <Image  Source="check_mark_checked.png" 
-                            x:Name="checkMarkOneTapped"
-                            VerticalOptions="Start" 
-                            HorizontalOptions="CenterAndExpand"
-                            Aspect="AspectFill"
-                            Margin="10, 10, 10, 10"
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            IsVisible="False"
-                            >
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="CheckMarkOneUntapped"/>
-                        </Image.GestureRecognizers>
-                    </Image>
+                    
                 </Grid>
-                
+
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -169,12 +166,12 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="Go Back"
-                        BackgroundColor="#6CD4FF"
+                    <Button Text="Give Up"
+                        BackgroundColor="#DA4167"
                         TextColor="White"
                         Grid.Row="0"
                         Grid.Column="0"
-                        Clicked="GoBack"
+                        Clicked="GiveUp"
                         CornerRadius = "30"/>
                     <Button Text="Found It!"
                         BackgroundColor="#6CD4FF"
@@ -184,6 +181,14 @@
                         Clicked="Test"
                         CornerRadius = "30" />
                 </Grid>
+
+                <Button Text="Go Back"
+                        BackgroundColor="#6CD4FF"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Clicked="GoBack"
+                        CornerRadius = "30"/>
             </StackLayout>
         </Frame>
 

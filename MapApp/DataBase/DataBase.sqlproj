@@ -59,6 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Locations.sql" />
-    <Build Include="Users.sql" />
+    <Build Include="Account.sql" />
+    <Build Include="AccessLevels.sql" />
+    <Build Include="AccountUpvotes.sql" />
+    <Build Include="AccountDownvotes.sql" />
+    <Build Include="AccountAccessLevel.sql" />
   </ItemGroup>
 </Project>

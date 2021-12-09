@@ -44,15 +44,14 @@ namespace MapApp
         Circle userSearchCircle;
 
         public Position userPosition;
-        Distance searchRadius;
+        public Distance searchRadius;
 
         //popup pages
         public SearchEncounter searchEncounterPage;
 
+        //attribute variables
         public List<EncounterMe.Classes.Attribute> attributes;
-        //LocationAttributes filterList;
-        //List<LocationAttributes> attributeList;
-        public int test;
+        public List<EncounterMe.Classes.Attribute> pickedAttributes = new List<EncounterMe.Classes.Attribute>();
 
         public User user;
         public MainPage()
@@ -81,6 +80,24 @@ namespace MapApp
             user.LevelPoints = 8520;
             user.AchievementNum = 10;
             user.FoundLocationNum = 23;
+
+            
+        }
+
+        private void ShrinkCircleHint(object sender, EventArgs e)
+        {
+            EncounterMe.Location location = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, 10);
+            var circle = new Circle
+            {
+                Center = location.getPosition(),
+                Radius = new Distance(50),
+                StrokeColor = Color.FromHex("#6CD4FF"),
+                StrokeWidth = 8,
+                FillColor = Color.FromRgba(108, 212, 255, 57)
+            };
+            MyMap.MapElements.Add(circle);
+            ChangeSearchRadius(1500);
+            Navigation.PushPopupAsync(new ShrinkSearchCircle(this, location.Latitude, location.Longtitude ,userPosition.Latitude,userPosition.Longitude));
         }
 
         //Dominykas: redudndant but left for future reference
@@ -170,7 +187,7 @@ namespace MapApp
                 userSearchCircle = new Circle
                 {
                     Center = userPosition,
-                    Radius = new Distance(0),
+                    Radius = new Distance(0), //changed for testing
                     //StrokeColor = Color.FromHex("#88FF0000"),
                     StrokeColor = Color.FromHex("#6CD4FF"),
                     StrokeWidth = 8,
@@ -199,11 +216,16 @@ namespace MapApp
         public async void PopupSearchEncounter(object sender, EventArgs e)
         {
             //SearchEncounter page pops out
+            if (PopupNavigation.Instance.PopupStack.Count > 0)
+                await Navigation.PopAllPopupAsync();
             MoveMap(-0.015, 0, 2);
-            if(searchEncounterPage == null)
+            if (searchEncounterPage == null)
                 await Navigation.PushPopupAsync(searchEncounterPage = new Pages.SearchEncounter(this));
             else
+            {
+                searchEncounterPage.GeneratePickedAttributes();
                 await Navigation.PushPopupAsync(searchEncounterPage);
+            }
 
         }
 
@@ -216,9 +238,20 @@ namespace MapApp
 
         public void SliderValueChanged(Slider RadiusSlider)
         {
+            //might change this that only ChangeSearchRadius exists
             //When the slider value is changed on SearchEncounter the map display changes
             searchRadius = new Distance(RadiusSlider.Value);
             userSearchCircle.Radius = searchRadius;
+        }
+
+        public void ChangeSearchRadius(float size)
+        {
+            searchRadius = new Distance(size);
+            userSearchCircle.Radius = searchRadius;
+        }
+        public void ChangeSearchCentre(Position position)
+        {
+            userSearchCircle.Center = position;
         }
 
         private static readonly HttpClient client = new HttpClient();
@@ -271,6 +304,32 @@ namespace MapApp
             //for debug
             //var responseString = await response.Content.ReadAsStringAsync();
             //Console.WriteLine(responseString);
+        }
+
+        private async void MainButtonClicked(object sender, EventArgs e)
+        {
+            if ((sender as Button).Text == "Search for Encounter")
+                PopupSearchEncounter(sender, e);
+            else if ((sender as Button).Text == "View Location")
+                ViewLocation();
+        }
+
+        public async void ViewLocation()
+        {
+            //when HintPage will need to remember, change this with reference!
+            await Navigation.PushPopupAsync(new HintPage(this, new EncounterMe.Location("Pilaite Jammi", 54.7073118, 25.1846521, 100)));
+        }
+
+            public async void ChangeButtonToViewLocation(object sender, EventArgs e)
+        {
+            mainButton.Text = "View Location";
+            mainButton.BackgroundColor = Color.FromHex("#EC9F2B");
+        }
+
+        public async void ChangeButtonToSearchForEncounter(object sender, EventArgs e)
+        {
+            mainButton.Text = "Search for Encounter";
+            mainButton.BackgroundColor = Color.FromHex("#6CD4FF");
         }
         /*
         private void ShowAll(Object sender, EventArgs args)
