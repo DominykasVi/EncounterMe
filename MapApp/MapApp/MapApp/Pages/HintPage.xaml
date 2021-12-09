@@ -34,31 +34,23 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    
 
-                    <forms:AnimationView
-                    x:Name="animationView"
-                    x:FieldModifier="public"
-                    Animation="circle.json"
-                    AutoPlay="true"
-                    RepeatCount="1000000000"
-                    Margin="10, 10, 10, 10"
-                    Opacity="100"
-                            Grid.Column="0"
-                        IsVisible="false"
-                    />
-                    
-
-
+                    <forms:AnimationView x:Name="animationView"
+                                             x:FieldModifier="public"
+                                             Animation="circle.json"
+                                             AutoPlay="true"
+                                             RepeatCount="1000000000" 
+                                             Margin="10, 10, 10, 10"
+                                             Opacity="100"
+                                             Grid.Column="0"
+                                             IsVisible="false"/>
                     <Image  Source="pilis.png"
-                        x:Name="hintImage"
-                        x:FieldModifier="public"
-                        VerticalOptions="Start" 
-                        HorizontalOptions="CenterAndExpand"
-                        Aspect="AspectFill"
-                        IsVisible="true"
-                        ></Image>
-                    
+                            x:Name="hintImage"
+                            x:FieldModifier="public"
+                            VerticalOptions="Start" 
+                            HorizontalOptions="CenterAndExpand"
+                            Aspect="AspectFill"
+                            IsVisible="true"/>
                     <BoxView x:Name="shade"
                              x:FieldModifier="public"
                              HeightRequest="300" 
@@ -67,7 +59,6 @@
                              Opacity="0" 
                              Grid.Column="0" 
                              IsVisible="true"/>
-
                 </Grid>
 
 
@@ -75,10 +66,10 @@
 
                 <StackLayout HeightRequest="34"
                              WidthRequest="0"
-                      x:Name="horizontalStack"
-                      Orientation="Horizontal"
-                      HorizontalOptions="Center"
-                      Spacing="0">
+                             x:Name="horizontalStack"
+                             Orientation="Horizontal"
+                             HorizontalOptions="Center"
+                             Spacing="0">
                 </StackLayout>
 
                 <!--

@@ -29,6 +29,7 @@ namespace MapApp.Pages
         private int stackWidth = 0;
         private int bubbleWidth = 16;
         private int currentPosition = 0;
+        private int hintNum = 0;
 
         HintCompass hintCompass;
         int posCompass = 0;
@@ -115,21 +116,17 @@ namespace MapApp.Pages
         {
             //CompassHint
             
-            //initCheck();
             if(hintCompass == null)
             {
                 checkMarkOne.Source = "compass.png";
                 hintCompass = new HintCompass(this);
                 updateCheckMark(hintCompass);
-                posCompass = currentPosition;
+                posCompass = hintNum;
             }
-            else
-            {
-                UpdateHint(posCompass);
-                currentPosition = posCompass;
-                UpdateStack();
-            }
-                //UpdateHint(2);
+
+            UpdateHint(posCompass);
+            currentPosition = posCompass;
+            UpdateStack();
         }
 
 
@@ -137,36 +134,29 @@ namespace MapApp.Pages
         {
             //DistanceHint
 
-            //initCheck();
             if (hintDistance == null)
             {
                 checkMarkTwo.Source = "bubble.png";
                 hintDistance = new HintDistance(this, gameLogic);
                 updateCheckMark(hintDistance);
-                posDistance = currentPosition;
+                posDistance = hintNum;
             }
-            else
-            {
-                UpdateHint(posDistance);
-                currentPosition = posDistance;
-                UpdateStack();
-            }
-                //UpdateHint(3);
+
+            UpdateHint(posDistance);
+            currentPosition = posDistance;
+            UpdateStack();
         }
 
         private async void CheckMarkThreeTapped(object sender, EventArgs e)
         {
             //Shrink Circle hint
 
-            //initCheck();
             if (hintCircle == null)
             {
                 checkMarkThree.Source = "shrink.png";
-                //this should not be userPosition, since the circles centre is the starting point!
                 hintCircle = new ShrinkSearchCircle(main, this, locationToFind.Latitude, locationToFind.Longtitude);
                 await Navigation.PopPopupAsync();
                 await Navigation.PushPopupAsync(hintCircle);
-                //updateCheckMark(hintCircle);
             }
             else
             {
@@ -185,6 +175,7 @@ namespace MapApp.Pages
         }
         */
 
+        //I have no idea what it does, but now it woeks without it(?)
         private void initCheck()
         {
             if (currentPosition != 0)
@@ -199,11 +190,16 @@ namespace MapApp.Pages
             //for location's picture
             if (currentPosition == 0)
             {
-                HintList.Insert(currentPosition, new ShowPicture(this, locationToFind));
+                //HintList.Insert(currentPosition, new ShowPicture(this, locationToFind));
+                hintNum++;
+                hintImage.IsEnabled = false;
+                HintList.Add(new ShowPicture(this, locationToFind));
                 UpdateNavigation();
             }
-            HintList.Insert(currentPosition, hint);
+            hintNum++;
+            HintList.Add(hint);
             UpdateNavigation();
+            //UpdateStack();
         }
         
         private void Test(object sender, EventArgs e)
