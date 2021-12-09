@@ -60,7 +60,7 @@
     <EmbeddedResource Update="Pages\SearchEncounter.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\ShrinkSearchCircle.xaml">
+    <EmbeddedResource Update="Hints\ShrinkSearchCircle.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
