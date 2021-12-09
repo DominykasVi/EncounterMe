@@ -22,15 +22,21 @@ namespace MapApp.Pages
         {
             this.main = main;
             InitializeComponent();
+            RadiusSlider.Value = 5000; //set to max from the start
+        }
+        public void Update()
+        {
+            main.ChangeSearchRadius((float)RadiusSlider.Value);
         }
         private async void GoBack(object sender, EventArgs e)
         {
-            main.MoveMap();
+            //main.MoveMap();
+            main.ChangeSearchRadius(0); //change if doesn't make sense
             await Navigation.PopPopupAsync();
         }
         private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
         {
-            main.SliderValueChanged(sender as Slider);
+            main.ChangeSearchRadius((float)(sender as Slider).Value);
             SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
         }
         public async void ShowLocation(Location location)

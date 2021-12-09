@@ -7,7 +7,7 @@ using EncounterMe.Functions;
 
 namespace EncounterMe.Functions
 {
-    public class GameLogic
+    public class GameLogic : IGame
     {
 
         public delegate void LocationFoundDel(Location loc);
@@ -92,6 +92,28 @@ namespace EncounterMe.Functions
         {
             if (loc == null) Console.WriteLine("There is no location to find");
             else Console.WriteLine("Your location to find is: " + loc.Name);
+        }
+
+        public double getBearingFromUser(double loclat, double loclon, double lat, double lon)
+        {
+            var lon2 = toRad(loclon);
+            var lon1 = toRad(lon);
+            var lat2 = toRad(loclat);
+            var lat1 = toRad(lat);
+            /*const y = Math.sin(λ2 - λ1) * Math.cos(φ2);
+            const x = Math.cos(φ1) * Math.sin(φ2) -
+                      Math.sin(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1);
+            const θ = Math.atan2(y, x);
+            const brng = (θ * 180 / Math.PI + 360) % 360; // in degrees */
+            var y = Math.Sin(lon2 - lon1) * Math.Cos(lat2);
+            var x = Math.Cos(lat1) * Math.Sin(lat2) - Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(lon2 - lon1);
+            var theta = Math.Atan2(y, x);
+            return (theta * 180 / Math.PI + 360) % 360;
+        }
+
+        public double toRad(double degrees)
+        {
+            return degrees * Math.PI / 180;
         }
     }
 }

@@ -33,7 +33,6 @@ namespace WebServer.Controllers
             Debug.Write(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
             Debug.Write("#################################################################");
 
-            this.db = new DatabaseManager(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Test", new DatabaseLogger());//it works i think// I made it work ;)
             IDGenerator idg = IDGenerator.Instance;
             idg.setID(new List<EncounterMe.Location> { });
 
