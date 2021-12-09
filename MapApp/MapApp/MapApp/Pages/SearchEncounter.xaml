@@ -38,13 +38,13 @@
                         CornerRadius = "30"
                         Clicked="GoBack"/>
                 <Label x:Name="SliderValue"
-                       Text="Selected radius is: 0 m."
+                       Text="Selected radius is: 5000 m."
                        TextColor="Black" 
                        VerticalOptions="End" 
                        HorizontalOptions="Center"/>
                 <Slider x:Name="RadiusSlider"
-                        Minimum="0"
                         Maximum="5000"
+                        Minimum="50"
                         WidthRequest="400"
                         BackgroundColor="#6CD4FF"
                         VerticalOptions="End"

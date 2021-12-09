@@ -31,8 +31,11 @@ namespace MapApp.Pages
         private int currentPosition = 0;
 
         HintCompass hintCompass;
+        int posCompass = 0;
         ShrinkSearchCircle hintCircle;
+        //int posCircle = 0;
         HintDistance hintDistance;
+        int posDistance = 0;
 
 
         public HintPage(MainPage main, Location loc)
@@ -118,7 +121,15 @@ namespace MapApp.Pages
                 checkMarkOne.Source = "compass.png";
                 hintCompass = new HintCompass(this);
                 updateCheckMark(hintCompass);
+                posCompass = currentPosition;
             }
+            else
+            {
+                UpdateHint(posCompass);
+                currentPosition = posCompass;
+                UpdateStack();
+            }
+                //UpdateHint(2);
         }
 
 
@@ -132,12 +143,16 @@ namespace MapApp.Pages
                 checkMarkTwo.Source = "bubble.png";
                 hintDistance = new HintDistance(this, gameLogic);
                 updateCheckMark(hintDistance);
-            }       
+                posDistance = currentPosition;
+            }
+            else
+            {
+                UpdateHint(posDistance);
+                currentPosition = posDistance;
+                UpdateStack();
+            }
+                //UpdateHint(3);
         }
-
-        
-     
-        
 
         private async void CheckMarkThreeTapped(object sender, EventArgs e)
         {
@@ -158,7 +173,6 @@ namespace MapApp.Pages
                 hintCircle.Update();
                 await Navigation.PopPopupAsync();
                 await Navigation.PushPopupAsync(hintCircle);
-                
             }
         }
 
@@ -185,7 +199,7 @@ namespace MapApp.Pages
             //for location's picture
             if (currentPosition == 0)
             {
-                HintList.Insert(currentPosition, new HintCircle(this));
+                HintList.Insert(currentPosition, new ShowPicture(this, locationToFind));
                 UpdateNavigation();
             }
             HintList.Insert(currentPosition, hint);
@@ -276,6 +290,7 @@ namespace MapApp.Pages
         private async void GiveUp(object sender, EventArgs e)
         {
             //function to go back to location search
+            main.ChangeSearchRadius(0);
             main.ChangeButtonToSearchForEncounter(sender, e);
             await Navigation.PopPopupAsync();
         }

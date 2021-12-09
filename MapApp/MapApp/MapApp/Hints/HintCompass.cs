@@ -10,7 +10,7 @@ namespace MapApp.Hints
         public HintCompass(HintPage hintPage)
         {
             hintPage.hintImage.IsVisible = true;
-            hintPage.hintImage.Source = "pilis.png";
+            hintPage.hintImage.Source = "temp.png";
         }
         public void hideHint(HintPage hintPage)
         {
@@ -22,7 +22,7 @@ namespace MapApp.Hints
         public void show(HintPage hintPage)
         {
             hintPage.hintImage.IsVisible = true;
-            hintPage.hintImage.Source = "pilis.png";
+            hintPage.hintImage.Source = "temp.png";
 
             //throw new NotImplementedException();
         }

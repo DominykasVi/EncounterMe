@@ -202,12 +202,13 @@ namespace MapApp
             //SearchEncounter page pops out
             if (PopupNavigation.Instance.PopupStack.Count > 0)
                 await Navigation.PopAllPopupAsync();
-            MoveMap(-0.015, 0, 2);
+            //MoveMap(-0.015, 0, 2);
             if (searchEncounterPage == null)
                 await Navigation.PushPopupAsync(searchEncounterPage = new SearchEncounter(this));
             else
             {
                 searchEncounterPage.GeneratePickedAttributes();
+                searchEncounterPage.Update();
                 await Navigation.PushPopupAsync(searchEncounterPage);
             }
         }
@@ -298,6 +299,8 @@ namespace MapApp
 
         public async void ViewLocation()
         {
+            if (PopupNavigation.Instance.PopupStack.Count > 0)
+                await Navigation.PopAllPopupAsync();
             await Navigation.PushPopupAsync(hintPage);
         }
 
