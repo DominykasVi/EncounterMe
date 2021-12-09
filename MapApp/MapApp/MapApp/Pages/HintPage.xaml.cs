@@ -34,7 +34,6 @@ namespace MapApp.Pages
         HintCompass hintCompass;
         int posCompass = 0;
         ShrinkSearchCircle hintCircle;
-        //int posCircle = 0;
         HintDistance hintDistance;
         int posDistance = 0;
 
@@ -175,7 +174,7 @@ namespace MapApp.Pages
         }
         */
 
-        //I have no idea what it does, but now it woeks without it(?)
+        //I have no idea what it does, but now it works without it(?)
         private void initCheck()
         {
             if (currentPosition != 0)

@@ -199,12 +199,17 @@ namespace MapApp
 
         public async void PopupSearchEncounter(object sender, EventArgs e)
         {
+            //there is an error when you click this button too early
+            //not sure why?
             //SearchEncounter page pops out
             if (PopupNavigation.Instance.PopupStack.Count > 0)
                 await Navigation.PopAllPopupAsync();
             //MoveMap(-0.015, 0, 2);
             if (searchEncounterPage == null)
-                await Navigation.PushPopupAsync(searchEncounterPage = new SearchEncounter(this));
+            {
+                searchEncounterPage = new SearchEncounter(this);
+                await Navigation.PushPopupAsync(searchEncounterPage);
+            }
             else
             {
                 searchEncounterPage.GeneratePickedAttributes();
