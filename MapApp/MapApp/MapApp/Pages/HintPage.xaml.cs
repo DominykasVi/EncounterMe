@@ -14,6 +14,7 @@ using Xamarin.Forms.Xaml;
 using System.Threading;
 using Xamarin.Forms.DetectUserLocationCange.Services;
 using MapApp.Hints;
+using Rg.Plugins.Popup.Services;
 
 namespace MapApp.Pages
 {
@@ -288,6 +289,14 @@ namespace MapApp.Pages
             main.ChangeSearchRadius(0);
             main.ChangeButtonToSearchForEncounter(sender, e);
             await Navigation.PopPopupAsync();
+        }
+        async void RedirectLocationFoundPage(object sender, EventArgs e)
+        {
+            main.ChangeSearchRadius(0);
+            main.ChangeButtonToSearchForEncounter(sender, e);
+            await Navigation.PushAsync(new LocationFoundPage());
+            await Navigation.PopPopupAsync();
+            
         }
     }
 }

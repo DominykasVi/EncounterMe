@@ -190,7 +190,7 @@
                         TextColor="White"
                         Grid.Row="0"
                         Grid.Column="1"
-                        Clicked="Test"
+                        Clicked="RedirectLocationFoundPage"
                         CornerRadius = "30" />
                 </Grid>
 
