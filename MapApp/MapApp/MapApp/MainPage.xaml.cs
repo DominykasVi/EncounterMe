@@ -16,6 +16,7 @@ using EncounterMe.Classes;
 using EncounterMe.Interfaces;
 using System.Net.Http;
 using MapApp.Pages;
+using MapApp.Notification;
 using Rg.Plugins.Popup.Services;
 
 namespace MapApp
@@ -66,7 +67,14 @@ namespace MapApp
             user = new User("Mr. Hamster", "mrhamster@gmail.com", "ilovehamsters");
             user.LevelPoints = 8520;
             user.AchievementNum = 10;
-            user.FoundLocationNum = 23;   
+            user.FoundLocationNum = 23;
+
+            
+        }
+
+        private async void TestNotif(object sender, EventArgs e)
+        {
+            await Navigation.PushPopupAsync(new Notification.NotificationPage());
         }
 
         private void ShrinkCircleHint(object sender, EventArgs e)
