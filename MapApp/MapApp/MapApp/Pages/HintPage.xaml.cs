@@ -363,19 +363,20 @@ namespace MapApp.Pages
             //function to close temporary HintPage
             await Navigation.PopPopupAsync();
         }
-        private async void GiveUp(object sender, EventArgs e)
+        public async void GiveUp(object sender, EventArgs e)
         {
             //function to go back to location search
             main.ChangeSearchRadius(0);
             main.ChangeButtonToSearchForEncounter(sender, e);
             await Navigation.PopPopupAsync();
         }
-        async void RedirectLocationFoundPage(object sender, EventArgs e)
+        async void LocationFound(object sender, EventArgs e)
         {
-            main.ChangeSearchRadius(0);
-            main.ChangeButtonToSearchForEncounter(sender, e);
-            await Navigation.PushAsync(new LocationFoundPage());
-            await Navigation.PopPopupAsync();
+            //main.ChangeSearchRadius(0); 
+            //main.ChangeButtonToSearchForEncounter(sender, e);
+            GiveUp(sender, e);
+            await Navigation.PushPopupAsync(new Notification.NotificationWin(exp));
+            
             
         }
     }

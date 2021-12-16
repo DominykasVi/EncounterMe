@@ -72,11 +72,6 @@ namespace MapApp
             
         }
 
-        private async void TestNotif(object sender, EventArgs e)
-        {
-           // await Navigation.PushPopupAsync(new Notification.NotificationPage());
-        }
-
         private void ShrinkCircleHint(object sender, EventArgs e)
         {
             EncounterMe.Location location = new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, 10);
