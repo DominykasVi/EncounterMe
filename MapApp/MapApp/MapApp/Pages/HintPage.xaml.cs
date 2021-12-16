@@ -38,11 +38,13 @@ namespace MapApp.Pages
         HintDistance hintDistance;
         int posDistance = 0;
 
-
-        public HintPage(MainPage main, Location loc)
+        public int exp;
+        public bool selected = false;
+        public HintPage(MainPage main, Location loc, int exp)
         {
             this.main = main;
             this.locationToFind = loc;
+            this.exp = exp;
 
             gameLogic = new GameLogic();
             InitializeComponent();
@@ -56,7 +58,9 @@ namespace MapApp.Pages
             //hintImage.GestureRecognizers.Add(rightSwipe);
 
             shade.GestureRecognizers.Add(leftSwipe);
-            shade.GestureRecognizers.Add(rightSwipe);   
+            shade.GestureRecognizers.Add(rightSwipe);
+
+            UpdateExperienceButton();
         }
 
         private void UpdateNavigation() 
@@ -65,6 +69,23 @@ namespace MapApp.Pages
             stackWidth += bubbleWidth;
             currentPosition += 1;
             UpdateStack();
+        }
+
+        public void UpdateExperienceButton()
+        {
+            Experience.Text = exp.ToString() + " EXP";
+            if (exp >= 1000)
+            {
+                Experience.BackgroundColor = Color.FromHex("#5bd963");
+            }
+            else if(exp < 1000 && exp > 100)
+            {
+                Experience.BackgroundColor = Color.FromHex("#EC9F2B");
+            }
+            else
+            {
+                Experience.BackgroundColor = Color.FromHex("#DA4167");
+            }
         }
 
         private void UpdateStack()
@@ -112,41 +133,100 @@ namespace MapApp.Pages
             //debugText.Text = currentPosition.ToString();
         }
         
-        private void CheckMarkOneTapped(object sender, EventArgs e)
+        public int CalculateExp(int perc)
+        {
+            int minusexp = exp * perc / 100;
+            if (minusexp >= 1000)
+            {
+                return minusexp = (minusexp / 100) * 100;
+            }
+            else if (exp < 1000 && exp > 100)
+            {
+                return minusexp = (minusexp / 10) * 10;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private async void CheckMarkOneTapped(object sender, EventArgs e)
         {
             //CompassHint
-            
-            if(hintCompass == null)
+
+            if (hintCompass == null)
             {
-                checkMarkOne.Source = "compass.png";
-                hintCompass = new HintCompass(this, gameLogic);
-                updateCheckMark(hintCompass);
-                posCompass = hintNum;
+                int minusExp = CalculateExp(90);
+                await Navigation.PushPopupAsync(
+                    new Notification.NotificationPage(
+                        this, 
+                        minusExp,
+                        "Compass Hint",
+                        "Compass hint will help you by showing the direction to the location.",
+                        "hamcomp1.png"));
             }
+            else
+            {
+                UpdateHint(posCompass);
+                currentPosition = posCompass;
+                UpdateStack();
+            }
+        }
+
+        public void ActivateCompass(int minusExp)
+        {
+            checkMarkOne.Source = "compass.png";
+            hintCompass = new HintCompass(this, gameLogic);
+            updateCheckMark(hintCompass);
+            posCompass = hintNum;
 
             UpdateHint(posCompass);
             currentPosition = posCompass;
             UpdateStack();
+
+            exp = exp - minusExp;
+            UpdateExperienceButton();
         }
 
 
-        private void CheckMarkTwoTapped(object sender, EventArgs e)
+        private async void CheckMarkTwoTapped(object sender, EventArgs e)
         {
             //DistanceHint
 
             if (hintDistance == null)
             {
-                checkMarkTwo.Source = "bubble.png";
-                hintDistance = new HintDistance(this, gameLogic);
-                updateCheckMark(hintDistance);
-                posDistance = hintNum;
+                int minusExp = CalculateExp(50);
+
+                await Navigation.PushPopupAsync(
+                    new Notification.NotificationPage(
+                        this,
+                        minusExp,
+                        "Distance Hint",
+                        "Distance hint will become brighter the closer you are to the location.",
+                        "hamorg1.png"));
             }
+            else
+            {
+                UpdateHint(posDistance);
+                currentPosition = posDistance;
+                UpdateStack();
+            }
+        }
+
+        public void ActivateDistance(int minusExp)
+        {
+            checkMarkTwo.Source = "bubble.png";
+            hintDistance = new HintDistance(this, gameLogic);
+            updateCheckMark(hintDistance);
+            posDistance = hintNum;
 
             UpdateHint(posDistance);
             currentPosition = posDistance;
             UpdateStack();
-        }
 
+            exp = exp - minusExp;
+            UpdateExperienceButton();
+        }
         private async void CheckMarkThreeTapped(object sender, EventArgs e)
         {
             //Shrink Circle hint
@@ -264,7 +344,7 @@ namespace MapApp.Pages
         {
             HintList[currentPosition - 1].hideHint(this);
             HintList[newPostion - 1].show(this);
-            debugText.Text = currentPosition.ToString() + " " + newPostion.ToString() + " " + HintList[newPostion - 1].ToString();
+            //debugText.Text = currentPosition.ToString() + " " + newPostion.ToString() + " " + HintList[newPostion - 1].ToString();
         }
         int PositionBoundsCheck(int change)
         {

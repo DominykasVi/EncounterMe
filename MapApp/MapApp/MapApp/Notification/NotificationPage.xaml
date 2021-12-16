@@ -35,79 +35,26 @@
                     </Grid.ColumnDefinitions>
                     
                     <Image  Source="hamcomp1.png"
-                                x:Name="image"
-                                x:FieldModifier="public"
+                                x:Name="Image"
                                 VerticalOptions="Start" 
                                 HorizontalOptions="CenterAndExpand"
                                 Aspect="AspectFill"
                                 Grid.Column="0"/>
                     <StackLayout 
                                  Grid.Column="1">
-                        <Label Text="Compass Hint"
+                        <Label x:Name="Header"
+                                Text="Compass Hint"
                                FontAttributes="Bold"
                                 FontSize="25"
                                Margin="0,40,0,0"
                                HorizontalOptions="Start"/>
-                        <Label Text="Compass hint will help you by showing the direction to the location."
+                        <Label x:Name="Text"
+                               Text="Compass hint will help you by showing the direction to the location."
                                HorizontalOptions="Center"
                                FontSize="20"/>
                      </StackLayout>
                 </Grid>
 
-                        <!--
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <RadioButton    x:Name="size2500"
-                                    Value="2500"
-                                     GroupName="Size"
-                                     HorizontalOptions="Center"
-                                     Grid.Row="0"
-                                     Grid.Column="0"/>
-                    <RadioButton x:Name="size1000"
-                                 Value="1000"
-                                     GroupName="Size"
-                                     HorizontalOptions="Center"
-                                     Grid.Row="0"
-                                     Grid.Column="1"/>
-                    <RadioButton x:Name="size500"
-                                 Value="500"
-                                     GroupName="Size"
-                                     HorizontalOptions="Center"
-                                     Grid.Row="0"
-                                     Grid.Column="2"/>
-                    <RadioButton x:Name="size50"
-                                 Value="50"
-                                     GroupName="Size"
-                                     HorizontalOptions="Center"
-                                     Grid.Row="0"
-                                     Grid.Column="3"/>
-                    <Label Text="2500 m"
-                           HorizontalOptions="Center"
-                           Grid.Row="1"
-                           Grid.Column="0"/>
-                    <Label Text="1000 m"
-                           HorizontalOptions="Center"
-                           Grid.Row="1"
-                           Grid.Column="1"/>
-                    <Label Text="500 m"
-                           HorizontalOptions="Center"
-                           Grid.Row="1"
-                           Grid.Column="2"/>
-                    <Label Text="50 m"
-                           HorizontalOptions="Center"
-                           Grid.Row="1"
-                           Grid.Column="3"/>
-                </Grid>
-                -->
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -125,13 +72,15 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Clicked="GoBack"/>
-                    <Button Text="-2000 XP"
+                    <Button x:Name="Experience" 
+                        Text="-2000 XP"
                             FontAttributes="Bold"
                         BackgroundColor="#EC9F2B"
                         TextColor="White"
                         FontSize="20"
                         Grid.Row="0"
-                        Grid.Column="1"/>
+                        Grid.Column="1"
+                            Clicked="Selected"/>
                 </Grid>
             </StackLayout>
         </Frame>

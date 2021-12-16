@@ -18,6 +18,7 @@ namespace MapApp.Pages
     public partial class SearchEncounter : Rg.Plugins.Popup.Pages.PopupPage
     {
         MainPage main;
+        int exp = 5000;
         public SearchEncounter(MainPage main)
         {
             this.main = main;
@@ -37,7 +38,24 @@ namespace MapApp.Pages
         private void SliderValueChanged(Object sender, ValueChangedEventArgs e)
         {
             main.ChangeSearchRadius((float)(sender as Slider).Value);
-            SliderValue.Text = "Selected radius is: " + RadiusSlider.Value.ToString() + " m.";
+            //calculate experience
+            exp = (int)RadiusSlider.Value;
+            if (exp >= 1000)
+            {
+                exp = (exp / 1000) * 1000;
+                Experience.TextColor = Color.FromHex("#5bd963");
+            }
+            else if (exp < 1000 && exp >= 200)
+            {
+                exp = (exp / 100) * 100;
+                Experience.TextColor = Color.FromHex("#f29f30");
+            }
+            else
+            {
+                exp = 100;
+                Experience.TextColor = Color.FromHex("#f03838");
+            }
+            Experience.Text = exp.ToString() + " EXP";
         }
         public async void ShowLocation(Location location)
         {
@@ -47,7 +65,7 @@ namespace MapApp.Pages
         private void Search(Object sender, EventArgs e)
         {
             main.ChangeButtonToViewLocation(sender, e);
-            main.SearchForPlace();
+            main.SearchForPlace(exp);
         }
         private async void Category(Object sender, EventArgs e)
         {

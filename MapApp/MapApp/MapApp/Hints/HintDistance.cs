@@ -46,13 +46,13 @@ namespace MapApp.Hints
             if (isActive)
             {
                 UpdateDistanceVisual(distance, hintPage);
-                hintPage.debugText.Text = distance.ToString();
+                //hintPage.debugText.Text = distance.ToString();
             }
         }
 
         public void hideHint(HintPage hintPage)
         {
-            hintPage.debugText.Text = "";
+            //hintPage.debugText.Text = "";
             hintPage.animationView.IsVisible = false;
             hintPage.shade.Opacity = 0;
             isActive = false;
@@ -60,7 +60,7 @@ namespace MapApp.Hints
 
         public void show(HintPage hintPage)
         {
-            hintPage.debugText.Text = distance.ToString();
+            //hintPage.debugText.Text = distance.ToString();
             hintPage.animationView.IsVisible = true;
             hintPage.shade.Opacity = opacity;
             isActive = true;

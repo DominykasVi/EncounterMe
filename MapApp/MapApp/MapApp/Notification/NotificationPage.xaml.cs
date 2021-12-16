@@ -11,6 +11,7 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
 using MapApp.Pages;
+using MapApp.Hints;
 using EncounterMe;
 
 namespace MapApp.Notification
@@ -18,28 +19,49 @@ namespace MapApp.Notification
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NotificationPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        //MainPage main;
-        //HintPage hintPage;
+        HintPage hintPage;
+        int minusExp;
+        String header;
+        String text;
+        String image;
+        ShrinkSearchCircle shrink;
 
-        public NotificationPage()
+        public NotificationPage(HintPage hintPage, int minusExp, String header, String text, String image, ShrinkSearchCircle shrink = null)
         {
-            //this.main = main;
-            //this.hintPage = hintPage;
+            this.hintPage = hintPage;
+            this.minusExp = minusExp;
+            this.header = header;
+            this.text = text;
+            this.image = image;
+            this.shrink = shrink;
 
-            /*
-            this.locX = locX;
-            this.locY = locY;
-            this.bigX = main.searchCircleCentre.Longitude;
-            this.bigY = main.searchCircleCentre.Latitude;
-            this.bigR = main.searchRadius.Meters;*/
             InitializeComponent();
-            //DisableTooBigSizes();
+            UpdateInterface();
+        }
+
+        private void UpdateInterface()
+        {
+            Image.Source = image;
+            Header.Text = header;
+            Text.Text = text;
+            Experience.Text = "-" + minusExp.ToString() + " EXP";
         }
 
         private async void GoBack(object sender, EventArgs e)
         {
             await Navigation.PopPopupAsync();
-            //await Navigation.PushPopupAsync(hintPage);
+        }
+
+        private async void Selected(object sender, EventArgs e)
+        {
+            //dumb as heck but i dont care
+            if (header == "Compass Hint")
+                hintPage.ActivateCompass(minusExp);
+            else if (header == "Distance Hint")
+                hintPage.ActivateDistance(minusExp);
+            else if (header == "Shrink Hint")
+                shrink.ActivateShrink(minusExp);
+            await Navigation.PopPopupAsync();
         }
     }
 }

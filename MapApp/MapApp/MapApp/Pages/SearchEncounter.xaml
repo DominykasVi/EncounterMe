@@ -37,11 +37,22 @@
                         HeightRequest="40"
                         CornerRadius = "30"
                         Clicked="GoBack"/>
+                <!--
                 <Label x:Name="SliderValue"
                        Text="Selected radius is: 5000 m."
                        TextColor="Black" 
                        VerticalOptions="End" 
                        HorizontalOptions="Center"/>
+                -->
+                <Label HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Receive points: " TextColor="Black"/>
+                            <Span Text="5000 EXP" TextColor="#5bd963"
+                             x:Name="Experience"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
                 <Slider x:Name="RadiusSlider"
                         Maximum="5000"
                         Minimum="50"
