@@ -31,6 +31,7 @@
                 CornerRadius = "30"
                  />
 
+
         <Image  Source="idk.png" 
                 VerticalOptions="Start" 
                 HorizontalOptions="End"

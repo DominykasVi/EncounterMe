@@ -12,6 +12,7 @@ using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
 using MapApp.Pages;
 using EncounterMe;
+using MapApp.Notification;
 
 namespace MapApp.Hints
 {
@@ -32,7 +33,7 @@ namespace MapApp.Hints
         public ShrinkSearchCircle(MainPage main, HintPage hintPage, double locY, double locX)
         {
             this.main = main;
-            this.hintPage = hintPage;
+            this.hintPage = hintPage;        
 
             this.locX = locX;
             this.locY = locY;
@@ -71,7 +72,7 @@ namespace MapApp.Hints
             await Navigation.PopPopupAsync();
             await Navigation.PushPopupAsync(hintPage);
         }
-        private void ShrinkCircle(object sender, EventArgs e)
+        private async void ShrinkCircle(object sender, EventArgs e)
         {
             newR = SelectRadius();
             if(newR == 0)
@@ -80,13 +81,39 @@ namespace MapApp.Hints
                 return;
             }
 
+            int minusPerc = 0;
+            if (newR == 2500)
+                minusPerc = 20;
+            else if (newR == 1000)
+                minusPerc = 40;
+            else if (newR == 500)
+                minusPerc = 60;
+            else if (newR == 50)
+                minusPerc = 90;
+
+            await Navigation.PushPopupAsync(
+                   new Notification.NotificationPage(
+                       hintPage,
+                       hintPage.CalculateExp(minusPerc),
+                       "Shrink Hint",
+                       "Shrink hint will decrease the radius of the area where the location might be.",
+                       "hamcircle1.png",
+                       this));
+        }
+
+        public async void ActivateShrink(int minusExp)
+        {
             //Latitude = Y, Longtitude = X
             double circleX = 0, circleY = 0;
             CalculateNewCircleCentre(out circleX, out circleY);
 
             main.ChangeSearchRadius((float)newR);
             main.ChangeSearchCentre(new Position(circleY, circleX));
-            Navigation.PopPopupAsync();
+            Update();
+
+            hintPage.exp = hintPage.exp - minusExp;
+            hintPage.UpdateExperienceButton();
+            await Navigation.PopPopupAsync(); //doesn't work, don't know why
         }
 
         private int SelectRadius()

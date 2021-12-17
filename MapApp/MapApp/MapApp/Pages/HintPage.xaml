@@ -52,6 +52,7 @@
                             HorizontalOptions="CenterAndExpand"
                             Aspect="AspectFill"
                             IsVisible="true"/>
+                    
                     <BoxView x:Name="shade"
                              x:FieldModifier="public"
                              HeightRequest="300" 
@@ -62,9 +63,11 @@
                              IsVisible="true"/>
                 </Grid>
 
-
+                <!--
                 <Label x:Name="debugText" x:FieldModifier="public" TextColor="#77d065" FontSize = "20" Text="Start" IsVisible="true" />
-
+                -->
+               
+                
                 <StackLayout HeightRequest="34"
                              WidthRequest="0"
                              x:Name="horizontalStack"
@@ -81,6 +84,18 @@
                        HorizontalOptions="Center"
                        />
                 -->
+
+                <Button x:Name="Experience"
+                        Text="5000 EXP"
+                        FontSize="20"
+                        BackgroundColor="#5bd963"
+                        TextColor="White"
+                        HorizontalOptions="Center"
+                        CornerRadius = "30"
+                        HeightRequest="45"
+                        WidthRequest="120"
+                        Margin="0,0,0,10"/>
+
                 <Grid >
                     <Grid.RowDefinitions >
                         <RowDefinition Height="80"/>
@@ -186,11 +201,11 @@
                         Clicked="GiveUp"
                         CornerRadius = "30"/>
                     <Button Text="Found It!"
-                        BackgroundColor="#6CD4FF"
+                        BackgroundColor="#EC9F2B"
                         TextColor="White"
                         Grid.Row="0"
                         Grid.Column="1"
-                        Clicked="Test"
+                        Clicked="LocationFound"
                         CornerRadius = "30" />
                 </Grid>
 

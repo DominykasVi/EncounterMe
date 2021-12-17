@@ -69,13 +69,13 @@
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>2.0.0.14</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Xamarin.Forms.Maps">
-      <Version>5.0.0.2244</Version>
+      <Version>5.0.0.2291</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Visual.Material">
-      <Version>5.0.0.2244</Version>
+      <Version>5.0.0.2291</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +202,16 @@
     <AndroidResource Include="Resources\drawable\bubblelocked.png" />
     <AndroidResource Include="Resources\drawable\compasslocked.png" />
     <AndroidResource Include="Resources\drawable\compass.png" />
+    <AndroidResource Include="Resources\drawable\hamcomp.png" />
+    <AndroidResource Include="Resources\drawable\hamcircle.png" />
+    <AndroidResource Include="Resources\drawable\hamorg.png" />
+    <AndroidResource Include="Resources\drawable\hamceleb.png" />
+    <AndroidResource Include="Resources\drawable\hamcomp1.png" />
+    <AndroidResource Include="Resources\drawable\hamceleb1.png" />
+    <AndroidResource Include="Resources\drawable\hamcircle1.png" />
+    <AndroidResource Include="Resources\drawable\hamorg1.png" />
+    <AndroidResource Include="Resources\drawable\compass2.png" />
+    <AndroidResource Include="Resources\drawable\compass1.png" />
     <Content Include="Resources\drawable\pilis.jpg" />
     <AndroidResource Include="Resources\drawable\temp.jpg" />
     <AndroidResource Include="Resources\drawable\shrink.png" />

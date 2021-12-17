@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+        xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+        xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+        x:Class="MapApp.Notification.NotificationWin"
+        CloseWhenBackgroundIsClicked="False"
+        NavigationPage.HasNavigationBar="false">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+                PositionIn="Center"
+                PositionOut="Center"
+               
+                DurationIn="400"
+                DurationOut="300"
+                EasingIn="SinOut"
+                EasingOut="SinIn"
+                HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <StackLayout 
+            VerticalOptions="Center" 
+            HorizontalOptions="FillAndExpand" 
+           >
+        <Frame CornerRadius="20"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" >
+            <StackLayout>
+
+                <Label       Text="Congratulations!"
+                               FontAttributes="Bold"
+                                FontSize="30"
+                               HorizontalOptions="Center"/>
+                <Image  Source="hamceleb1.png"
+                                x:Name="Image"
+                                VerticalOptions="Start" 
+                                HorizontalOptions="CenterAndExpand"
+                                Aspect="AspectFill"
+                                Grid.Column="0"/>
+                <Label HorizontalTextAlignment="Center"
+                       FontSize="25">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="You have received "/>
+                            <Span Text="5000 EXP" TextColor="#5bd963"
+                             x:Name="Experience"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Button Text="Go Back"
+                        FontSize="25"
+                        BackgroundColor="#6CD4FF"
+                        TextColor="White"
+                        Clicked="GoBack"
+                        CornerRadius = "30"/>
+            </StackLayout>
+        </Frame>
+
+    </StackLayout>
+</pages:PopupPage>

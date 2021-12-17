@@ -16,6 +16,7 @@ using EncounterMe.Classes;
 using EncounterMe.Interfaces;
 using System.Net.Http;
 using MapApp.Pages;
+using MapApp.Notification;
 using Rg.Plugins.Popup.Services;
 
 namespace MapApp
@@ -66,7 +67,9 @@ namespace MapApp
             user = new User("Mr. Hamster", "mrhamster@gmail.com", "ilovehamsters");
             user.LevelPoints = 8520;
             user.AchievementNum = 10;
-            user.FoundLocationNum = 23;   
+            user.FoundLocationNum = 23;
+
+            
         }
 
         private void ShrinkCircleHint(object sender, EventArgs e)
@@ -238,7 +241,7 @@ namespace MapApp
         }
 
         private static readonly HttpClient client = new HttpClient();
-        public async void SearchForPlace()
+        public async void SearchForPlace(int exp)
         {
             //read database and save locations locally
             //in the future might use stream, so as not to store locations locally, or do calculation on sql
@@ -247,7 +250,7 @@ namespace MapApp
             searchCircleCentre = new Position(myPosition.Latitude, myPosition.Longitude);
 
             //change this when database works
-            hintPage = new HintPage(this, new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, 100));
+            hintPage = new HintPage(this, new EncounterMe.Location("M. Mažvydo Nacionalinė Biblioteka", 54.690803584492194, 25.263577022718472, 100),exp);
             await Navigation.PopPopupAsync();
             await Navigation.PushPopupAsync(hintPage);
             //Dominykas TODO: Add handling of null exception, also republish webserver
