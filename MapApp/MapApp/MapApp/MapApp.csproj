@@ -29,12 +29,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.14" />
-    <PackageReference Include="Uno.UI" Version="3.10.11" />
+    <PackageReference Include="Uno.UI" Version="4.0.11" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2196" />
-    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2291" />
+    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2291" />
   </ItemGroup>
 
   <ItemGroup>

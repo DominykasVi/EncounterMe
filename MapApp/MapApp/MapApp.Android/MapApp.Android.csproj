@@ -210,6 +210,8 @@
     <AndroidResource Include="Resources\drawable\hamceleb1.png" />
     <AndroidResource Include="Resources\drawable\hamcircle1.png" />
     <AndroidResource Include="Resources\drawable\hamorg1.png" />
+    <AndroidResource Include="Resources\drawable\compass2.png" />
+    <AndroidResource Include="Resources\drawable\compass1.png" />
     <Content Include="Resources\drawable\pilis.jpg" />
     <AndroidResource Include="Resources\drawable\temp.jpg" />
     <AndroidResource Include="Resources\drawable\shrink.png" />

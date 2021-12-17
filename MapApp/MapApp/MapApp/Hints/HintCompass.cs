@@ -30,7 +30,7 @@ namespace MapApp.Hints
 
             LocationUpdateService.GetUserLocation();
             hintPage.hintImage.IsVisible = true;
-            hintPage.hintImage.Source = "arrow.png";
+            hintPage.hintImage.Source = "compass2.png";
         }
 
         void updateBearing (object sender, ILocationEventArgs args, GameLogic gameLogic)
@@ -92,7 +92,7 @@ namespace MapApp.Hints
                 Start();
             isActive = true;
             hintPage.hintImage.IsVisible = true;
-            hintPage.hintImage.Source = "arrow.png";
+            hintPage.hintImage.Source = "compass2.png";
             hintPage.hintImage.Rotation = Bearing;
         }
 
