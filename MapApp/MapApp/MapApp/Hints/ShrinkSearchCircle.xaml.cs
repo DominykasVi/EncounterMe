@@ -85,11 +85,11 @@ namespace MapApp.Hints
             if (newR == 2500)
                 minusPerc = 20;
             else if (newR == 1000)
-                minusPerc = 40;
+                minusPerc = 20;
             else if (newR == 500)
-                minusPerc = 60;
+                minusPerc = 20;
             else if (newR == 50)
-                minusPerc = 90;
+                minusPerc = 50;
 
             await Navigation.PushPopupAsync(
                    new Notification.NotificationPage(

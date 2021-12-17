@@ -136,17 +136,17 @@ namespace MapApp.Pages
         public int CalculateExp(int perc)
         {
             int minusexp = exp * perc / 100;
+
+            if (exp - minusexp < 100)
+                return 0;
+
             if (minusexp >= 1000)
             {
                 return minusexp = (minusexp / 100) * 100;
             }
-            else if (exp < 1000 && exp > 100)
+            else 
             {
                 return minusexp = (minusexp / 10) * 10;
-            }
-            else
-            {
-                return 0;
             }
         }
 
@@ -156,7 +156,7 @@ namespace MapApp.Pages
 
             if (hintCompass == null)
             {
-                int minusExp = CalculateExp(90);
+                int minusExp = CalculateExp(30);
                 await Navigation.PushPopupAsync(
                     new Notification.NotificationPage(
                         this, 
@@ -195,7 +195,7 @@ namespace MapApp.Pages
 
             if (hintDistance == null)
             {
-                int minusExp = CalculateExp(50);
+                int minusExp = CalculateExp(20);
 
                 await Navigation.PushPopupAsync(
                     new Notification.NotificationPage(

@@ -145,7 +145,7 @@ namespace MapApp
             EncounterMe.Classes.Attribute att1 = new EncounterMe.Classes.Attribute("Cafe", "coffee.png");
             EncounterMe.Classes.Attribute att2 = new EncounterMe.Classes.Attribute("Forest", "tree.png");
             EncounterMe.Classes.Attribute att3 = new EncounterMe.Classes.Attribute("Water Object", "waterfall.png");
-            EncounterMe.Classes.Attribute att4 = new EncounterMe.Classes.Attribute("Restaurant", "coffee.png");
+            EncounterMe.Classes.Attribute att4 = new EncounterMe.Classes.Attribute("Restaurant", "food2.png");
             attributes.Add(att1);
             attributes.Add(att2);
             attributes.Add(att3);
