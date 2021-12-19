@@ -46,6 +46,33 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="Downvote"
+                        BackgroundColor="#DA4167"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Clicked="GoBack"
+                        CornerRadius = "30"/>
+                    <Button Text="Upvote"
+                        BackgroundColor="#86DC3D"
+                        TextColor="White"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Clicked="GoBack"
+                        CornerRadius = "30" />
+                </Grid>
+
+                
 
                 <Button Text="Go Back"
                         FontSize="25"
