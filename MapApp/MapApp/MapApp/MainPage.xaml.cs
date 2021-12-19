@@ -142,14 +142,24 @@ namespace MapApp
         private List<EncounterMe.Classes.Attribute> AddAttributes()
         {
             List<EncounterMe.Classes.Attribute> attributes = new List<EncounterMe.Classes.Attribute>();
-            EncounterMe.Classes.Attribute att1 = new EncounterMe.Classes.Attribute("Cafe", "coffee.png");
-            EncounterMe.Classes.Attribute att2 = new EncounterMe.Classes.Attribute("Forest", "tree.png");
-            EncounterMe.Classes.Attribute att3 = new EncounterMe.Classes.Attribute("Water Object", "waterfall.png");
-            EncounterMe.Classes.Attribute att4 = new EncounterMe.Classes.Attribute("Restaurant", "coffee.png");
+            EncounterMe.Classes.Attribute att1 = new EncounterMe.Classes.Attribute("Cafe", "icon8.png");
+            EncounterMe.Classes.Attribute att2 = new EncounterMe.Classes.Attribute("Forest", "icon9.png");
+            EncounterMe.Classes.Attribute att3 = new EncounterMe.Classes.Attribute("Lake", "icon7.png");
+            EncounterMe.Classes.Attribute att4 = new EncounterMe.Classes.Attribute("Fast Food", "icon5.png");
+            EncounterMe.Classes.Attribute att5 = new EncounterMe.Classes.Attribute("Social", "icon1.png");
+            EncounterMe.Classes.Attribute att6 = new EncounterMe.Classes.Attribute("Art", "icon2.png");
+            EncounterMe.Classes.Attribute att7 = new EncounterMe.Classes.Attribute("Landmark", "icon3.png");
+            EncounterMe.Classes.Attribute att8 = new EncounterMe.Classes.Attribute("Hard to Find", "icon4.png");
+            EncounterMe.Classes.Attribute att9 = new EncounterMe.Classes.Attribute("City", "icon6.png");
             attributes.Add(att1);
             attributes.Add(att2);
             attributes.Add(att3);
             attributes.Add(att4);
+            attributes.Add(att5);
+            attributes.Add(att6);
+            attributes.Add(att7);
+            attributes.Add(att8);
+            attributes.Add(att9);
             return attributes;
         }
 

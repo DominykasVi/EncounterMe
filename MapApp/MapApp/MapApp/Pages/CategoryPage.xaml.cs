@@ -75,7 +75,7 @@ namespace MapApp.Pages
 
         private Label CreateLabelFromAttribute(EncounterMe.Classes.Attribute attribute)
         {
-            return new Label { Text = attribute.Name, HorizontalOptions = LayoutOptions.Start };
+            return new Label { Text = attribute.Name, TextColor = Color.Black,  HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.Center };
         }
 
         private CheckBox CreateCheckBoxFromAttribute(EncounterMe.Classes.Attribute attribute)
