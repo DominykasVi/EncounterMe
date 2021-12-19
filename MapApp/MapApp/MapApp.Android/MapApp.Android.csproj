@@ -168,33 +168,21 @@
     <AndroidResource Include="Resources\drawable\_union_6.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\coffee.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\hamster.png" />
+    <AndroidResource Include="Resources\drawable\icon8.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\line_2.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\tree.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\waterfall.png" />
+    <AndroidResource Include="Resources\drawable\icon9.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\yes.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\hamster.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\idk.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\check_mark_unchecked.png" />
-    <AndroidResource Include="Resources\drawable\check_mark_checked.png" />
-    <AndroidResource Include="Resources\drawable\custom_checkmark.png" />
     <AndroidResource Include="Resources\drawable\navigation_selected.png" />
     <AndroidResource Include="Resources\drawable\navigation_unselected.png" />
     <AndroidResource Include="Resources\drawable\arrow.png" />
@@ -202,22 +190,23 @@
     <AndroidResource Include="Resources\drawable\bubblelocked.png" />
     <AndroidResource Include="Resources\drawable\compasslocked.png" />
     <AndroidResource Include="Resources\drawable\compass.png" />
-    <AndroidResource Include="Resources\drawable\hamcomp.png" />
-    <AndroidResource Include="Resources\drawable\hamcircle.png" />
-    <AndroidResource Include="Resources\drawable\hamorg.png" />
-    <AndroidResource Include="Resources\drawable\hamceleb.png" />
     <AndroidResource Include="Resources\drawable\hamcomp1.png" />
     <AndroidResource Include="Resources\drawable\hamceleb1.png" />
     <AndroidResource Include="Resources\drawable\hamcircle1.png" />
     <AndroidResource Include="Resources\drawable\hamorg1.png" />
     <AndroidResource Include="Resources\drawable\compass2.png" />
     <AndroidResource Include="Resources\drawable\compass1.png" />
-    <AndroidResource Include="Resources\drawable\food2.png" />
+    <AndroidResource Include="Resources\drawable\icon1.png" />
+    <AndroidResource Include="Resources\drawable\icon7.png" />
+    <AndroidResource Include="Resources\drawable\icon6.png" />
+    <AndroidResource Include="Resources\drawable\icon5.png" />
+    <AndroidResource Include="Resources\drawable\icon4.png" />
+    <AndroidResource Include="Resources\drawable\icon3.png" />
+    <AndroidResource Include="Resources\drawable\icon2.png" />
     <Content Include="Resources\drawable\pilis.jpg" />
     <AndroidResource Include="Resources\drawable\temp.jpg" />
     <AndroidResource Include="Resources\drawable\shrink.png" />
     <AndroidResource Include="Resources\drawable\shrinklocked.png" />
-    <AndroidResource Include="Resources\drawable\water.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

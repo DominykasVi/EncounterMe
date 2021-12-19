@@ -44,11 +44,13 @@
                                  Grid.Column="1">
                         <Label x:Name="Header"
                                 Text="Compass Hint"
+                               TextColor="Black"
                                FontAttributes="Bold"
                                 FontSize="25"
                                Margin="0,40,0,0"
                                HorizontalOptions="Start"/>
                         <Label x:Name="Text"
+                               TextColor="Black"
                                Text="Compass hint will help you by showing the direction to the location."
                                HorizontalOptions="Center"
                                FontSize="20"/>

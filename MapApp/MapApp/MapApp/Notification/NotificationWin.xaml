@@ -29,6 +29,7 @@
                 <Label       Text="Congratulations!"
                                FontAttributes="Bold"
                                 FontSize="30"
+                             TextColor="Black"
                                HorizontalOptions="Center"/>
                 <Image  Source="hamceleb1.png"
                                 x:Name="Image"
@@ -40,7 +41,7 @@
                        FontSize="25">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="You have received "/>
+                            <Span Text="You have received " TextColor="Black"/>
                             <Span Text="5000 EXP" TextColor="#5bd963"
                              x:Name="Experience"/>
                         </FormattedString>
